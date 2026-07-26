@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Weekly reporting for 26 schools — Kieran Yuen</title>
+<meta name="description" content="How I replaced a leadership team's manual Salesforce pulls with an automated weekly reporting pipeline.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#F6F7F5;
+    --ink:#16212B;
+    --slate:#5C6B77;
+    --rule:#DCE1DE;
+    --live:#237A52;
+    --measure:66ch;
+  }
+
+  *{box-sizing:border-box;}
+  html{-webkit-text-size-adjust:100%;}
+
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:"IBM Plex Sans",system-ui,sans-serif;
+    font-size:17px;
+    line-height:1.65;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  .wrap{max-width:820px;margin:0 auto;padding:0 28px;}
+
+  a{color:inherit;}
+  a:focus-visible{outline:2px solid var(--live);outline-offset:3px;}
+
+  .back{
+    display:inline-block;
+    font-family:"IBM Plex Mono",monospace;
+    font-size:.75rem;
+    letter-spacing:.12em;
+    text-transform:uppercase;
+    color:var(--slate);
+    text-decoration:none;
+    padding:72px 0 56px;
+  }
+
+  .back:hover{color:var(--ink);}
+
+  .kicker{
+    font-family:"IBM Plex Mono",monospace;
+    font-size:.72rem;
+    letter-spacing:.16em;
+    text-transform:uppercase;
+    color:var(--slate);
+    margin:0 0 18px;
+  }
+
+  h1{
+    font-family:"Bricolage Grotesque",system-ui,sans-serif;
+    font-optical-sizing:auto;
+    font-weight:800;
+    font-size:clamp(2rem,5.5vw,3.1rem);
+    line-height:1.08;
+    letter-spacing:-.025em;
+    margin:0 0 24px;
+    max-width:18ch;
+  }
+
+  .standfirst{
+    max-width:var(--measure);
+    font-size:1.08rem;
+    color:var(--slate);
+    margin:0 0 44px;
+  }
+
+  .facts{
+    display:flex;
+    flex-wrap:wrap;
+    gap:10px 30px;
+    padding:16px 0;
+    border-top:1px solid var(--rule);
+    border-bottom:1px solid var(--rule);
+    font-family:"IBM Plex Mono",monospace;
+    font-size:.76rem;
+    letter-spacing:.04em;
+    color:var(--slate);
+    margin:0 0 8px;
+  }
+
+  .band{padding:56px 0;border-bottom:1px solid var(--rule);}
+  .band:last-of-type{border-bottom:0;}
+
+  h2{
+    font-family:"Bricolage Grotesque",system-ui,sans-serif;
+    font-weight:600;
+    font-size:1.35rem;
+    letter-spacing:-.015em;
+    margin:0 0 18px;
+  }
+
+  p{max-width:var(--measure);margin:0 0 18px;}
+  p:last-child{margin-bottom:0;}
+
+  .pull{
+    max-width:var(--measure);
+    margin:32px 0;
+    padding:0 0 0 22px;
+    border-left:3px solid var(--live);
+    font-family:"Bricolage Grotesque",system-ui,sans-serif;
+    font-weight:400;
+    font-size:1.22rem;
+    line-height:1.4;
+    letter-spacing:-.01em;
+  }
+
+  .stack{
+    list-style:none;
+    margin:0;
+    padding:0;
+    max-width:var(--measure);
+  }
+
+  .stack li{
+    padding:13px 0;
+    border-top:1px solid var(--rule);
+  }
+
+  .stack li:first-child{border-top:0;padding-top:0;}
+  .stack b{font-weight:600;}
+  .stack span{color:var(--slate);}
+
+  footer{
+    padding:44px 0 68px;
+    font-family:"IBM Plex Mono",monospace;
+    font-size:.72rem;
+    letter-spacing:.06em;
+    color:var(--slate);
+  }
+
+  @media (max-width:560px){
+    body{font-size:16px;}
+    .back{padding:44px 0 36px;}
+    .band{padding:42px 0;}
+  }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+  <a class="back" href="/">&larr; Kieran Yuen</a>
+
+  <p class="kicker">Case study &middot; Student Leadership Network</p>
+
+  <h1>Weekly reporting for 26 schools, without anyone logging in</h1>
+
+  <p class="standfirst">
+    An entire leadership layer was pulling its own numbers out of Salesforce, one person at a time.
+    I replaced that with an individualized report that lands in their inbox every Monday morning.
+  </p>
+
+  <div class="facts">
+    <span>Python &middot; Colab &middot; WeasyPrint &middot; Apps Script &middot; Salesforce</span>
+    <span>in production since May 2026</span>
+  </div>
+
+  <section class="band">
+    <h2>The problem</h2>
+    <p>
+      If a director wanted to know how a school was doing, they logged into Salesforce and built the
+      view themselves. So did the associate directors. So did everyone above them.
+    </p>
+    <p>
+      That produced three problems at once. There was no single source of truth &mdash; two people
+      could pull the same question and get different answers depending on how they filtered. There
+      was no cadence, so the numbers got looked at when someone remembered to look. And there was no
+      individualized view: nobody could see just their own schools, or just their own portfolio,
+      without assembling it by hand every time.
+    </p>
+    <p>
+      The reporting existed. Getting to it was the problem.
+    </p>
+  </section>
+
+  <section class="band">
+    <h2>What I built</h2>
+    <p>
+      A Python notebook in Google Colab reads a Salesforce-synced Google Sheet that refreshes every
+      few hours. It computes progress against four program goals, sorts every item into a four-tier
+      urgency system, and generates two things from that same computation: a PDF via WeasyPrint and
+      the HTML body of an email. A bound Apps Script drafts the Monday morning sends.
+    </p>
+    <p>
+      Generating both formats from one data source was deliberate. It's the only way to guarantee
+      that the PDF and the email can never disagree with each other &mdash; which is the failure that
+      quietly destroys trust in a reporting system.
+    </p>
+    <p>
+      The whole thing is config-driven. Goals, recipients, callout columns, and health scorecards
+      are all spreadsheet edits. Adding a school or changing a threshold doesn't require touching
+      code, which means it doesn't require me.
+    </p>
+  </section>
+
+  <section class="band">
+    <h2>The decisions that mattered</h2>
+
+    <p class="pull">
+      I had a weighted priority score that ranked what needed attention. I threw it out and replaced
+      it with counting overdue items.
+    </p>
+
+    <p>
+      The score was more sophisticated and it was worse. When a director looked at a number and
+      asked "why is this school flagged?", the honest answer involved explaining a formula. Nobody
+      trusts a number they can't reason about, and a report people don't trust is a report they stop
+      opening. Counting overdue items is dumber and it's legible on sight.
+    </p>
+
+    <ul class="stack">
+      <li><b>WeasyPrint's CSS grid rendering was unreliable</b> &mdash; <span>so I rebuilt the entire report layout on HTML tables. Less elegant, renders correctly every time.</span></li>
+      <li><b>Every timestamp standardized to Eastern</b> &mdash; <span>which eliminated a whole category of bugs where a report generated at the wrong hour showed the wrong day's data.</span></li>
+      <li><b>Two timestamps on every report</b> &mdash; <span>when the data was last refreshed, and when the report was generated. Plus a plain-language note that it's a snapshot. A stale number that's labeled stale is still useful; an unlabeled one is a trap.</span></li>
+    </ul>
+  </section>
+
+  <section class="band">
+    <h2>The result</h2>
+    <p>
+      In production since May 2026 and running every week since. A program director, four associate
+      directors, and counselors across 26 schools now get an individualized view of their own
+      schools without opening Salesforce at all.
+    </p>
+    <p>
+      It's also become infrastructure rather than a deliverable: two of my goals for the coming year
+      &mdash; a data warehouse migration and a student outcome projection model &mdash; are both
+      built on top of this pipeline.
+    </p>
+  </section>
+
+  <footer>
+    &copy; 2026 Kieran Yuen &middot; <a href="/">back to home</a>
+  </footer>
+
+</div>
+
+</body>
+</html>
