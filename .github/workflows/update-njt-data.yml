@@ -1,0 +1,63 @@
+# Refreshes NJ Transit on-time performance data.
+#
+# Save as: .github/workflows/update-njt-data.yml
+#
+# NJ Transit publishes new numbers monthly, so a weekly check is more than
+# enough to stay current without hammering their server. The job commits
+# only when the data actually changed, which keeps the history readable --
+# every commit here is a real data update.
+#
+# Before this can push, enable write access for Actions:
+#   repo Settings -> Actions -> General -> Workflow permissions
+#   -> "Read and write permissions" -> Save
+
+name: Update NJ Transit data
+
+on:
+  schedule:
+    # 11:00 UTC every Monday (about 6-7am Eastern).
+    - cron: "0 11 * * 1"
+  # Lets you trigger it by hand from the Actions tab.
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: njt-data
+  cancel-in-progress: false
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out the repo
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      # Prints every file's columns, row count, and first/last rows into the
+      # Actions log. Purely informational -- never fails the job.
+      - name: Inspect the files
+        continue-on-error: true
+        run: python3 scripts/fetch_njt.py --inspect
+
+      - name: Fetch the data
+        run: python3 scripts/fetch_njt.py
+
+      - name: Commit if anything changed
+        run: |
+          if git diff --quiet -- trains/data/otp.json; then
+            echo "No change in the published data. Nothing to commit."
+            exit 0
+          fi
+
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add trains/data/otp.json
+          git commit -m "Update NJ Transit OTP data ($(date -u +%Y-%m-%d))"
+          git push
