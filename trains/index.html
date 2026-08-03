@@ -75,6 +75,14 @@ h2{font-size:15px; font-weight:700; letter-spacing:-.01em; margin:0 0 4px}
 .gap-caption{font-size:16px; margin:18px 0 0; max-width:60ch}
 .gap-caption strong{font-weight:700; color:var(--contested)}
 
+.means{margin:34px 0 0; padding:22px 24px; background:var(--surface);
+  border:1px solid var(--rule); border-radius:3px}
+.means h3{font-size:13px; font-family:"IBM Plex Mono",monospace; font-weight:500;
+  letter-spacing:.12em; text-transform:uppercase; color:var(--muted); margin:0 0 12px}
+.means p{margin:0 0 12px; font-size:17px; max-width:58ch}
+.means p:last-child{margin-bottom:0; font-size:16px; color:var(--muted)}
+.means b{font-weight:700}
+
 table{width:100%; border-collapse:collapse; margin-top:18px; font-size:15px}
 th,td{text-align:right; padding:11px 8px; border-bottom:1px solid var(--rule-soft)}
 th:first-child,td:first-child{text-align:left; padding-left:0}
@@ -133,6 +141,7 @@ footer p{max-width:64ch}
   <p class="eyebrow">Last 12 months</p>
   <p class="headline" id="headline">Loading&hellip;</p>
   <div class="gap" id="gap"></div>
+  <div class="means" id="means"></div>
 </section>
 
 <section aria-labelledby="trend-h">
@@ -164,6 +173,7 @@ footer p{max-width:64ch}
   <p class="eyebrow">Method</p>
   <p>NJ Transit counts a train as on time if it arrives within 6 minutes of its published schedule. Figures are monthly and published under New Jersey Executive Order 80. This page averages the most recent twelve months available.</p>
   <p>Two lines publish only the Amtrak-adjusted file, so no rider-experienced figure exists for them. That is NJ Transit's omission, not an error here.</p>
+  <p>Built by Kieran Yuen. Not affiliated with, endorsed by, or connected to NJ Transit. The figures here are NJ Transit's own published numbers, reproduced without modification.</p>
   <p class="stamp" id="stamp"></p>
   <p><a href="https://www.njtransit.com/performance-data-download">Source data</a> &middot; <a href="data/otp.json">This page's data as JSON</a></p>
   <a class="back" href="/">&larr; kieranyuen.com</a>
@@ -258,6 +268,26 @@ function drawTable(){
     +'<td class="num gapcell">'+(s.all==null?"—":"+"+(s.adj-s.all).toFixed(1))+'</td></tr>').join("");
 }
 
+function drawMeans(line,s){
+  const el=document.getElementById("means");
+  const runs=series(line,"all_causes");
+  if(s.all==null||!runs.length){el.innerHTML="";return;}
+  const total=runs.reduce((a,r)=>a+(r.total||0),0);
+  const ontime=runs.reduce((a,r)=>a+(r.count||0),0);
+  const late=total-ontime;
+  const rate=(100-s.all)/100;
+  const perYear=Math.round(500*rate);      // 2 trains a day, ~250 workdays
+  const oneIn=Math.round(1/rate);
+  const n=x=>x.toLocaleString("en-US");
+  el.innerHTML='<h3>What that actually means</h3>'
+    +'<p>NJ Transit ran <b>'+n(total)+'</b> '+line+' trains over these twelve months. <b>'
+    +n(late)+'</b> of them arrived late.</p>'
+    +'<p>If you ride two trains a day, five days a week, that works out to roughly <b>'
+    +perYear+' late trains a year</b> &mdash; about one in every '+oneIn+' trips.</p>'
+    +'<p>Worth knowing: a train counts as on time if it arrives within six minutes of schedule. '
+    +'A train five minutes behind is on time by this measure and late by yours.</p>';
+}
+
 function select(line){
   current=line;
   document.querySelectorAll("#lines button").forEach(b=>
@@ -267,13 +297,14 @@ function select(line){
     s.all!=null
       ? '<span class="pct">'+fmt(s.all)+'</span> of '+line+' trains arrived on time.'
       : line+': NJ Transit publishes no rider-experienced figure.';
-  drawGap(s); drawChart(line); drawTable();
+  drawGap(s); drawMeans(line,s); drawChart(line); drawTable();
 }
 
 fetch("data/otp.json").then(r=>r.json()).then(d=>{
   ROWS=d.records.filter(r=>/^\d+$/.test(r.YEAR)&&r.LINE).map(r=>{
     const m=MONTHS.indexOf(r.MONTH.toUpperCase())+1, y=+r.YEAR;
-    return {line:r.line, version:r.version, y, m, key:y*12+m, pct:parseFloat(r.PERCENTAGE)};
+    return {line:r.line, version:r.version, y, m, key:y*12+m, pct:parseFloat(r.PERCENTAGE),
+            count:parseInt(r.COUNT,10), total:parseInt(r.TOTAL,10)};
   }).filter(r=>r.m>0&&!isNaN(r.pct));
   LINES=[...new Set(ROWS.map(r=>r.line))].sort();
   WINDOW=[...new Set(ROWS.map(r=>r.key))].sort((a,b)=>a-b).slice(-12);
