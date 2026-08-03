@@ -25,6 +25,7 @@ import io
 import json
 import os
 import sys
+import time
 import urllib.error
 import urllib.request
 from datetime import datetime, timezone
@@ -67,14 +68,28 @@ def build_url(line_code: str, version_suffix: str) -> str:
     return f"{BASE}/RAIL_{middle}OTP_DATA{version_suffix}.csv"
 
 
-def fetch(url: str) -> str:
-    """Download a URL and return its body as text."""
-    request = urllib.request.Request(url, headers=HEADERS)
-    with urllib.request.urlopen(request, timeout=TIMEOUT) as response:
-        raw = response.read()
-    # These files have been seen with a UTF-8 BOM; utf-8-sig strips it if
-    # present and behaves like plain utf-8 if not.
-    return raw.decode("utf-8-sig")
+def fetch(url: str, attempts: int = 4, backoff: float = 2.0) -> str:
+    """Download a URL and return its body as text.
+
+    NJ Transit's file server intermittently returns 404 for files that do
+    exist -- a different handful fails on every run -- so a single attempt
+    silently loses whole lines. Retry before believing a failure.
+    """
+    last_error: Exception | None = None
+    for attempt in range(attempts):
+        try:
+            request = urllib.request.Request(url, headers=HEADERS)
+            with urllib.request.urlopen(request, timeout=TIMEOUT) as response:
+                raw = response.read()
+            # These files have been seen with a UTF-8 BOM; utf-8-sig strips it
+            # if present and behaves like plain utf-8 if not.
+            return raw.decode("utf-8-sig")
+        except Exception as exc:  # noqa: BLE001
+            last_error = exc
+            if attempt < attempts - 1:
+                time.sleep(backoff * (attempt + 1))
+
+    raise last_error  # type: ignore[misc]
 
 
 def parse(text: str) -> list[dict]:
