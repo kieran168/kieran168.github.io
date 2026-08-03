@@ -30,6 +30,28 @@
     }
   }
 
+
+  .sitenav{
+    display:flex; flex-wrap:wrap; align-items:baseline; gap:10px 20px;
+    padding:22px 0 0; margin:0;
+    font-family:"IBM Plex Mono",monospace; font-size:.74rem; letter-spacing:.1em;
+  }
+  .sitenav a{text-decoration:none; color:var(--slate, var(--muted));}
+  .sitenav a:hover{color:var(--ink);}
+  .sitenav .brand{
+    color:var(--ink); font-weight:500;
+    text-transform:uppercase; letter-spacing:.14em;
+  }
+  .sitenav ul{
+    display:flex; flex-wrap:wrap; gap:18px;
+    list-style:none; margin:0 0 0 auto; padding:0;
+  }
+  .sitenav a[aria-current="page"]{
+    color:var(--ink); text-decoration:underline; text-underline-offset:5px;
+  }
+  @media (max-width:520px){
+    .sitenav ul{margin-left:0; width:100%;}
+  }
   *{box-sizing:border-box;}
   html{-webkit-text-size-adjust:100%;}
 
@@ -127,9 +149,18 @@
 </head>
 <body>
 <div class="wrap">
+  <nav class="sitenav" aria-label="Site">
+    <a class="brand" href="/">Kieran Yuen</a>
+    <ul>
+      <li><a href="/#work">Work</a></li>
+      <li><a href="/trains/">Trains</a></li>
+      <li><a href="/how-i-build.html" aria-current="page">How I work</a></li>
+      <li><a href="/#about">About</a></li>
+    </ul>
+  </nav>
+
 
   <header class="masthead">
-    <p class="wordmark">Kieran Yuen</p>
     <h1>How I build things</h1>
     <p class="standfirst">
       Most of what I make follows one pattern. Find data someone already publishes, pull it on a
