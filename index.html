@@ -19,6 +19,17 @@
     --measure:62ch;
   }
 
+  @media (prefers-color-scheme: dark){
+    :root{
+      --paper:#101619;
+      --ink:#E7EDEA;
+      --slate:#98A5AB;
+      --rule:#283136;
+      --live:#5FB98C;
+      --build:#D9A65A;
+    }
+  }
+
   *{box-sizing:border-box;}
 
   html{-webkit-text-size-adjust:100%;}
@@ -257,7 +268,7 @@
   </header>
 
   <div class="strip">
-    <span><span class="dot dot--live"></span>2 tools running in production</span>
+    <span><span class="dot dot--live"></span>3 tools running in production</span>
     <span><span class="dot dot--build"></span>1 in active development</span>
   </div>
 
@@ -268,6 +279,28 @@
 
   <section class="band">
     <p class="eyebrow">Things I built &amp; use</p>
+
+    <article class="entry">
+      <h2 class="entry__name"><a class="contact-link" href="trains/">How late is your NJ Transit train?</a></h2>
+      <p class="entry__meta">
+        <span class="dot dot--live"></span>live &middot; python &middot; github actions &middot; public data
+      </p>
+      <p class="entry__body">
+        NJ Transit publishes two on-time figures for every rail line. One counts every late train.
+        The other removes delays the agency attributes to Amtrak. Nobody had put the difference on
+        a screen, so I did. Pick a line and see both numbers, plus the gap between them.
+      </p>
+      <p class="entry__body">
+        The headline finding: on the Northeast Corridor, riders experience 85.6% on-time while
+        NJ Transit reports 92.1%. That single adjustment moves their busiest line from worst on
+        the system to the middle of the pack.
+      </p>
+      <p class="entry__why">
+        <b>Why I built it.</b> I ride the Raritan Valley Line and wanted to know whether my
+        complaints were fair. They weren't &mdash; my line is one of the better ones. But the
+        question led somewhere more interesting, and now anyone who rides can check their own.
+      </p>
+    </article>
 
     <article class="entry">
       <h2 class="entry__name">Expense Dashboard</h2>
