@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>How late is your NJ Transit train?</title>
+<meta name="description" content="On-time performance for every NJ Transit rail line, and how much lateness NJ Transit attributes to Amtrak.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Public+Sans:wght@400;500;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#F4F6F6; --surface:#FFFFFF; --ink:#14181B; --muted:#5C6467;
+  --rule:#DCE1E1; --rule-soft:#E9EDED;
+  --late:#B5341F; --contested:#D99A2B; --ok:#2F6B5A;
+  --focus:#1F6FB2;
+}
+@media (prefers-color-scheme: dark){
+  :root{
+    --paper:#0F1315; --surface:#171C1E; --ink:#E9EDEB; --muted:#98A2A3;
+    --rule:#2A3134; --rule-soft:#20272A;
+    --late:#E0664C; --contested:#E8B45C; --ok:#5FAE93;
+    --focus:#6FB4E8;
+  }
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{
+  margin:0; background:var(--paper); color:var(--ink);
+  font-family:"Public Sans",system-ui,sans-serif; font-size:17px; line-height:1.6;
+  -webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:860px; margin:0 auto; padding:0 24px 96px}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--focus); outline-offset:3px; border-radius:2px}
+
+.eyebrow{
+  font-family:"IBM Plex Mono",monospace; font-size:12px; font-weight:500;
+  letter-spacing:.14em; text-transform:uppercase; color:var(--muted);
+}
+header{padding:64px 0 40px; border-bottom:1px solid var(--rule)}
+h1{
+  font-size:clamp(38px,6.5vw,60px); font-weight:800; letter-spacing:-.03em;
+  line-height:1.04; margin:16px 0 18px; max-width:15ch;
+}
+.standfirst{font-size:19px; color:var(--muted); margin:0; max-width:56ch}
+
+nav[aria-label="Rail line"]{padding:32px 0 8px}
+.lines{display:flex; flex-wrap:wrap; gap:8px; list-style:none; margin:12px 0 0; padding:0}
+.lines button{
+  font:inherit; font-size:15px; font-weight:500; cursor:pointer;
+  background:var(--surface); color:var(--ink);
+  border:1px solid var(--rule); border-radius:999px; padding:7px 15px;
+}
+.lines button:hover{border-color:var(--muted)}
+.lines button[aria-pressed="true"]{background:var(--ink); color:var(--paper); border-color:var(--ink)}
+
+section{padding:44px 0; border-bottom:1px solid var(--rule)}
+h2{font-size:15px; font-weight:700; letter-spacing:-.01em; margin:0 0 4px}
+.note{font-size:15px; color:var(--muted); margin:6px 0 0; max-width:62ch}
+
+.headline{font-size:clamp(30px,5vw,44px); font-weight:800; letter-spacing:-.025em; line-height:1.15; margin:20px 0 0; max-width:22ch}
+.headline .pct{font-family:"IBM Plex Mono",monospace; font-weight:500; color:var(--late)}
+
+.gap{margin:36px 0 0}
+.gap-track{position:relative; height:64px}
+.gap-rule{position:absolute; left:0; right:0; top:30px; height:2px; background:var(--rule)}
+.gap-fill{position:absolute; top:26px; height:10px; border-radius:2px;
+  background:repeating-linear-gradient(115deg,var(--contested) 0 5px,transparent 5px 10px);
+  border-top:2px solid var(--contested); border-bottom:2px solid var(--contested)}
+.pin{position:absolute; top:18px; width:2px; height:26px; background:var(--ink)}
+.pin-label{position:absolute; font-family:"IBM Plex Mono",monospace; font-size:13px; white-space:nowrap}
+.pin-label.top{top:-4px}
+.pin-label.bot{top:48px; color:var(--muted)}
+.gap-caption{font-size:16px; margin:18px 0 0; max-width:60ch}
+.gap-caption strong{font-weight:700; color:var(--contested)}
+
+table{width:100%; border-collapse:collapse; margin-top:18px; font-size:15px}
+th,td{text-align:right; padding:11px 8px; border-bottom:1px solid var(--rule-soft)}
+th:first-child,td:first-child{text-align:left; padding-left:0}
+th{font-family:"IBM Plex Mono",monospace; font-size:11px; font-weight:500;
+   letter-spacing:.1em; text-transform:uppercase; color:var(--muted); border-bottom:1px solid var(--rule)}
+td.num{font-family:"IBM Plex Mono",monospace}
+tr.here td{font-weight:700}
+tr.here td:first-child::before{content:"▸ "; color:var(--late)}
+td.gapcell{color:var(--contested); font-weight:500}
+
+.chart{width:100%; height:auto; margin-top:20px; overflow:visible}
+.chart .axis{stroke:var(--rule); stroke-width:1}
+.chart .grid{stroke:var(--rule-soft); stroke-width:1}
+.chart text{font-family:"IBM Plex Mono",monospace; font-size:11px; fill:var(--muted)}
+.chart .band{fill:var(--contested); opacity:.22}
+.chart .l-all{fill:none; stroke:var(--late); stroke-width:2; stroke-linejoin:round}
+.chart .l-adj{fill:none; stroke:var(--muted); stroke-width:1.5; stroke-dasharray:4 3}
+
+.key{display:flex; flex-wrap:wrap; gap:18px; margin-top:14px; font-size:14px; color:var(--muted)}
+.key span{display:flex; align-items:center; gap:7px}
+.sw{width:22px; height:0; border-top:2px solid}
+.sw.hatch{height:10px; border:none; border-radius:2px;
+  background:repeating-linear-gradient(115deg,var(--contested) 0 5px,transparent 5px 10px)}
+
+footer{padding:40px 0 0; font-size:15px; color:var(--muted)}
+footer p{max-width:64ch}
+.stamp{font-family:"IBM Plex Mono",monospace; font-size:13px}
+.back{display:inline-block; margin-top:28px; font-weight:500; color:var(--ink)}
+
+.empty{color:var(--muted); font-size:16px; margin-top:20px}
+.sr{position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap}
+@media (max-width:560px){
+  body{font-size:16px}
+  .wrap{padding:0 18px 72px}
+  th,td{padding:10px 4px}
+  .hide-s{display:none}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <p class="eyebrow">NJ Transit rail &middot; on-time performance</p>
+  <h1>How late is your train, really?</h1>
+  <p class="standfirst">NJ Transit publishes two on-time figures for every rail line. One counts every late train. The other removes delays the agency attributes to Amtrak. The difference is rarely discussed, and on some lines it is very large.</p>
+</header>
+
+<nav aria-label="Rail line">
+  <p class="eyebrow">Pick your line</p>
+  <ul class="lines" id="lines"></ul>
+</nav>
+
+<section aria-labelledby="verdict-h">
+  <h2 id="verdict-h" class="sr">Headline figure</h2>
+  <p class="eyebrow">Last 12 months</p>
+  <p class="headline" id="headline">Loading&hellip;</p>
+  <div class="gap" id="gap"></div>
+</section>
+
+<section aria-labelledby="trend-h">
+  <h2 id="trend-h">Month by month</h2>
+  <p class="note" id="trend-note"></p>
+  <div id="chart"></div>
+  <div class="key">
+    <span><i class="sw" style="border-color:var(--late)"></i> What riders experienced</span>
+    <span><i class="sw" style="border-color:var(--muted); border-top-style:dashed"></i> NJ Transit's adjusted figure</span>
+    <span><i class="sw hatch"></i> Attributed to Amtrak</span>
+  </div>
+</section>
+
+<section aria-labelledby="all-h">
+  <h2 id="all-h">Every line, worst to best</h2>
+  <p class="note">Ranked by the figure riders actually experience, not the adjusted one.</p>
+  <table>
+    <thead><tr>
+      <th scope="col">Line</th>
+      <th scope="col">Riders felt</th>
+      <th scope="col" class="hide-s">NJT reports</th>
+      <th scope="col">Amtrak</th>
+    </tr></thead>
+    <tbody id="tbody"></tbody>
+  </table>
+</section>
+
+<footer>
+  <p class="eyebrow">Method</p>
+  <p>NJ Transit counts a train as on time if it arrives within 6 minutes of its published schedule. Figures are monthly and published under New Jersey Executive Order 80. This page averages the most recent twelve months available.</p>
+  <p>Two lines publish only the Amtrak-adjusted file, so no rider-experienced figure exists for them. That is NJ Transit's omission, not an error here.</p>
+  <p class="stamp" id="stamp"></p>
+  <p><a href="https://www.njtransit.com/performance-data-download">Source data</a> &middot; <a href="data/otp.json">This page's data as JSON</a></p>
+  <a class="back" href="/">&larr; kieranyuen.com</a>
+</footer>
+
+</div>
+
+<script>
+const MONTHS=["JANUARY","FEBRUARY","MARCH","APRIL","MAY","JUNE","JULY","AUGUST","SEPTEMBER","OCTOBER","NOVEMBER","DECEMBER"];
+const SHORT=["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+let ROWS=[], LINES=[], WINDOW=[], current=null;
+
+const mean=a=>a.reduce((s,x)=>s+x,0)/a.length;
+const fmt=n=>n==null?"—":n.toFixed(1)+"%";
+
+function stats(line){
+  const pick=v=>ROWS.filter(r=>r.line===line&&r.version===v&&WINDOW.includes(r.key)).map(r=>r.pct);
+  const all=pick("all_causes"), adj=pick("amtrak_adjusted");
+  return {line, all:all.length?mean(all):null, adj:adj.length?mean(adj):null};
+}
+
+function series(line,version){
+  return ROWS.filter(r=>r.line===line&&r.version===version&&WINDOW.includes(r.key))
+             .sort((a,b)=>a.key-b.key);
+}
+
+function drawGap(s){
+  const el=document.getElementById("gap");
+  if(s.all==null){
+    el.innerHTML='<p class="empty">NJ Transit does not publish an all-causes file for this line, so there is no way to know what riders experienced. Only its adjusted figure is available: <strong>'+fmt(s.adj)+'</strong>.</p>';
+    return;
+  }
+  const lo=Math.floor(Math.min(s.all,s.adj))-3, hi=Math.ceil(Math.max(s.all,s.adj))+2;
+  const at=v=>((v-lo)/(hi-lo))*100;
+  const a=at(s.all), b=at(s.adj), d=s.adj-s.all;
+  el.innerHTML=
+    '<div class="gap-track">'
+    +'<div class="gap-rule"></div>'
+    +(d>0.05?'<div class="gap-fill" style="left:'+a+'%;width:'+(b-a)+'%"></div>':'')
+    +'<div class="pin" style="left:'+a+'%"></div>'
+    +'<div class="pin" style="left:'+b+'%"></div>'
+    +'<div class="pin-label top" style="left:'+a+'%;transform:translateX(-50%)">'+fmt(s.all)+'</div>'
+    +'<div class="pin-label bot" style="left:'+a+'%;transform:translateX(-50%)">riders felt</div>'
+    +'<div class="pin-label top" style="left:'+b+'%;transform:translateX(-50%)">'+fmt(s.adj)+'</div>'
+    +'<div class="pin-label bot" style="left:'+b+'%;transform:translateX(-50%)">NJT reports</div>'
+    +'</div>'
+    +'<p class="gap-caption">NJ Transit blames Amtrak for <strong>'+d.toFixed(1)+' points</strong> of '
+    +s.line+"'s lateness. Riders on those trains were late either way.</p>";
+}
+
+function drawChart(line){
+  const all=series(line,"all_causes"), adj=series(line,"amtrak_adjusted");
+  const host=document.getElementById("chart");
+  if(!adj.length){host.innerHTML='<p class="empty">No monthly data available.</p>';return;}
+  const W=860,H=260,L=42,R=12,T=16,B=34;
+  const pts=adj.map(r=>r.key);
+  const vals=all.concat(adj).map(r=>r.pct);
+  const lo=Math.max(0,Math.floor(Math.min.apply(null,vals)/5)*5-5), hi=100;
+  const x=i=>L+(i/(pts.length-1||1))*(W-L-R);
+  const y=v=>T+(1-(v-lo)/(hi-lo))*(H-T-B);
+  const path=arr=>arr.map((r,i)=>(i?"L":"M")+x(pts.indexOf(r.key)).toFixed(1)+" "+y(r.pct).toFixed(1)).join(" ");
+  let band="";
+  if(all.length===adj.length&&all.length){
+    band='<path class="band" d="'+path(all)+" "+adj.slice().reverse().map((r,i)=>
+      "L"+x(pts.indexOf(r.key)).toFixed(1)+" "+y(r.pct).toFixed(1)).join(" ")+' Z"/>';
+  }
+  let grid="",ticks="";
+  for(let v=Math.ceil(lo/5)*5; v<=hi; v+=5){
+    grid+='<line class="grid" x1="'+L+'" x2="'+(W-R)+'" y1="'+y(v).toFixed(1)+'" y2="'+y(v).toFixed(1)+'"/>';
+    ticks+='<text x="'+(L-8)+'" y="'+(y(v)+4).toFixed(1)+'" text-anchor="end">'+v+'%</text>';
+  }
+  let xlab="";
+  adj.forEach((r,i)=>{ if(i%3===0||i===adj.length-1)
+    xlab+='<text x="'+x(i).toFixed(1)+'" y="'+(H-12)+'" text-anchor="middle">'+SHORT[r.m-1]+" "+String(r.y).slice(2)+'</text>'; });
+  host.innerHTML='<svg class="chart" viewBox="0 0 '+W+' '+H+'" role="img" aria-label="Monthly on-time performance for '+line+'">'
+    +grid+band
+    +(all.length?'<path class="l-all" d="'+path(all)+'"/>':'')
+    +'<path class="l-adj" d="'+path(adj)+'"/>'
+    +'<line class="axis" x1="'+L+'" x2="'+(W-R)+'" y1="'+(H-B)+'" y2="'+(H-B)+'"/>'
+    +ticks+xlab+'</svg>';
+  document.getElementById("trend-note").textContent=
+    all.length? "The shaded band is the portion NJ Transit attributes to Amtrak."
+              : "Only the adjusted figure is published for this line.";
+}
+
+function drawTable(){
+  const rows=LINES.map(stats).sort((a,b)=>(a.all==null)-(b.all==null)||(a.all-b.all));
+  document.getElementById("tbody").innerHTML=rows.map(s=>
+    '<tr class="'+(s.line===current?"here":"")+'"><td>'+s.line+'</td>'
+    +'<td class="num">'+fmt(s.all)+'</td>'
+    +'<td class="num hide-s">'+fmt(s.adj)+'</td>'
+    +'<td class="num gapcell">'+(s.all==null?"—":"+"+(s.adj-s.all).toFixed(1))+'</td></tr>').join("");
+}
+
+function select(line){
+  current=line;
+  document.querySelectorAll("#lines button").forEach(b=>
+    b.setAttribute("aria-pressed",String(b.dataset.line===line)));
+  const s=stats(line);
+  document.getElementById("headline").innerHTML=
+    s.all!=null
+      ? '<span class="pct">'+fmt(s.all)+'</span> of '+line+' trains arrived on time.'
+      : line+': NJ Transit publishes no rider-experienced figure.';
+  drawGap(s); drawChart(line); drawTable();
+}
+
+fetch("data/otp.json").then(r=>r.json()).then(d=>{
+  ROWS=d.records.filter(r=>/^\d+$/.test(r.YEAR)&&r.LINE).map(r=>{
+    const m=MONTHS.indexOf(r.MONTH.toUpperCase())+1, y=+r.YEAR;
+    return {line:r.line, version:r.version, y, m, key:y*12+m, pct:parseFloat(r.PERCENTAGE)};
+  }).filter(r=>r.m>0&&!isNaN(r.pct));
+  LINES=[...new Set(ROWS.map(r=>r.line))].sort();
+  WINDOW=[...new Set(ROWS.map(r=>r.key))].sort((a,b)=>a-b).slice(-12);
+  document.getElementById("lines").innerHTML=LINES.map(l=>
+    '<li><button type="button" data-line="'+l+'" aria-pressed="false">'+l+'</button></li>').join("");
+  document.querySelectorAll("#lines button").forEach(b=>
+    b.addEventListener("click",()=>select(b.dataset.line)));
+  const w=WINDOW[WINDOW.length-1], wy=Math.floor((w-1)/12), wm=w-wy*12;
+  document.getElementById("stamp").textContent=
+    "Data through "+SHORT[wm-1]+" "+wy+". Refreshed automatically every Monday. Last checked "
+    +new Date(d.generated_at).toLocaleDateString("en-US",{month:"long",day:"numeric",year:"numeric"})+".";
+  select(LINES.includes("Raritan Valley")?"Raritan Valley":LINES[0]);
+}).catch(()=>{
+  document.getElementById("headline").textContent="The data file could not be loaded.";
+});
+</script>
+</body>
+</html>
