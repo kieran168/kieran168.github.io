@@ -154,12 +154,19 @@ def build() -> int:
                     }
                 )
 
-    if failures:
-        # Don't overwrite good data with a partial pull.
-        print("Aborting -- some files failed:", file=sys.stderr)
+    if not records:
+        # Nothing at all came back -- something is genuinely wrong.
+        print("Aborting -- every file failed:", file=sys.stderr)
         for failure in failures:
             print(f"  {failure}", file=sys.stderr)
         return 1
+
+    if failures:
+        # Some of NJ Transit's own published links 404. Note it and carry on
+        # rather than discarding the files that did work.
+        print(f"Warning -- {len(failures)} file(s) unavailable:")
+        for failure in failures:
+            print(f"  {failure}")
 
     payload = {
         "generated_at": datetime.now(timezone.utc).isoformat(timespec="seconds"),
@@ -170,6 +177,7 @@ def build() -> int:
             "NJ Executive Order 80."
         ),
         "lines": {code or "SYSTEM": name for code, name in LINES.items()},
+        "unavailable": failures,
         "record_count": len(records),
         "records": records,
     }
