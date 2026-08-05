@@ -40,12 +40,6 @@ jobs:
         with:
           python-version: "3.12"
 
-      # Prints every file's columns, row count, and first/last rows into the
-      # Actions log. Purely informational -- never fails the job.
-      - name: Inspect the files
-        continue-on-error: true
-        run: python3 scripts/fetch_njt.py --inspect
-
       - name: Fetch the data
         run: python3 scripts/fetch_njt.py
 

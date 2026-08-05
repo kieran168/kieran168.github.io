@@ -204,7 +204,7 @@ footer p{max-width:64ch}
 <footer>
   <p class="eyebrow">Method</p>
   <p>NJ Transit counts a train as on time if it arrives within 6 minutes of its published schedule. Figures are monthly and published under New Jersey Executive Order 80. This page averages the most recent twelve months available.</p>
-  <p>Two lines publish only the Amtrak-adjusted file, so no rider-experienced figure exists for them. That is NJ Transit's omission, not an error here.</p>
+  <p>NJ Transit's file server intermittently fails to return files that do exist. When a file cannot be retrieved, the last confirmed copy is kept and dated rather than dropped, so a figure here may be older than the rest.</p>
   <p>Built by Kieran Yuen. Not affiliated with, endorsed by, or connected to NJ Transit. The figures here are NJ Transit's own published numbers, reproduced without modification.</p>
   <p class="stamp" id="stamp"></p>
   <p><a href="https://www.njtransit.com/performance-data-download">Source data</a> &middot; <a href="data/otp.json">This page's data as JSON</a></p>
@@ -235,7 +235,7 @@ function series(line,version){
 function drawGap(s){
   const el=document.getElementById("gap");
   if(s.all==null){
-    el.innerHTML='<p class="empty">NJ Transit does not publish an all-causes file for this line, so there is no way to know what riders experienced. Only its adjusted figure is available: <strong>'+fmt(s.adj)+'</strong>.</p>';
+    el.innerHTML='<p class="empty">No all-causes file has been retrieved for this line yet, so there is no rider-experienced figure to show. NJ Transit&rsquo;s adjusted figure is <strong>'+fmt(s.adj)+'</strong>.</p>';
     return;
   }
   const lo=Math.floor(Math.min(s.all,s.adj))-3, hi=Math.ceil(Math.max(s.all,s.adj))+2;
@@ -288,7 +288,7 @@ function drawChart(line){
     +ticks+xlab+'</svg>';
   document.getElementById("trend-note").textContent=
     all.length? "The shaded band is the portion NJ Transit attributes to Amtrak."
-              : "Only the adjusted figure is published for this line.";
+              : "Only the adjusted figure is available for this line.";
 }
 
 function drawTable(){
@@ -328,7 +328,7 @@ function select(line){
   document.getElementById("headline").innerHTML=
     s.all!=null
       ? '<span class="pct">'+fmt(s.all)+'</span> of '+line+' trains arrived on time.'
-      : line+': NJ Transit publishes no rider-experienced figure.';
+      : line+': no rider-experienced figure available yet.';
   drawGap(s); drawMeans(line,s); drawChart(line); drawTable();
 }
 
