@@ -68,7 +68,7 @@ CLAIMS = {
     # (line_code, year): claimed percentage
     ("SYSTEM", 2026): 88.6,
     ("NJCL", 2026): 87.4,
-    ("NEC", 2026): 91.5,
+    ("NEC", 2026): 83.8,      # all-causes, restored 2026-08-05
     ("RARV", 2026): 91.7,
     ("RARV", 2025): 91.5,
     ("MNBN", 2026): 96.3,
@@ -80,7 +80,7 @@ CLAIMS = {
 
 # Claimed 2017-2019 pre-COVID baselines, same method.
 BASELINE_CLAIMS = {
-    "SYSTEM": 90.9, "NJCL": 94.5, "NEC": 95.7, "RARV": 94.9,
+    "SYSTEM": 90.9, "NJCL": 94.5, "NEC": 88.2, "RARV": 94.9,
     "PASC": 95.4, "MNE": 89.0, "BNTN": 89.6, "ACRL": 89.0, "MNBN": 94.8,
 }
 
