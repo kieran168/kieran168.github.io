@@ -7,14 +7,24 @@ per line, in two flavours: all causes, and adjusted to remove delays
 attributed to Amtrak. The filenames never change -- new months are appended
 as rows -- so a scheduled fetch is all that's needed to stay current.
 
+Their file server is unreliable. It intermittently returns 404 for files
+that definitely exist, and a different handful fails on every run. So this
+script MERGES into the existing otp.json rather than rebuilding it from
+scratch. A file that fails to download keeps its last good copy, marked
+with the date it was last confirmed, instead of vanishing from the site.
+
+That distinction matters: rebuilding meant one bad Monday could silently
+delete a line's entire history. Merging means a bad Monday costs freshness,
+never existence.
+
 Usage
 -----
     python3 fetch_njt.py --inspect
         Downloads everything and prints each file's header row, row count,
-        and first two data rows. Writes nothing. Run this first.
+        and first two data rows. Writes nothing.
 
     python3 fetch_njt.py
-        Downloads everything and writes OUT_PATH as JSON.
+        Downloads everything and merges it into OUT_PATH.
 
 Standard library only -- no pip install, works on a bare Actions runner.
 """
@@ -68,12 +78,13 @@ def build_url(line_code: str, version_suffix: str) -> str:
     return f"{BASE}/RAIL_{middle}OTP_DATA{version_suffix}.csv"
 
 
-def fetch(url: str, attempts: int = 4, backoff: float = 2.0) -> str:
+def fetch(url: str, attempts: int = 5, backoff: float = 3.0) -> str:
     """Download a URL and return its body as text.
 
-    NJ Transit's file server intermittently returns 404 for files that do
-    exist -- a different handful fails on every run -- so a single attempt
-    silently loses whole lines. Retry before believing a failure.
+    Retries with a widening gap -- 3s, 6s, 9s, 12s, so half a minute in
+    total before giving up. Observed 404s have survived shorter retries
+    than this, which is why the merge below exists as a second line of
+    defence rather than relying on retries alone.
     """
     last_error: Exception | None = None
     for attempt in range(attempts):
@@ -92,6 +103,23 @@ def fetch(url: str, attempts: int = 4, backoff: float = 2.0) -> str:
     raise last_error  # type: ignore[misc]
 
 
+# Keys this script adds to each row. Ignored when judging whether a row is
+# a separator, so the check works on raw CSV rows and on records already
+# written to otp.json by an earlier run.
+META_KEYS = ("line_code", "line", "version")
+
+
+def is_separator(row: dict) -> bool:
+    """True for the dashed rule rows NJ Transit puts under some headers.
+
+    They look like {"YEAR": "----------", "MONTH": "---------------", ...}
+    and are not data. The page already filters them out client-side; this
+    keeps them out of the file in the first place.
+    """
+    values = [v for k, v in row.items() if v and k not in META_KEYS]
+    return bool(values) and all(set(str(v)) == {"-"} for v in values)
+
+
 def parse(text: str) -> list[dict]:
     """Parse CSV text into a list of dicts keyed by header name."""
     reader = csv.DictReader(io.StringIO(text))
@@ -103,9 +131,37 @@ def parse(text: str) -> list[dict]:
             for k, v in row.items()
             if k is not None
         }
-        if any(cleaned.values()):
+        if any(cleaned.values()) and not is_separator(cleaned):
             rows.append(cleaned)
     return rows
+
+
+def load_previous(path: str) -> dict:
+    """Read the otp.json already on disk, or an empty shell if there isn't one.
+
+    Anything unreadable is treated as absent. A corrupt file should not stop
+    a fresh fetch from succeeding -- it just means nothing to carry forward.
+    """
+    try:
+        with open(path, encoding="utf-8") as handle:
+            payload = json.load(handle)
+    except (FileNotFoundError, json.JSONDecodeError, OSError):
+        return {"records": [], "sources": {}}
+
+    if not isinstance(payload, dict):
+        return {"records": [], "sources": {}}
+    payload.setdefault("records", [])
+    payload.setdefault("sources", {})
+    return payload
+
+
+def group_by_pair(records: list[dict]) -> dict[tuple[str, str], list[dict]]:
+    """Bucket a flat record list into {(line_code, version): [rows]}."""
+    grouped: dict[tuple[str, str], list[dict]] = {}
+    for record in records:
+        key = (record.get("line_code", ""), record.get("version", ""))
+        grouped.setdefault(key, []).append(record)
+    return grouped
 
 
 def inspect() -> int:
@@ -146,45 +202,103 @@ def inspect() -> int:
 
 
 def build() -> int:
-    """Download everything and write the consolidated JSON file."""
-    records = []
-    failures = []
+    """Download everything and merge it into the consolidated JSON file."""
+    now = datetime.now(timezone.utc).isoformat(timespec="seconds")
 
+    previous = load_previous(OUT_PATH)
+    previous_pairs = group_by_pair(previous["records"])
+    previous_sources = previous["sources"]
+
+    records: list[dict] = []
+    sources: dict[str, dict] = {}
+    failures: list[str] = []   # raw errors, as before
+    stale: list[str] = []      # served from a previous run
+    missing: list[str] = []    # failed and nothing to fall back on
+    fresh_count = 0
+
+    # Iterating LINES x VERSIONS in declared order keeps record order stable
+    # between runs, which keeps the git diff small and readable.
+    #
+    # Note: a pair dropped from LINES also drops out of the file. That is
+    # deliberate -- removing a line from the dict should remove it from the
+    # site, not leave a fossil behind.
     for line_code, line_name in LINES.items():
+        code = line_code or "SYSTEM"
         for version_name, suffix in VERSIONS.items():
             url = build_url(line_code, suffix)
+            label = f"{line_name}/{version_name}"
+            key = (code, version_name)
+            was = previous_sources.get(code, {}).get(version_name, {})
+
+            error = None
+            rows = []
             try:
                 rows = parse(fetch(url))
+                if not rows:
+                    error = "parsed zero rows"
             except Exception as exc:  # noqa: BLE001
-                failures.append(f"{line_name}/{version_name}: {exc}")
+                error = str(exc)
+
+            if not error:
+                # Fresh download wins outright for this pair.
+                for row in rows:
+                    records.append(
+                        {
+                            "line_code": code,
+                            "line": line_name,
+                            "version": version_name,
+                            **row,
+                        }
+                    )
+                sources.setdefault(code, {})[version_name] = {
+                    "status": "fresh",
+                    "rows": len(rows),
+                    "last_success": now,
+                    "checked_at": now,
+                }
+                fresh_count += 1
                 continue
 
-            for row in rows:
-                records.append(
-                    {
-                        "line_code": line_code or "SYSTEM",
-                        "line": line_name,
-                        "version": version_name,
-                        **row,
-                    }
-                )
+            # Download failed. Fall back to whatever we had last time.
+            failures.append(f"{label}: {error}")
+            # Records written by an older version of this script may still
+            # contain separator rows, so filter on the way through.
+            carried = [r for r in previous_pairs.get(key, [])
+                       if not is_separator(r)]
+
+            if carried:
+                records.extend(carried)
+                last_success = was.get("last_success")
+                sources.setdefault(code, {})[version_name] = {
+                    "status": "carried",
+                    "rows": len(carried),
+                    "last_success": last_success,
+                    "checked_at": now,
+                    "last_error": error,
+                }
+                seen = last_success[:10] if last_success else "an earlier run"
+                stale.append(f"{label}: kept the copy from {seen}")
+            else:
+                sources.setdefault(code, {})[version_name] = {
+                    "status": "missing",
+                    "rows": 0,
+                    "last_success": was.get("last_success"),
+                    "checked_at": now,
+                    "last_error": error,
+                }
+                missing.append(f"{label}: {error}")
 
     if not records:
-        # Nothing at all came back -- something is genuinely wrong.
-        print("Aborting -- every file failed:", file=sys.stderr)
+        # Nothing downloaded and nothing to fall back on. Leave the existing
+        # file untouched rather than writing an empty one over it.
+        print("Aborting -- no records, and nothing on disk to carry forward.",
+              file=sys.stderr)
         for failure in failures:
             print(f"  {failure}", file=sys.stderr)
         return 1
 
-    if failures:
-        # Some of NJ Transit's own published links 404. Note it and carry on
-        # rather than discarding the files that did work.
-        print(f"Warning -- {len(failures)} file(s) unavailable:")
-        for failure in failures:
-            print(f"  {failure}")
-
     payload = {
-        "generated_at": datetime.now(timezone.utc).isoformat(timespec="seconds"),
+        "generated_at": now,
         "source": "https://www.njtransit.com/performance-data-download",
         "note": (
             "NJ TRANSIT counts a train as on time if it operates within "
@@ -193,6 +307,9 @@ def build() -> int:
         ),
         "lines": {code or "SYSTEM": name for code, name in LINES.items()},
         "unavailable": failures,
+        "stale": stale,
+        "missing": missing,
+        "sources": sources,
         "record_count": len(records),
         "records": records,
     }
@@ -202,7 +319,22 @@ def build() -> int:
         json.dump(payload, handle, indent=2, sort_keys=False)
         handle.write("\n")
 
+    total_pairs = len(LINES) * len(VERSIONS)
     print(f"wrote {OUT_PATH} -- {len(records)} records")
+    print(f"  {fresh_count}/{total_pairs} files downloaded fresh")
+
+    if stale:
+        print(f"  {len(stale)} served from a previous run:")
+        for item in stale:
+            print(f"    {item}")
+    if missing:
+        print(f"  {len(missing)} unavailable with no fallback:")
+        for item in missing:
+            print(f"    {item}")
+
+    # Exit 0 even with stale or missing files. A non-zero exit would fail the
+    # Actions job before the commit step, which would throw away a merge that
+    # is strictly better than what is already published.
     return 0
 
 
