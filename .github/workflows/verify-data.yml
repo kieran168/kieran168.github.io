@@ -1,0 +1,53 @@
+name: Verify NJ Transit data
+
+# Runs the audit without needing a terminal. Trigger it by hand from the
+# Actions tab, or let it run automatically half an hour after the Monday
+# fetch so there is a standing record that the published figures still
+# reconcile against NJ Transit's own files.
+#
+# A red X means something stopped reconciling. That is the point of it.
+
+on:
+  workflow_dispatch:
+  schedule:
+    # 11:30 UTC Mondays -- 30 minutes after update-njt-data.yml
+    - cron: "30 11 * * 1"
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out the repo
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      # Recomputes every published figure from the committed otp.json and
+      # compares it against the claims pinned inside the script. Needs no
+      # network -- this is pure arithmetic against your own data.
+      - name: Recompute every published figure
+        run: python3 scripts/verify_otp.py
+
+      # Re-downloads NJ Transit's CSVs and diffs them row by row against what
+      # is stored. Runs even if the step above failed, so one click gives the
+      # whole picture rather than stopping at the first problem.
+      - name: Diff against NJ Transit's published files
+        if: always()
+        run: python3 scripts/verify_otp.py --against-source
+
+      # verify_by_year.csv lands as a downloadable zip at the bottom of the
+      # run page. Open it in a spreadsheet and check the division yourself.
+      - name: Upload the spreadsheet
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: verify-by-year
+          path: verify_by_year.csv
+          if-no-files-found: warn
