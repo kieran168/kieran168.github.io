@@ -86,15 +86,6 @@
     padding:72px 0 0;
   }
 
-  .wordmark{
-    font-family:"IBM Plex Mono",monospace;
-    font-size:.75rem;
-    letter-spacing:.14em;
-    text-transform:uppercase;
-    color:var(--slate);
-    margin:0 0 56px;
-  }
-
   .lede{
     font-family:"Bricolage Grotesque",system-ui,sans-serif;
     font-optical-sizing:auto;
@@ -171,47 +162,77 @@
     margin:0 0 34px;
   }
 
-  /* ---------- project entries ---------- */
+  /* ---------- featured project ---------- */
 
-  .entry{
-    padding:34px 0;
-    border-top:1px solid var(--rule);
+  .feature{
+    border:1px solid var(--rule);
+    padding:34px 32px;
   }
 
-  .entry:first-of-type{border-top:0;padding-top:0;}
-
-  .entry__name{
+  .feature__name{
     font-family:"Bricolage Grotesque",system-ui,sans-serif;
     font-weight:600;
-    font-size:1.5rem;
-    letter-spacing:-.015em;
-    margin:0 0 6px;
+    font-size:clamp(1.5rem,3.6vw,2.05rem);
+    letter-spacing:-.02em;
+    line-height:1.15;
+    margin:0 0 8px;
   }
 
-  .entry__meta{
+  .feature__name a{
+    text-decoration:none;
+    border-bottom:2px solid var(--live);
+    padding-bottom:1px;
+  }
+
+  .feature__name a:hover{color:var(--live);}
+
+  .feature__meta{
     font-family:"IBM Plex Mono",monospace;
     font-size:.76rem;
     letter-spacing:.03em;
     color:var(--slate);
-    margin:0 0 18px;
+    margin:0 0 20px;
   }
 
-  .entry__body{
+  .feature__body{
     max-width:var(--measure);
-    margin:0 0 14px;
+    margin:0 0 4px;
   }
 
-  .entry__body:last-child{margin-bottom:0;}
+  /* the two figures, side by side, no commentary */
 
-  .entry__why{
-    max-width:var(--measure);
+  .figures{
+    display:flex;
+    flex-wrap:wrap;
+    gap:20px 52px;
+    margin:26px 0 20px;
+    padding:24px 0 0;
+    border-top:1px solid var(--rule);
+  }
+
+  .figures dt{
+    font-family:"IBM Plex Mono",monospace;
+    font-size:.72rem;
+    letter-spacing:.1em;
+    text-transform:uppercase;
     color:var(--slate);
+    margin:0 0 8px;
+  }
+
+  .figures dd{
+    font-family:"Bricolage Grotesque",system-ui,sans-serif;
+    font-weight:800;
+    font-size:2.1rem;
+    letter-spacing:-.025em;
+    line-height:1;
     margin:0;
   }
 
-  .entry__why b{
-    font-weight:500;
-    color:var(--ink);
+  .feature__note{
+    max-width:var(--measure);
+    color:var(--slate);
+    font-size:.92rem;
+    margin:0;
   }
 
   /* ---------- compact list ---------- */
@@ -268,8 +289,8 @@
   @media (max-width:560px){
     body{font-size:16px;}
     .masthead{padding-top:48px;}
-    .wordmark{margin-bottom:38px;}
     .band{padding:48px 0;}
+    .feature{padding:26px 22px;}
   }
 </style>
 </head>
@@ -292,7 +313,7 @@
     <h1 class="lede">I build the tools that get data to the people who need it.</h1>
 
     <p class="standfirst">
-      Data analyst at Student Leadership Network. Former teacher. I work mostly in
+      Data analyst at Student Leadership Network. I work mostly in
       <strong>Python, SQL, BigQuery, Salesforce, and Google Apps Script</strong> &mdash; and I build
       small things on the side that I actually use every day.
     </p>
@@ -303,106 +324,51 @@
     <span><span class="dot dot--build"></span>Building: Activity Log</span>
   </div>
 
-  <section class="band">
-    <p class="eyebrow">Case study</p>
-    <p><a class="contact-link" href="weekly-reporting.html">Weekly reporting for 26 schools</a></p>
-  </section>
-
   <section class="band" id="work">
-    <p class="eyebrow">Things I built &amp; use</p>
+    <p class="eyebrow">Latest build</p>
 
-    <article class="entry">
-      <h2 class="entry__name"><a class="contact-link" href="trains/">How late is your NJ Transit train?</a></h2>
-      <p class="entry__meta">
+    <article class="feature">
+      <h2 class="feature__name"><a href="trains/">How late is your NJ Transit train?</a></h2>
+      <p class="feature__meta">
         <span class="dot dot--live"></span>live &middot; python &middot; github actions &middot; public data
       </p>
-      <p class="entry__body">
+      <p class="feature__body">
         NJ Transit publishes two on-time figures for every rail line. One counts every late train.
-        The other removes delays the agency attributes to Amtrak. Nobody had put the difference on
-        a screen, so I did. Pick a line and see both numbers, plus the gap between them.
+        The other removes delays the agency attributes to Amtrak, and that is the one they lead
+        with. This reads both files every week and puts them side by side, for all eight lines,
+        back to 2017.
       </p>
-      <p class="entry__body">
-        The headline finding: on the Northeast Corridor, riders experience 85.6% on-time while
-        NJ Transit reports 92.1%. That single adjustment moves their busiest line from worst on
-        the system to the middle of the pack.
-      </p>
-      <p class="entry__why">
-        <b>Why I built it.</b> I ride the Raritan Valley Line and wanted to know whether my
-        complaints were fair. They weren't &mdash; my line is one of the better ones. But the
-        question led somewhere more interesting, and now anyone who rides can check their own.
-      </p>
-    </article>
 
-    <article class="entry">
-      <h2 class="entry__name">Expense Dashboard</h2>
-      <p class="entry__meta">
-        <span class="dot dot--live"></span>running &middot; apps script &middot; google sheets &middot; ios shortcut
-      </p>
-      <p class="entry__body">
-        Logs a purchase from my phone in two taps. An iOS Shortcut sends the vendor, amount, and a
-        note to an Apps Script endpoint, which writes the row to a Google Sheet. The dashboard reads
-        that sheet and answers one question: am I ahead or behind for the month?
-      </p>
-      <p class="entry__body">
-        It shows spending pace against budget, a projected month-end total, what's left per day
-        across the days remaining, and a month-over-month comparison &mdash; all on a single
-        scrollable dark-mode page built for a phone screen.
-      </p>
-      <p class="entry__why">
-        <b>Why I built it.</b> Every budgeting app I tried wanted me to connect my bank accounts.
-        I wanted the opposite: nothing linked, nothing shared, two taps to log. The test of whether
-        it worked is that I still open it &mdash; not to log, but to look back at where the money went.
-      </p>
-    </article>
+      <dl class="figures">
+        <div>
+          <dt>Counting every late train</dt>
+          <dd>83.8%</dd>
+        </div>
+        <div>
+          <dt>Amtrak-adjusted</dt>
+          <dd>91.5%</dd>
+        </div>
+      </dl>
 
-    <article class="entry">
-      <h2 class="entry__name">Morning Digest</h2>
-      <p class="entry__meta">
-        <span class="dot dot--live"></span>running &middot; apps script &middot; time-driven triggers &middot; notion api
-      </p>
-      <p class="entry__body">
-        An email that arrives before I'm awake with everything that matters that day, pulled from a
-        single Notion database and grouped by life area: the current quarter's focus with a live
-        days-remaining count, this week's picks, what's overdue, what I finished recently, and
-        what's sitting unsorted in the inbox.
-      </p>
-      <p class="entry__body">
-        A second script runs Sunday evening. It clears the week's selections and asks me to choose
-        again, so the list can't quietly accumulate into something I stop reading.
-      </p>
-      <p class="entry__why">
-        <b>Why I built it.</b> I had a well-organized system I kept forgetting to open. The fix
-        wasn't better organization &mdash; it was making the system come find me instead.
-      </p>
-    </article>
-
-    <article class="entry">
-      <h2 class="entry__name">Activity Log</h2>
-      <p class="entry__meta">
-        <span class="dot dot--build"></span>in development &middot; apps script &middot; google sheets
-      </p>
-      <p class="entry__body">
-        A web app for logging what I actually did today &mdash; washed the dishes, cut the grass, met
-        a friend for lunch &mdash; so that at the end of a month I can see where the hours really went.
-        Full add, edit, and delete in the app, so I never have to open the spreadsheet underneath it.
-      </p>
-      <p class="entry__body">
-        Most of the design work has gone into removing friction from logging, because a tracker you
-        don't use tells you nothing. Duration is a row of small buttons instead of a text field.
-        Start times are relative and clickable. Past entries autocomplete as you type. Time is
-        optional; only the date is required.
-      </p>
-      <p class="entry__why">
-        <b>Why I built it.</b> Time tracking tells you where hours went but not what they cost you.
-        Washing dishes and playing a game can take the same thirty minutes and leave you in
-        completely different places, so this one records whether an activity gave energy or drained
-        it. The goal isn't a tidier log &mdash; it's finding the hours worth reclaiming.
+      <p class="feature__note">
+        Northeast Corridor, January&ndash;June 2026. System-wide over the same months was 88.6%,
+        the lowest figure in the published record, which begins in 2017. Every number on the page
+        is recomputed from NJ Transit's own files by a script anyone can run.
       </p>
     </article>
   </section>
 
   <section class="band">
-    <p class="eyebrow">Also built</p>
+    <p class="eyebrow">Also running</p>
+    <ul class="also">
+      <li><b>Expense Dashboard</b> &mdash; <span>logs a purchase from my phone in two taps, straight into a Google Sheet. Answers one question: am I ahead or behind for the month?</span></li>
+      <li><b>Morning Digest</b> &mdash; <span>an email that arrives before I'm awake with the day's tasks, pulled from Notion and grouped by life area.</span></li>
+      <li><b>Activity Log</b> &mdash; <span>in development. Records what I actually did today, and whether it gave energy or drained it.</span></li>
+    </ul>
+  </section>
+
+  <section class="band">
+    <p class="eyebrow">Earlier builds</p>
     <ul class="also">
       <li><b>Through Line</b> &mdash; <span>a life-management app that makes accumulated progress visible. React, Supabase, and Postgres, installed on my phone.</span></li>
       <li><b>Persist</b> &mdash; <span>a college search tool over federal College Scorecard data for 2,423 schools, built around one question: where can I afford to go and actually graduate?</span></li>
@@ -411,14 +377,20 @@
     </ul>
   </section>
 
+  <section class="band">
+    <p class="eyebrow">Case study</p>
+    <p><a class="contact-link" href="weekly-reporting.html">Weekly reporting for 26 schools</a></p>
+  </section>
+
   <section class="band" id="about">
     <p class="eyebrow">About</p>
     <div class="prose">
       <p>
-        I taught before I did this, which is most of why I care about the last mile of a data
-        problem. A dashboard nobody can reach is the same as no dashboard. The work I'm proudest of
-        is rarely the cleverest query &mdash; it's the thing that finally put the right numbers in
-        front of the person who needed them, in a format they'd actually open.
+        I've been building things in spreadsheets since I was twenty. The tools got bigger; the
+        instinct didn't. What I care about most is the last mile of a data problem &mdash; a
+        dashboard nobody can reach is the same as no dashboard. The work I'm proudest of is rarely
+        the cleverest query. It's the thing that finally put the right numbers in front of the
+        person who needed them, in a format they'd actually open.
       </p>
       <p>
         The side projects are the same instinct at small scale. I notice a bit of friction in my own
