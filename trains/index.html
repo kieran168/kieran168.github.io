@@ -129,6 +129,49 @@ td.gapcell{color:var(--contested); font-weight:500}
 .sw.hatch{height:10px; border:none; border-radius:2px;
   background:repeating-linear-gradient(115deg,var(--contested) 0 5px,transparent 5px 10px)}
 
+/* ---------- route builder ---------- */
+.legs{display:flex; flex-wrap:wrap; gap:14px; margin:18px 0 0}
+.leg{flex:1 1 220px; min-width:0}
+.leg label{display:block; font-family:"IBM Plex Mono",monospace; font-size:11px;
+  font-weight:500; letter-spacing:.1em; text-transform:uppercase;
+  color:var(--muted); margin:0 0 6px}
+.leg select{
+  width:100%; font:inherit; font-size:15px; padding:9px 11px;
+  background:var(--surface); color:var(--ink);
+  border:1px solid var(--rule); border-radius:3px;
+}
+.leg select:hover{border-color:var(--muted)}
+
+.result{margin:32px 0 0; padding:26px 24px; background:var(--surface);
+  border:1px solid var(--rule); border-radius:3px}
+.result .big{font-size:clamp(34px,6vw,52px); font-weight:800; letter-spacing:-.03em;
+  line-height:1; margin:0; font-family:"IBM Plex Mono",monospace; color:var(--late)}
+.result .big-cap{font-size:16px; color:var(--muted); margin:10px 0 0; max-width:52ch}
+
+.breakdown{list-style:none; margin:24px 0 0; padding:20px 0 0;
+  border-top:1px solid var(--rule-soft)}
+.breakdown li{display:flex; justify-content:space-between; align-items:baseline;
+  gap:16px; padding:7px 0; font-size:16px}
+.breakdown li.total{border-top:1px solid var(--rule); margin-top:8px;
+  padding-top:14px; font-weight:700}
+.breakdown .v{font-family:"IBM Plex Mono",monospace; white-space:nowrap}
+.breakdown .who{color:var(--muted); font-size:14px}
+
+.bars{margin:22px 0 0; padding:0; list-style:none}
+.bars li{display:grid; grid-template-columns:46px 1fr 58px; align-items:center;
+  gap:10px; padding:3px 0; font-family:"IBM Plex Mono",monospace; font-size:13px;
+  color:var(--muted)}
+.bars .track{height:12px; background:var(--rule-soft); border-radius:2px; overflow:hidden}
+.bars .fill{display:block; height:100%; background:var(--late); opacity:.75}
+.bars li.partial .fill{opacity:.4}
+.bars .val{text-align:right; color:var(--ink)}
+
+@media (max-width:560px){
+  .legs{gap:12px}
+  .leg{flex:1 1 100%}
+  .result{padding:20px 18px}
+}
+
 footer{padding:40px 0 0; font-size:15px; color:var(--muted)}
 footer p{max-width:64ch}
 .stamp{font-family:"IBM Plex Mono",monospace; font-size:13px}
@@ -187,6 +230,30 @@ footer p{max-width:64ch}
   </div>
 </section>
 
+<section aria-labelledby="commute-h">
+  <h2 id="commute-h">Your whole commute</h2>
+  <p class="note">Most people don't ride one line. Pick the legs you actually take and the figures compound, because every leg is another chance to be late.</p>
+
+  <div class="legs" id="legs">
+    <div class="leg">
+      <label for="leg1">First leg</label>
+      <select id="leg1"></select>
+    </div>
+    <div class="leg">
+      <label for="leg2">Then transfer to</label>
+      <select id="leg2"></select>
+    </div>
+    <div class="leg">
+      <label for="leg3">Then</label>
+      <select id="leg3"></select>
+    </div>
+  </div>
+
+  <div class="result" id="commute" aria-live="polite"></div>
+
+  <p class="note" id="commute-caveat"></p>
+</section>
+
 <section aria-labelledby="all-h">
   <h2 id="all-h">Every line, worst to best</h2>
   <p class="note">Ranked by the figure riders actually experience, not the adjusted one.</p>
@@ -218,13 +285,22 @@ const MONTHS=["JANUARY","FEBRUARY","MARCH","APRIL","MAY","JUNE","JULY","AUGUST",
 const SHORT=["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
 let ROWS=[], LINES=[], WINDOW=[], current=null;
 
-const mean=a=>a.reduce((s,x)=>s+x,0)/a.length;
 const fmt=n=>n==null?"—":n.toFixed(1)+"%";
 
+// Weighted: on-time trains divided by trains run, NOT the average of the
+// monthly percentages. Those differ whenever months carry different train
+// volumes, and a short February should not count as much as a busy March.
+// scripts/verify_otp.py computes it the same way, so the two agree.
+function rate(line,version,window){
+  const sel=ROWS.filter(r=>r.line===line&&r.version===version&&window.includes(r.key));
+  if(!sel.length) return null;
+  let c=0,t=0;
+  for(const r of sel){ if(!isNaN(r.count)&&!isNaN(r.total)){ c+=r.count; t+=r.total; } }
+  return t?100*c/t:null;
+}
+
 function stats(line){
-  const pick=v=>ROWS.filter(r=>r.line===line&&r.version===v&&WINDOW.includes(r.key)).map(r=>r.pct);
-  const all=pick("all_causes"), adj=pick("amtrak_adjusted");
-  return {line, all:all.length?mean(all):null, adj:adj.length?mean(adj):null};
+  return {line, all:rate(line,"all_causes",WINDOW), adj:rate(line,"amtrak_adjusted",WINDOW)};
 }
 
 function series(line,version){
@@ -320,6 +396,114 @@ function drawMeans(line,s){
     +'A train five minutes behind is on time by this measure and late by yours.</p>';
 }
 
+/* ---------- route builder ---------- */
+
+const NONE="\u2014";
+const yearKeys=y=>Array.from({length:12},(_,i)=>y*12+i+1);
+
+function commuteLegs(){
+  return ["leg1","leg2","leg3"]
+    .map(id=>document.getElementById(id).value)
+    .filter(v=>v&&v!==NONE);
+}
+
+// Multiply the legs together. Returns null if any leg has no figure at all,
+// because a commute is only as knowable as its least-documented leg.
+function compound(legs,version,window){
+  let p=1;
+  for(const l of legs){
+    const r=rate(l,version,window);
+    if(r==null) return null;
+    p*=r/100;
+  }
+  return p*100;
+}
+
+function monthsPresent(line,window){
+  return new Set(ROWS.filter(r=>r.line===line&&r.version==="all_causes"
+    &&window.includes(r.key)).map(r=>r.m)).size;
+}
+
+function drawCommute(){
+  const legs=commuteLegs();
+  const host=document.getElementById("commute");
+  const cav=document.getElementById("commute-caveat");
+
+  if(!legs.length){
+    host.innerHTML='<p class="empty">Pick at least one line.</p>';
+    cav.textContent=""; return;
+  }
+
+  const all=compound(legs,"all_causes",WINDOW);
+  const adj=compound(legs,"amtrak_adjusted",WINDOW);
+
+  if(all==null){
+    const missing=legs.filter(l=>rate(l,"all_causes",WINDOW)==null);
+    host.innerHTML='<p class="empty">No rider-experienced figure has been published for '
+      +missing.join(" or ")+', so this commute cannot be built from what riders felt. '
+      +'Using NJ Transit&rsquo;s adjusted figures for every leg gives <b>'+fmt(adj)+'</b>.</p>';
+    cav.textContent=""; return;
+  }
+
+  const lateShare=100-all;
+  const oneIn=Math.round(100/lateShare);
+  const roundTrip=all*all/100;
+  const badDays=Math.round((100-roundTrip)/100*250);
+
+  let out=
+    '<p class="big">'+fmt(all)+'</p>'
+    +'<p class="big-cap">of journeys have every leg on time'
+    +(legs.length>1?', on a '+legs.length+'-leg trip':'')
+    +'. About one in '+oneIn+' has a late leg.</p>';
+
+  out+='<ul class="breakdown">';
+  legs.forEach((l,i)=>{
+    out+='<li><span>Leg '+(i+1)+' &middot; '+l+'</span>'
+       +'<span class="v">'+fmt(rate(l,"all_causes",WINDOW))+'</span></li>';
+  });
+  out+='<li class="total"><span>All legs on time</span><span class="v">'+fmt(all)+'</span></li>';
+  out+='<li><span>Round trip, every leg on time <span class="who">('+(legs.length*2)+' legs)</span></span>'
+     +'<span class="v">'+fmt(roundTrip)+'</span></li>';
+  out+='<li><span class="who">On a 250-day commuting year, days with at least one late train</span>'
+     +'<span class="v">'+badDays+'</span></li>';
+  if(adj!=null){
+    out+='<li><span class="who">Same commute, using NJ Transit&rsquo;s Amtrak-adjusted figures</span>'
+       +'<span class="v">'+fmt(adj)+'</span></li>';
+  }
+  out+='</ul>';
+
+  // Year by year. Bars show the share of journeys with a late leg, so they
+  // start at zero and the lengths mean what they look like they mean.
+  const years=[...new Set(ROWS.map(r=>r.y))].sort((a,b)=>a-b).slice(-6);
+  const series=years.map(y=>{
+    const w=yearKeys(y);
+    const v=compound(legs,"all_causes",w);
+    return v==null?null:{y, late:100-v, partial:monthsPresent(legs[0],w)<12};
+  }).filter(Boolean);
+
+  if(series.length>1){
+    const max=Math.max.apply(null,series.map(s=>s.late));
+    out+='<p class="eyebrow" style="margin:26px 0 0">Journeys with a late leg, by year</p><ul class="bars">';
+    series.forEach(s=>{
+      out+='<li'+(s.partial?' class="partial"':'')+'><span>'+s.y+'</span>'
+         +'<span class="track"><i class="fill" style="width:'
+         +Math.max(2,(s.late/max)*100).toFixed(1)+'%"></i></span>'
+         +'<span class="val">'+s.late.toFixed(1)+'%</span></li>';
+    });
+    out+='</ul>';
+    const part=series.filter(s=>s.partial).map(s=>s.y);
+    if(part.length) out+='<p class="note" style="margin-top:10px">'
+      +part.join(", ")+' covers part of the year only.</p>';
+  }
+
+  host.innerHTML=out;
+
+  cav.innerHTML='These figures are multiplied together, which treats each leg as '
+    +'independent. They aren&rsquo;t entirely: one line running late can hold up another, '
+    +'and a missed connection costs more than a late train. Read this as the shape of the '
+    +'exposure rather than an exact probability.';
+}
+
 function select(line){
   current=line;
   document.querySelectorAll("#lines button").forEach(b=>
@@ -344,6 +528,23 @@ fetch("data/otp.json").then(r=>r.json()).then(d=>{
     '<li><button type="button" data-line="'+l+'" aria-pressed="false">'+l+'</button></li>').join("");
   document.querySelectorAll("#lines button").forEach(b=>
     b.addEventListener("click",()=>select(b.dataset.line)));
+
+  // Route builder. Leg 1 must be a line; legs 2 and 3 can be empty.
+  const opts=LINES.map(l=>'<option value="'+l+'">'+l+'</option>').join("");
+  const blank='<option value="'+NONE+'">'+NONE+' none</option>';
+  document.getElementById("leg1").innerHTML=opts;
+  document.getElementById("leg2").innerHTML=blank+opts;
+  document.getElementById("leg3").innerHTML=blank+opts;
+  const pick=(id,want,fallback)=>{
+    const el=document.getElementById(id);
+    el.value=LINES.includes(want)?want:fallback;
+  };
+  pick("leg1","Raritan Valley",LINES[0]);
+  pick("leg2","Northeast Corridor",NONE);
+  document.getElementById("leg3").value=NONE;
+  ["leg1","leg2","leg3"].forEach(id=>
+    document.getElementById(id).addEventListener("change",drawCommute));
+  drawCommute();
   const w=WINDOW[WINDOW.length-1], wy=Math.floor((w-1)/12), wm=w-wy*12;
   document.getElementById("stamp").textContent=
     "Data through "+SHORT[wm-1]+" "+wy+". Refreshed automatically every Monday. Last checked "
