@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Kieran Yuen — data analyst</title>
-<meta name="description" content="Data analyst. I build small tools that get data to the people who need it.">
+<title>Kieran Yuen — nonprofit data operations</title>
+<meta name="description" content="Data analyst working in nonprofit data operations — the last mile between the system that holds the data and the person who has to act on it.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
@@ -86,7 +86,7 @@
     padding:72px 0 0;
   }
 
-  .lede{
+  .lede{max-width:18ch;
     font-family:"Bricolage Grotesque",system-ui,sans-serif;
     font-optical-sizing:auto;
     font-weight:800;
@@ -297,6 +297,7 @@
 <body>
 
 <div class="wrap">
+  
   <nav class="sitenav" aria-label="Site">
     <a class="brand" href="/">Kieran Yuen</a>
     <ul>
@@ -307,15 +308,15 @@
     </ul>
   </nav>
 
-
   <header class="masthead">
 
-    <h1 class="lede">I build the tools that get data to the people who need it.</h1>
+    <h1 class="lede">I build the last mile of nonprofit data.</h1>
 
     <p class="standfirst">
-      Data analyst at Student Leadership Network. I work mostly in
-      <strong>Python, SQL, BigQuery, Salesforce, and Google Apps Script</strong> &mdash; and I build
-      small things on the side that I actually use every day.
+      Data analyst at Student Leadership Network. The part I care about is what happens after the
+      data is correct &mdash; getting it in front of the person who has to act on it, in a form
+      they will actually open. <strong>Ten or so internal web apps so far</strong>, each one built
+      from a specific business problem, several in weekly use by my team.
     </p>
   </header>
 
@@ -325,7 +326,40 @@
   </div>
 
   <section class="band" id="work">
-    <p class="eyebrow">Latest build</p>
+    <p class="eyebrow">Nonprofit data operations</p>
+
+    <article class="feature">
+      <h2 class="feature__name"><a href="weekly-reporting.html">Weekly reporting for 26 schools, without anyone logging in</a></h2>
+      <p class="feature__meta">
+        case study &middot; salesforce &middot; apps script &middot; bigquery
+      </p>
+      <p class="feature__body">
+        An entire leadership layer was pulling its own numbers out of Salesforce, one person at a
+        time. I replaced that with an individualised report that arrives in their inbox every
+        Monday morning &mdash; built around the fact that the people who most needed the data were
+        never going to log in to get it.
+      </p>
+
+      <dl class="figures">
+        <div>
+          <dt>Schools reporting weekly</dt>
+          <dd>26</dd>
+        </div>
+        <div>
+          <dt>Logins required</dt>
+          <dd>None</dd>
+        </div>
+      </dl>
+
+      <p class="feature__note">
+        Includes the decisions that mattered &mdash; among them throwing out a weighted priority
+        score, because nobody trusts a number they cannot reason about.
+      </p>
+    </article>
+  </section>
+
+  <section class="band">
+    <p class="eyebrow">Built in the open</p>
 
     <article class="feature">
       <h2 class="feature__name"><a href="trains/">How late is your NJ Transit train?</a></h2>
@@ -333,10 +367,10 @@
         <span class="dot dot--live"></span>live &middot; python &middot; github actions &middot; public data
       </p>
       <p class="feature__body">
-        NJ Transit publishes two on-time figures for every rail line. One counts every late train.
-        The other removes delays the agency attributes to Amtrak, and that is the one they lead
-        with. This reads both files every week and puts them side by side, for all eight lines,
-        back to 2017.
+        A scheduled pipeline over NJ Transit's published performance data. It reads eighteen files
+        every week from a source that intermittently fails, merges rather than rebuilds so a failed
+        download can never delete history, and publishes figures that anyone can recompute. The
+        work I do at my job I can only describe. This one you can read.
       </p>
 
       <dl class="figures">
@@ -351,9 +385,9 @@
       </dl>
 
       <p class="feature__note">
-        Northeast Corridor, the twelve months to June 2026. System-wide over the same period was
-        89.1%. Every number on the page is recomputed from NJ Transit's own files by a script
-        anyone can run.
+        Northeast Corridor, the twelve months to June 2026. NJ Transit publishes both figures and
+        leads with the second. Every number here is recomputed from their own files by a
+        verification script that fails loudly if any published figure drifts.
       </p>
     </article>
   </section>
@@ -377,26 +411,21 @@
     </ul>
   </section>
 
-  <section class="band">
-    <p class="eyebrow">Case study</p>
-    <p><a class="contact-link" href="weekly-reporting.html">Weekly reporting for 26 schools</a></p>
-  </section>
-
   <section class="band" id="about">
     <p class="eyebrow">About</p>
     <div class="prose">
       <p>
         I've been building things in spreadsheets since I was twenty. The tools got bigger; the
-        instinct didn't. What I care about most is the last mile of a data problem &mdash; a
-        dashboard nobody can reach is the same as no dashboard. The work I'm proudest of is rarely
-        the cleverest query. It's the thing that finally put the right numbers in front of the
-        person who needed them, in a format they'd actually open.
+        instinct didn't. What I keep running into in nonprofit work is the same gap &mdash; the
+        data exists, it's even correct, and it still isn't reaching the person who has to make a
+        decision with it. That last stretch is the work I'm best at and the work I find most
+        worth doing.
       </p>
       <p>
-        The side projects are the same instinct at small scale. I notice a bit of friction in my own
-        week, and instead of tolerating it I go build the smallest thing that removes it. Most of
-        them are a Google Sheet, a script, and a trigger. They're still running, which is the only
-        review that counts.
+        The side projects are the same instinct at small scale. I notice a bit of friction in my
+        own week, and instead of tolerating it I go build the smallest thing that removes it. Most
+        of them are a Google Sheet, a script, and a trigger. They're still running, which is the
+        only review that counts.
       </p>
     </div>
   </section>
