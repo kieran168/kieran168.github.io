@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-08-05T03:13:59+00:00",
+  "generated_at": "2026-08-10T11:44:13+00:00",
   "source": "https://www.njtransit.com/performance-data-download",
   "note": "NJ TRANSIT counts a train as on time if it operates within 6 minutes of its published schedule. Published monthly under NJ Executive Order 80.",
   "lines": {
@@ -14,146 +14,142 @@
     "RARV": "Raritan Valley"
   },
   "unavailable": [
-    "North Jersey Coast/all_causes: HTTP Error 404: Not Found",
-    "Raritan Valley/all_causes: HTTP Error 404: Not Found"
+    "Montclair-Boonton/all_causes: HTTP Error 404: Not Found"
   ],
   "stale": [
-    "Raritan Valley/all_causes: kept the copy from an earlier run"
+    "Montclair-Boonton/all_causes: kept the copy from 2026-08-05"
   ],
-  "missing": [
-    "North Jersey Coast/all_causes: HTTP Error 404: Not Found"
-  ],
+  "missing": [],
   "sources": {
     "SYSTEM": {
       "all_causes": {
         "status": "fresh",
         "rows": 114,
-        "last_success": "2026-08-05T03:13:59+00:00",
-        "checked_at": "2026-08-05T03:13:59+00:00"
+        "last_success": "2026-08-10T11:44:13+00:00",
+        "checked_at": "2026-08-10T11:44:13+00:00"
       },
       "amtrak_adjusted": {
         "status": "fresh",
         "rows": 114,
-        "last_success": "2026-08-05T03:13:59+00:00",
-        "checked_at": "2026-08-05T03:13:59+00:00"
+        "last_success": "2026-08-10T11:44:13+00:00",
+        "checked_at": "2026-08-10T11:44:13+00:00"
       }
     },
     "ACRL": {
       "all_causes": {
         "status": "fresh",
         "rows": 107,
-        "last_success": "2026-08-05T03:13:59+00:00",
-        "checked_at": "2026-08-05T03:13:59+00:00"
+        "last_success": "2026-08-10T11:44:13+00:00",
+        "checked_at": "2026-08-10T11:44:13+00:00"
       },
       "amtrak_adjusted": {
         "status": "fresh",
         "rows": 107,
-        "last_success": "2026-08-05T03:13:59+00:00",
-        "checked_at": "2026-08-05T03:13:59+00:00"
+        "last_success": "2026-08-10T11:44:13+00:00",
+        "checked_at": "2026-08-10T11:44:13+00:00"
       }
     },
     "MNBN": {
       "all_causes": {
         "status": "fresh",
         "rows": 114,
-        "last_success": "2026-08-05T03:13:59+00:00",
-        "checked_at": "2026-08-05T03:13:59+00:00"
+        "last_success": "2026-08-10T11:44:13+00:00",
+        "checked_at": "2026-08-10T11:44:13+00:00"
       },
       "amtrak_adjusted": {
         "status": "fresh",
         "rows": 114,
-        "last_success": "2026-08-05T03:13:59+00:00",
-        "checked_at": "2026-08-05T03:13:59+00:00"
+        "last_success": "2026-08-10T11:44:13+00:00",
+        "checked_at": "2026-08-10T11:44:13+00:00"
       }
     },
     "BNTN": {
       "all_causes": {
-        "status": "fresh",
+        "status": "carried",
         "rows": 114,
         "last_success": "2026-08-05T03:13:59+00:00",
-        "checked_at": "2026-08-05T03:13:59+00:00"
+        "checked_at": "2026-08-10T11:44:13+00:00",
+        "last_error": "HTTP Error 404: Not Found"
       },
       "amtrak_adjusted": {
         "status": "fresh",
         "rows": 114,
-        "last_success": "2026-08-05T03:13:59+00:00",
-        "checked_at": "2026-08-05T03:13:59+00:00"
+        "last_success": "2026-08-10T11:44:13+00:00",
+        "checked_at": "2026-08-10T11:44:13+00:00"
       }
     },
     "MNE": {
       "all_causes": {
         "status": "fresh",
         "rows": 114,
-        "last_success": "2026-08-05T03:13:59+00:00",
-        "checked_at": "2026-08-05T03:13:59+00:00"
+        "last_success": "2026-08-10T11:44:13+00:00",
+        "checked_at": "2026-08-10T11:44:13+00:00"
       },
       "amtrak_adjusted": {
         "status": "fresh",
         "rows": 114,
-        "last_success": "2026-08-05T03:13:59+00:00",
-        "checked_at": "2026-08-05T03:13:59+00:00"
+        "last_success": "2026-08-10T11:44:13+00:00",
+        "checked_at": "2026-08-10T11:44:13+00:00"
       }
     },
     "NEC": {
       "all_causes": {
         "status": "fresh",
         "rows": 114,
-        "last_success": "2026-08-05T03:13:59+00:00",
-        "checked_at": "2026-08-05T03:13:59+00:00"
+        "last_success": "2026-08-10T11:44:13+00:00",
+        "checked_at": "2026-08-10T11:44:13+00:00"
       },
       "amtrak_adjusted": {
         "status": "fresh",
         "rows": 114,
-        "last_success": "2026-08-05T03:13:59+00:00",
-        "checked_at": "2026-08-05T03:13:59+00:00"
+        "last_success": "2026-08-10T11:44:13+00:00",
+        "checked_at": "2026-08-10T11:44:13+00:00"
       }
     },
     "NJCL": {
       "all_causes": {
-        "status": "missing",
-        "rows": 0,
-        "last_success": null,
-        "checked_at": "2026-08-05T03:13:59+00:00",
-        "last_error": "HTTP Error 404: Not Found"
+        "status": "fresh",
+        "rows": 114,
+        "last_success": "2026-08-10T11:44:13+00:00",
+        "checked_at": "2026-08-10T11:44:13+00:00"
       },
       "amtrak_adjusted": {
         "status": "fresh",
         "rows": 114,
-        "last_success": "2026-08-05T03:13:59+00:00",
-        "checked_at": "2026-08-05T03:13:59+00:00"
+        "last_success": "2026-08-10T11:44:13+00:00",
+        "checked_at": "2026-08-10T11:44:13+00:00"
       }
     },
     "PASC": {
       "all_causes": {
         "status": "fresh",
         "rows": 114,
-        "last_success": "2026-08-05T03:13:59+00:00",
-        "checked_at": "2026-08-05T03:13:59+00:00"
+        "last_success": "2026-08-10T11:44:13+00:00",
+        "checked_at": "2026-08-10T11:44:13+00:00"
       },
       "amtrak_adjusted": {
         "status": "fresh",
         "rows": 114,
-        "last_success": "2026-08-05T03:13:59+00:00",
-        "checked_at": "2026-08-05T03:13:59+00:00"
+        "last_success": "2026-08-10T11:44:13+00:00",
+        "checked_at": "2026-08-10T11:44:13+00:00"
       }
     },
     "RARV": {
       "all_causes": {
-        "status": "carried",
+        "status": "fresh",
         "rows": 114,
-        "last_success": null,
-        "checked_at": "2026-08-05T03:13:59+00:00",
-        "last_error": "HTTP Error 404: Not Found"
+        "last_success": "2026-08-10T11:44:13+00:00",
+        "checked_at": "2026-08-10T11:44:13+00:00"
       },
       "amtrak_adjusted": {
         "status": "fresh",
         "rows": 114,
-        "last_success": "2026-08-05T03:13:59+00:00",
-        "checked_at": "2026-08-05T03:13:59+00:00"
+        "last_success": "2026-08-10T11:44:13+00:00",
+        "checked_at": "2026-08-10T11:44:13+00:00"
       }
     }
   },
-  "record_count": 1924,
+  "record_count": 2038,
   "records": [
     {
       "line_code": "SYSTEM",
@@ -15048,6 +15044,1260 @@
       "COUNT": "3174",
       "TOTAL": "3385",
       "PERCENTAGE": "93.8"
+    },
+    {
+      "line_code": "NJCL",
+      "line": "North Jersey Coast",
+      "version": "all_causes",
+      "YEAR": "2017",
+      "MONTH": "APRIL",
+      "LINE": "North Jersey Coast Line",
+      "COUNT": "2469",
+      "TOTAL": "2863",
+      "PERCENTAGE": "86.2"
+    },
+    {
+      "line_code": "NJCL",
+      "line": "North Jersey Coast",
+      "version": "all_causes",
+      "YEAR": "2017",
+      "MONTH": "AUGUST",
+      "LINE": "North Jersey Coast Line",
+      "COUNT": "3125",
+      "TOTAL": "3381",
+      "PERCENTAGE": "92.4"
+    },
+    {
+      "line_code": "NJCL",
+      "line": "North Jersey Coast",
+      "version": "all_causes",
+      "YEAR": "2017",
+      "MONTH": "DECEMBER",
+      "LINE": "North Jersey Coast Line",
+      "COUNT": "2721",
+      "TOTAL": "3036",
+      "PERCENTAGE": "89.6"
+    },
+    {
+      "line_code": "NJCL",
+      "line": "North Jersey Coast",
+      "version": "all_causes",
+      "YEAR": "2017",
+      "MONTH": "FEBRUARY",
+      "LINE": "North Jersey Coast Line",
+      "COUNT": "2554",
+      "TOTAL": "2778",
+      "PERCENTAGE": "91.9"
+    },
+    {
+      "line_code": "NJCL",
+      "line": "North Jersey Coast",
+      "version": "all_causes",
+      "YEAR": "2017",
+      "MONTH": "JANUARY",
+      "LINE": "North Jersey Coast Line",
+      "COUNT": "2808",
+      "TOTAL": "3035",
+      "PERCENTAGE": "92.5"
+    },
+    {
+      "line_code": "NJCL",
+      "line": "North Jersey Coast",
+      "version": "all_causes",
+      "YEAR": "2017",
+      "MONTH": "JULY",
+      "LINE": "North Jersey Coast Line",
+      "COUNT": "3021",
+      "TOTAL": "3311",
+      "PERCENTAGE": "91.2"
+    },
+    {
+      "line_code": "NJCL",
+      "line": "North Jersey Coast",
+      "version": "all_causes",
+      "YEAR": "2017",
+      "MONTH": "JUNE",
+      "LINE": "North Jersey Coast Line",
+      "COUNT": "2589",
+      "TOTAL": "3075",
+      "PERCENTAGE": "84.2"
+    },
+    {
+      "line_code": "NJCL",
+      "line": "North Jersey Coast",
+      "version": "all_causes",
+      "YEAR": "2017",
+      "MONTH": "MARCH",
+      "LINE": "North Jersey Coast Line",
+      "COUNT": "2870",
+      "TOTAL": "3073",
+      "PERCENTAGE": "93.4"
+    },
+    {
+      "line_code": "NJCL",
+      "line": "North Jersey Coast",
+      "version": "all_causes",
+      "YEAR": "2017",
+      "MONTH": "MAY",
+      "LINE": "North Jersey Coast Line",
+      "COUNT": "2585",
+      "TOTAL": "3149",
+      "PERCENTAGE": "82.1"
+    },
+    {
+      "line_code": "NJCL",
+      "line": "North Jersey Coast",
+      "version": "all_causes",
+      "YEAR": "2017",
+      "MONTH": "NOVEMBER",
+      "LINE": "North Jersey Coast Line",
+      "COUNT": "2708",
+      "TOTAL": "3008",
+      "PERCENTAGE": "90"
+    },
+    {
+      "line_code": "NJCL",
+      "line": "North Jersey Coast",
+      "version": "all_causes",
+      "YEAR": "2017",
+      "MONTH": "OCTOBER",
+      "LINE": "North Jersey Coast Line",
+      "COUNT": "2713",
+      "TOTAL": "3112",
+      "PERCENTAGE": "87.2"
+    },
+    {
+      "line_code": "NJCL",
+      "line": "North Jersey Coast",
+      "version": "all_causes",
+      "YEAR": "2017",
+      "MONTH": "SEPTEMBER",
+      "LINE": "North Jersey Coast Line",
+      "COUNT": "2734",
+      "TOTAL": "3056",
+      "PERCENTAGE": "89.5"
+    },
+    {
+      "line_code": "NJCL",
+      "line": "North Jersey Coast",
+      "version": "all_causes",
+      "YEAR": "2018",
+      "MONTH": "APRIL",
+      "LINE": "North Jersey Coast Line",
+      "COUNT": "2766",
+      "TOTAL": "2961",
+      "PERCENTAGE": "93.4"
+    },
+    {
+      "line_code": "NJCL",
+      "line": "North Jersey Coast",
+      "version": "all_causes",
+      "YEAR": "2018",
+      "MONTH": "AUGUST",
+      "LINE": "North Jersey Coast Line",
+      "COUNT": "2808",
+      "TOTAL": "3070",
+      "PERCENTAGE": "91.5"
+    },
+    {
+      "line_code": "NJCL",
+      "line": "North Jersey Coast",
+      "version": "all_causes",
+      "YEAR": "2018",
+      "MONTH": "DECEMBER",
+      "LINE": "North Jersey Coast Line",
+      "COUNT": "2580",
+      "TOTAL": "2873",
+      "PERCENTAGE": "89.8"
+    },
+    {
+      "line_code": "NJCL",
+      "line": "North Jersey Coast",
+      "version": "all_causes",
+      "YEAR": "2018",
+      "MONTH": "FEBRUARY",
+      "LINE": "North Jersey Coast Line",
+      "COUNT": "2632",
+      "TOTAL": "2759",
+      "PERCENTAGE": "95.4"
+    },
+    {
+      "line_code": "NJCL",
+      "line": "North Jersey Coast",
+      "version": "all_causes",
+      "YEAR": "2018",
+      "MONTH": "JANUARY",
+      "LINE": "North Jersey Coast Line",
+      "COUNT": "2597",
+      "TOTAL": "3059",
+      "PERCENTAGE": "84.9"
+    },
+    {
+      "line_code": "NJCL",
+      "line": "North Jersey Coast",
+      "version": "all_causes",
+      "YEAR": "2018",
+      "MONTH": "JULY",
+      "LINE": "North Jersey Coast Line",
+      "COUNT": "2634",
+      "TOTAL": "3008",
+      "PERCENTAGE": "87.6"
+    },
+    {
+      "line_code": "NJCL",
+      "line": "North Jersey Coast",
+      "version": "all_causes",
+      "YEAR": "2018",
+      "MONTH": "JUNE",
+      "LINE": "North Jersey Coast Line",
+      "COUNT": "2654",
+      "TOTAL": "2893",
+      "PERCENTAGE": "91.7"
+    },
+    {
+      "line_code": "NJCL",
+      "line": "North Jersey Coast",
+      "version": "all_causes",
+      "YEAR": "2018",
+      "MONTH": "MARCH",
+      "LINE": "North Jersey Coast Line",
+      "COUNT": "2750",
+      "TOTAL": "3026",
+      "PERCENTAGE": "90.9"
+    },
+    {
+      "line_code": "NJCL",
+      "line": "North Jersey Coast",
+      "version": "all_causes",
+      "YEAR": "2018",
+      "MONTH": "MAY",
+      "LINE": "North Jersey Coast Line",
+      "COUNT": "2811",
+      "TOTAL": "3109",
+      "PERCENTAGE": "90.4"
+    },
+    {
+      "line_code": "NJCL",
+      "line": "North Jersey Coast",
+      "version": "all_causes",
+      "YEAR": "2018",
+      "MONTH": "NOVEMBER",
+      "LINE": "North Jersey Coast Line",
+      "COUNT": "2293",
+      "TOTAL": "2843",
+      "PERCENTAGE": "80.7"
+    },
+    {
+      "line_code": "NJCL",
+      "line": "North Jersey Coast",
+      "version": "all_causes",
+      "YEAR": "2018",
+      "MONTH": "OCTOBER",
+      "LINE": "North Jersey Coast Line",
+      "COUNT": "2646",
+      "TOTAL": "2995",
+      "PERCENTAGE": "88.3"
+    },
+    {
+      "line_code": "NJCL",
+      "line": "North Jersey Coast",
+      "version": "all_causes",
+      "YEAR": "2018",
+      "MONTH": "SEPTEMBER",
+      "LINE": "North Jersey Coast Line",
+      "COUNT": "2548",
+      "TOTAL": "2827",
+      "PERCENTAGE": "90.1"
+    },
+    {
+      "line_code": "NJCL",
+      "line": "North Jersey Coast",
+      "version": "all_causes",
+      "YEAR": "2019",
+      "MONTH": "APRIL",
+      "LINE": "North Jersey Coast Line",
+      "COUNT": "2650",
+      "TOTAL": "2872",
+      "PERCENTAGE": "92.3"
+    },
+    {
+      "line_code": "NJCL",
+      "line": "North Jersey Coast",
+      "version": "all_causes",
+      "YEAR": "2019",
+      "MONTH": "AUGUST",
+      "LINE": "North Jersey Coast Line",
+      "COUNT": "2673",
+      "TOTAL": "2989",
+      "PERCENTAGE": "89.4"
+    },
+    {
+      "line_code": "NJCL",
+      "line": "North Jersey Coast",
+      "version": "all_causes",
+      "YEAR": "2019",
+      "MONTH": "DECEMBER",
+      "LINE": "North Jersey Coast Line",
+      "COUNT": "2672",
+      "TOTAL": "2904",
+      "PERCENTAGE": "92"
+    },
+    {
+      "line_code": "NJCL",
+      "line": "North Jersey Coast",
+      "version": "all_causes",
+      "YEAR": "2019",
+      "MONTH": "FEBRUARY",
+      "LINE": "North Jersey Coast Line",
+      "COUNT": "2365",
+      "TOTAL": "2627",
+      "PERCENTAGE": "90"
+    },
+    {
+      "line_code": "NJCL",
+      "line": "North Jersey Coast",
+      "version": "all_causes",
+      "YEAR": "2019",
+      "MONTH": "JANUARY",
+      "LINE": "North Jersey Coast Line",
+      "COUNT": "2578",
+      "TOTAL": "2910",
+      "PERCENTAGE": "88.6"
+    },
+    {
+      "line_code": "NJCL",
+      "line": "North Jersey Coast",
+      "version": "all_causes",
+      "YEAR": "2019",
+      "MONTH": "JULY",
+      "LINE": "North Jersey Coast Line",
+      "COUNT": "2481",
+      "TOTAL": "2995",
+      "PERCENTAGE": "82.8"
+    },
+    {
+      "line_code": "NJCL",
+      "line": "North Jersey Coast",
+      "version": "all_causes",
+      "YEAR": "2019",
+      "MONTH": "JUNE",
+      "LINE": "North Jersey Coast Line",
+      "COUNT": "2412",
+      "TOTAL": "2830",
+      "PERCENTAGE": "85.2"
+    },
+    {
+      "line_code": "NJCL",
+      "line": "North Jersey Coast",
+      "version": "all_causes",
+      "YEAR": "2019",
+      "MONTH": "MARCH",
+      "LINE": "North Jersey Coast Line",
+      "COUNT": "2771",
+      "TOTAL": "2920",
+      "PERCENTAGE": "94.9"
+    },
+    {
+      "line_code": "NJCL",
+      "line": "North Jersey Coast",
+      "version": "all_causes",
+      "YEAR": "2019",
+      "MONTH": "MAY",
+      "LINE": "North Jersey Coast Line",
+      "COUNT": "2759",
+      "TOTAL": "2975",
+      "PERCENTAGE": "92.7"
+    },
+    {
+      "line_code": "NJCL",
+      "line": "North Jersey Coast",
+      "version": "all_causes",
+      "YEAR": "2019",
+      "MONTH": "NOVEMBER",
+      "LINE": "North Jersey Coast Line",
+      "COUNT": "2537",
+      "TOTAL": "2809",
+      "PERCENTAGE": "90.3"
+    },
+    {
+      "line_code": "NJCL",
+      "line": "North Jersey Coast",
+      "version": "all_causes",
+      "YEAR": "2019",
+      "MONTH": "OCTOBER",
+      "LINE": "North Jersey Coast Line",
+      "COUNT": "2696",
+      "TOTAL": "2974",
+      "PERCENTAGE": "90.7"
+    },
+    {
+      "line_code": "NJCL",
+      "line": "North Jersey Coast",
+      "version": "all_causes",
+      "YEAR": "2019",
+      "MONTH": "SEPTEMBER",
+      "LINE": "North Jersey Coast Line",
+      "COUNT": "2601",
+      "TOTAL": "2818",
+      "PERCENTAGE": "92.3"
+    },
+    {
+      "line_code": "NJCL",
+      "line": "North Jersey Coast",
+      "version": "all_causes",
+      "YEAR": "2020",
+      "MONTH": "APRIL",
+      "LINE": "North Jersey Coast Line",
+      "COUNT": "2032",
+      "TOTAL": "2148",
+      "PERCENTAGE": "94.6"
+    },
+    {
+      "line_code": "NJCL",
+      "line": "North Jersey Coast",
+      "version": "all_causes",
+      "YEAR": "2020",
+      "MONTH": "AUGUST",
+      "LINE": "North Jersey Coast Line",
+      "COUNT": "2304",
+      "TOTAL": "2685",
+      "PERCENTAGE": "85.8"
+    },
+    {
+      "line_code": "NJCL",
+      "line": "North Jersey Coast",
+      "version": "all_causes",
+      "YEAR": "2020",
+      "MONTH": "DECEMBER",
+      "LINE": "North Jersey Coast Line",
+      "COUNT": "2333",
+      "TOTAL": "2676",
+      "PERCENTAGE": "87.2"
+    },
+    {
+      "line_code": "NJCL",
+      "line": "North Jersey Coast",
+      "version": "all_causes",
+      "YEAR": "2020",
+      "MONTH": "FEBRUARY",
+      "LINE": "North Jersey Coast Line",
+      "COUNT": "2523",
+      "TOTAL": "2697",
+      "PERCENTAGE": "93.5"
+    },
+    {
+      "line_code": "NJCL",
+      "line": "North Jersey Coast",
+      "version": "all_causes",
+      "YEAR": "2020",
+      "MONTH": "JANUARY",
+      "LINE": "North Jersey Coast Line",
+      "COUNT": "2675",
+      "TOTAL": "2911",
+      "PERCENTAGE": "91.9"
+    },
+    {
+      "line_code": "NJCL",
+      "line": "North Jersey Coast",
+      "version": "all_causes",
+      "YEAR": "2020",
+      "MONTH": "JULY",
+      "LINE": "North Jersey Coast Line",
+      "COUNT": "2593",
+      "TOTAL": "2860",
+      "PERCENTAGE": "90.7"
+    },
+    {
+      "line_code": "NJCL",
+      "line": "North Jersey Coast",
+      "version": "all_causes",
+      "YEAR": "2020",
+      "MONTH": "JUNE",
+      "LINE": "North Jersey Coast Line",
+      "COUNT": "2013",
+      "TOTAL": "2102",
+      "PERCENTAGE": "95.8"
+    },
+    {
+      "line_code": "NJCL",
+      "line": "North Jersey Coast",
+      "version": "all_causes",
+      "YEAR": "2020",
+      "MONTH": "MARCH",
+      "LINE": "North Jersey Coast Line",
+      "COUNT": "2553",
+      "TOTAL": "2700",
+      "PERCENTAGE": "94.6"
+    },
+    {
+      "line_code": "NJCL",
+      "line": "North Jersey Coast",
+      "version": "all_causes",
+      "YEAR": "2020",
+      "MONTH": "MAY",
+      "LINE": "North Jersey Coast Line",
+      "COUNT": "2000",
+      "TOTAL": "2158",
+      "PERCENTAGE": "92.7"
+    },
+    {
+      "line_code": "NJCL",
+      "line": "North Jersey Coast",
+      "version": "all_causes",
+      "YEAR": "2020",
+      "MONTH": "NOVEMBER",
+      "LINE": "North Jersey Coast Line",
+      "COUNT": "2319",
+      "TOTAL": "2639",
+      "PERCENTAGE": "87.9"
+    },
+    {
+      "line_code": "NJCL",
+      "line": "North Jersey Coast",
+      "version": "all_causes",
+      "YEAR": "2020",
+      "MONTH": "OCTOBER",
+      "LINE": "North Jersey Coast Line",
+      "COUNT": "2667",
+      "TOTAL": "2808",
+      "PERCENTAGE": "95"
+    },
+    {
+      "line_code": "NJCL",
+      "line": "North Jersey Coast",
+      "version": "all_causes",
+      "YEAR": "2020",
+      "MONTH": "SEPTEMBER",
+      "LINE": "North Jersey Coast Line",
+      "COUNT": "2610",
+      "TOTAL": "2709",
+      "PERCENTAGE": "96.3"
+    },
+    {
+      "line_code": "NJCL",
+      "line": "North Jersey Coast",
+      "version": "all_causes",
+      "YEAR": "2021",
+      "MONTH": "APRIL",
+      "LINE": "North Jersey Coast Line",
+      "COUNT": "2531",
+      "TOTAL": "2716",
+      "PERCENTAGE": "93.2"
+    },
+    {
+      "line_code": "NJCL",
+      "line": "North Jersey Coast",
+      "version": "all_causes",
+      "YEAR": "2021",
+      "MONTH": "AUGUST",
+      "LINE": "North Jersey Coast Line",
+      "COUNT": "2666",
+      "TOTAL": "2894",
+      "PERCENTAGE": "92.1"
+    },
+    {
+      "line_code": "NJCL",
+      "line": "North Jersey Coast",
+      "version": "all_causes",
+      "YEAR": "2021",
+      "MONTH": "DECEMBER",
+      "LINE": "North Jersey Coast Line",
+      "COUNT": "2652",
+      "TOTAL": "2884",
+      "PERCENTAGE": "92"
+    },
+    {
+      "line_code": "NJCL",
+      "line": "North Jersey Coast",
+      "version": "all_causes",
+      "YEAR": "2021",
+      "MONTH": "FEBRUARY",
+      "LINE": "North Jersey Coast Line",
+      "COUNT": "2184",
+      "TOTAL": "2345",
+      "PERCENTAGE": "93.1"
+    },
+    {
+      "line_code": "NJCL",
+      "line": "North Jersey Coast",
+      "version": "all_causes",
+      "YEAR": "2021",
+      "MONTH": "JANUARY",
+      "LINE": "North Jersey Coast Line",
+      "COUNT": "2401",
+      "TOTAL": "2705",
+      "PERCENTAGE": "88.8"
+    },
+    {
+      "line_code": "NJCL",
+      "line": "North Jersey Coast",
+      "version": "all_causes",
+      "YEAR": "2021",
+      "MONTH": "JULY",
+      "LINE": "North Jersey Coast Line",
+      "COUNT": "2654",
+      "TOTAL": "2880",
+      "PERCENTAGE": "92.2"
+    },
+    {
+      "line_code": "NJCL",
+      "line": "North Jersey Coast",
+      "version": "all_causes",
+      "YEAR": "2021",
+      "MONTH": "JUNE",
+      "LINE": "North Jersey Coast Line",
+      "COUNT": "2546",
+      "TOTAL": "2800",
+      "PERCENTAGE": "90.9"
+    },
+    {
+      "line_code": "NJCL",
+      "line": "North Jersey Coast",
+      "version": "all_causes",
+      "YEAR": "2021",
+      "MONTH": "MARCH",
+      "LINE": "North Jersey Coast Line",
+      "COUNT": "2633",
+      "TOTAL": "2814",
+      "PERCENTAGE": "93.6"
+    },
+    {
+      "line_code": "NJCL",
+      "line": "North Jersey Coast",
+      "version": "all_causes",
+      "YEAR": "2021",
+      "MONTH": "MAY",
+      "LINE": "North Jersey Coast Line",
+      "COUNT": "2552",
+      "TOTAL": "2730",
+      "PERCENTAGE": "93.5"
+    },
+    {
+      "line_code": "NJCL",
+      "line": "North Jersey Coast",
+      "version": "all_causes",
+      "YEAR": "2021",
+      "MONTH": "NOVEMBER",
+      "LINE": "North Jersey Coast Line",
+      "COUNT": "2423",
+      "TOTAL": "2708",
+      "PERCENTAGE": "89.5"
+    },
+    {
+      "line_code": "NJCL",
+      "line": "North Jersey Coast",
+      "version": "all_causes",
+      "YEAR": "2021",
+      "MONTH": "OCTOBER",
+      "LINE": "North Jersey Coast Line",
+      "COUNT": "2520",
+      "TOTAL": "2758",
+      "PERCENTAGE": "91.4"
+    },
+    {
+      "line_code": "NJCL",
+      "line": "North Jersey Coast",
+      "version": "all_causes",
+      "YEAR": "2021",
+      "MONTH": "SEPTEMBER",
+      "LINE": "North Jersey Coast Line",
+      "COUNT": "2352",
+      "TOTAL": "2638",
+      "PERCENTAGE": "89.2"
+    },
+    {
+      "line_code": "NJCL",
+      "line": "North Jersey Coast",
+      "version": "all_causes",
+      "YEAR": "2022",
+      "MONTH": "APRIL",
+      "LINE": "North Jersey Coast Line",
+      "COUNT": "2586",
+      "TOTAL": "2772",
+      "PERCENTAGE": "93.3"
+    },
+    {
+      "line_code": "NJCL",
+      "line": "North Jersey Coast",
+      "version": "all_causes",
+      "YEAR": "2022",
+      "MONTH": "AUGUST",
+      "LINE": "North Jersey Coast Line",
+      "COUNT": "2681",
+      "TOTAL": "3002",
+      "PERCENTAGE": "89.3"
+    },
+    {
+      "line_code": "NJCL",
+      "line": "North Jersey Coast",
+      "version": "all_causes",
+      "YEAR": "2022",
+      "MONTH": "DECEMBER",
+      "LINE": "North Jersey Coast Line",
+      "COUNT": "2639",
+      "TOTAL": "2849",
+      "PERCENTAGE": "92.6"
+    },
+    {
+      "line_code": "NJCL",
+      "line": "North Jersey Coast",
+      "version": "all_causes",
+      "YEAR": "2022",
+      "MONTH": "FEBRUARY",
+      "LINE": "North Jersey Coast Line",
+      "COUNT": "2417",
+      "TOTAL": "2570",
+      "PERCENTAGE": "94"
+    },
+    {
+      "line_code": "NJCL",
+      "line": "North Jersey Coast",
+      "version": "all_causes",
+      "YEAR": "2022",
+      "MONTH": "JANUARY",
+      "LINE": "North Jersey Coast Line",
+      "COUNT": "2625",
+      "TOTAL": "2816",
+      "PERCENTAGE": "93.2"
+    },
+    {
+      "line_code": "NJCL",
+      "line": "North Jersey Coast",
+      "version": "all_causes",
+      "YEAR": "2022",
+      "MONTH": "JULY",
+      "LINE": "North Jersey Coast Line",
+      "COUNT": "2664",
+      "TOTAL": "2944",
+      "PERCENTAGE": "90.5"
+    },
+    {
+      "line_code": "NJCL",
+      "line": "North Jersey Coast",
+      "version": "all_causes",
+      "YEAR": "2022",
+      "MONTH": "JUNE",
+      "LINE": "North Jersey Coast Line",
+      "COUNT": "2518",
+      "TOTAL": "2839",
+      "PERCENTAGE": "88.7"
+    },
+    {
+      "line_code": "NJCL",
+      "line": "North Jersey Coast",
+      "version": "all_causes",
+      "YEAR": "2022",
+      "MONTH": "MARCH",
+      "LINE": "North Jersey Coast Line",
+      "COUNT": "2596",
+      "TOTAL": "2906",
+      "PERCENTAGE": "89.3"
+    },
+    {
+      "line_code": "NJCL",
+      "line": "North Jersey Coast",
+      "version": "all_causes",
+      "YEAR": "2022",
+      "MONTH": "MAY",
+      "LINE": "North Jersey Coast Line",
+      "COUNT": "2534",
+      "TOTAL": "2880",
+      "PERCENTAGE": "88"
+    },
+    {
+      "line_code": "NJCL",
+      "line": "North Jersey Coast",
+      "version": "all_causes",
+      "YEAR": "2022",
+      "MONTH": "NOVEMBER",
+      "LINE": "North Jersey Coast Line",
+      "COUNT": "2454",
+      "TOTAL": "2748",
+      "PERCENTAGE": "89.3"
+    },
+    {
+      "line_code": "NJCL",
+      "line": "North Jersey Coast",
+      "version": "all_causes",
+      "YEAR": "2022",
+      "MONTH": "OCTOBER",
+      "LINE": "North Jersey Coast Line",
+      "COUNT": "2553",
+      "TOTAL": "2842",
+      "PERCENTAGE": "89.8"
+    },
+    {
+      "line_code": "NJCL",
+      "line": "North Jersey Coast",
+      "version": "all_causes",
+      "YEAR": "2022",
+      "MONTH": "SEPTEMBER",
+      "LINE": "North Jersey Coast Line",
+      "COUNT": "2550",
+      "TOTAL": "2822",
+      "PERCENTAGE": "90.4"
+    },
+    {
+      "line_code": "NJCL",
+      "line": "North Jersey Coast",
+      "version": "all_causes",
+      "YEAR": "2023",
+      "MONTH": "APRIL",
+      "LINE": "North Jersey Coast Line",
+      "COUNT": "2538",
+      "TOTAL": "2745",
+      "PERCENTAGE": "92.5"
+    },
+    {
+      "line_code": "NJCL",
+      "line": "North Jersey Coast",
+      "version": "all_causes",
+      "YEAR": "2023",
+      "MONTH": "AUGUST",
+      "LINE": "North Jersey Coast Line",
+      "COUNT": "2692",
+      "TOTAL": "3025",
+      "PERCENTAGE": "89"
+    },
+    {
+      "line_code": "NJCL",
+      "line": "North Jersey Coast",
+      "version": "all_causes",
+      "YEAR": "2023",
+      "MONTH": "DECEMBER",
+      "LINE": "North Jersey Coast Line",
+      "COUNT": "2541",
+      "TOTAL": "2837",
+      "PERCENTAGE": "89.6"
+    },
+    {
+      "line_code": "NJCL",
+      "line": "North Jersey Coast",
+      "version": "all_causes",
+      "YEAR": "2023",
+      "MONTH": "FEBRUARY",
+      "LINE": "North Jersey Coast Line",
+      "COUNT": "2372",
+      "TOTAL": "2570",
+      "PERCENTAGE": "92.3"
+    },
+    {
+      "line_code": "NJCL",
+      "line": "North Jersey Coast",
+      "version": "all_causes",
+      "YEAR": "2023",
+      "MONTH": "JANUARY",
+      "LINE": "North Jersey Coast Line",
+      "COUNT": "2649",
+      "TOTAL": "2817",
+      "PERCENTAGE": "94"
+    },
+    {
+      "line_code": "NJCL",
+      "line": "North Jersey Coast",
+      "version": "all_causes",
+      "YEAR": "2023",
+      "MONTH": "JULY",
+      "LINE": "North Jersey Coast Line",
+      "COUNT": "2563",
+      "TOTAL": "2962",
+      "PERCENTAGE": "86.5"
+    },
+    {
+      "line_code": "NJCL",
+      "line": "North Jersey Coast",
+      "version": "all_causes",
+      "YEAR": "2023",
+      "MONTH": "JUNE",
+      "LINE": "North Jersey Coast Line",
+      "COUNT": "2555",
+      "TOTAL": "2863",
+      "PERCENTAGE": "89.2"
+    },
+    {
+      "line_code": "NJCL",
+      "line": "North Jersey Coast",
+      "version": "all_causes",
+      "YEAR": "2023",
+      "MONTH": "MARCH",
+      "LINE": "North Jersey Coast Line",
+      "COUNT": "2560",
+      "TOTAL": "2917",
+      "PERCENTAGE": "87.8"
+    },
+    {
+      "line_code": "NJCL",
+      "line": "North Jersey Coast",
+      "version": "all_causes",
+      "YEAR": "2023",
+      "MONTH": "MAY",
+      "LINE": "North Jersey Coast Line",
+      "COUNT": "2637",
+      "TOTAL": "2933",
+      "PERCENTAGE": "89.9"
+    },
+    {
+      "line_code": "NJCL",
+      "line": "North Jersey Coast",
+      "version": "all_causes",
+      "YEAR": "2023",
+      "MONTH": "NOVEMBER",
+      "LINE": "North Jersey Coast Line",
+      "COUNT": "2508",
+      "TOTAL": "2750",
+      "PERCENTAGE": "91.2"
+    },
+    {
+      "line_code": "NJCL",
+      "line": "North Jersey Coast",
+      "version": "all_causes",
+      "YEAR": "2023",
+      "MONTH": "OCTOBER",
+      "LINE": "North Jersey Coast Line",
+      "COUNT": "2560",
+      "TOTAL": "2896",
+      "PERCENTAGE": "88.4"
+    },
+    {
+      "line_code": "NJCL",
+      "line": "North Jersey Coast",
+      "version": "all_causes",
+      "YEAR": "2023",
+      "MONTH": "SEPTEMBER",
+      "LINE": "North Jersey Coast Line",
+      "COUNT": "2414",
+      "TOTAL": "2813",
+      "PERCENTAGE": "85.8"
+    },
+    {
+      "line_code": "NJCL",
+      "line": "North Jersey Coast",
+      "version": "all_causes",
+      "YEAR": "2024",
+      "MONTH": "APRIL",
+      "LINE": "North Jersey Coast Line",
+      "COUNT": "2488",
+      "TOTAL": "2826",
+      "PERCENTAGE": "88"
+    },
+    {
+      "line_code": "NJCL",
+      "line": "North Jersey Coast",
+      "version": "all_causes",
+      "YEAR": "2024",
+      "MONTH": "AUGUST",
+      "LINE": "North Jersey Coast Line",
+      "COUNT": "2481",
+      "TOTAL": "3008",
+      "PERCENTAGE": "82.5"
+    },
+    {
+      "line_code": "NJCL",
+      "line": "North Jersey Coast",
+      "version": "all_causes",
+      "YEAR": "2024",
+      "MONTH": "DECEMBER",
+      "LINE": "North Jersey Coast Line",
+      "COUNT": "2390",
+      "TOTAL": "2821",
+      "PERCENTAGE": "84.7"
+    },
+    {
+      "line_code": "NJCL",
+      "line": "North Jersey Coast",
+      "version": "all_causes",
+      "YEAR": "2024",
+      "MONTH": "FEBRUARY",
+      "LINE": "North Jersey Coast Line",
+      "COUNT": "2443",
+      "TOTAL": "2693",
+      "PERCENTAGE": "90.7"
+    },
+    {
+      "line_code": "NJCL",
+      "line": "North Jersey Coast",
+      "version": "all_causes",
+      "YEAR": "2024",
+      "MONTH": "JANUARY",
+      "LINE": "North Jersey Coast Line",
+      "COUNT": "2551",
+      "TOTAL": "2867",
+      "PERCENTAGE": "89"
+    },
+    {
+      "line_code": "NJCL",
+      "line": "North Jersey Coast",
+      "version": "all_causes",
+      "YEAR": "2024",
+      "MONTH": "JULY",
+      "LINE": "North Jersey Coast Line",
+      "COUNT": "2464",
+      "TOTAL": "3006",
+      "PERCENTAGE": "82"
+    },
+    {
+      "line_code": "NJCL",
+      "line": "North Jersey Coast",
+      "version": "all_causes",
+      "YEAR": "2024",
+      "MONTH": "JUNE",
+      "LINE": "North Jersey Coast Line",
+      "COUNT": "2229",
+      "TOTAL": "2820",
+      "PERCENTAGE": "79"
+    },
+    {
+      "line_code": "NJCL",
+      "line": "North Jersey Coast",
+      "version": "all_causes",
+      "YEAR": "2024",
+      "MONTH": "MARCH",
+      "LINE": "North Jersey Coast Line",
+      "COUNT": "2607",
+      "TOTAL": "2877",
+      "PERCENTAGE": "90.6"
+    },
+    {
+      "line_code": "NJCL",
+      "line": "North Jersey Coast",
+      "version": "all_causes",
+      "YEAR": "2024",
+      "MONTH": "MAY",
+      "LINE": "North Jersey Coast Line",
+      "COUNT": "2506",
+      "TOTAL": "2933",
+      "PERCENTAGE": "85.4"
+    },
+    {
+      "line_code": "NJCL",
+      "line": "North Jersey Coast",
+      "version": "all_causes",
+      "YEAR": "2024",
+      "MONTH": "NOVEMBER",
+      "LINE": "North Jersey Coast Line",
+      "COUNT": "2355",
+      "TOTAL": "2690",
+      "PERCENTAGE": "87.5"
+    },
+    {
+      "line_code": "NJCL",
+      "line": "North Jersey Coast",
+      "version": "all_causes",
+      "YEAR": "2024",
+      "MONTH": "OCTOBER",
+      "LINE": "North Jersey Coast Line",
+      "COUNT": "2610",
+      "TOTAL": "2933",
+      "PERCENTAGE": "89"
+    },
+    {
+      "line_code": "NJCL",
+      "line": "North Jersey Coast",
+      "version": "all_causes",
+      "YEAR": "2024",
+      "MONTH": "SEPTEMBER",
+      "LINE": "North Jersey Coast Line",
+      "COUNT": "2440",
+      "TOTAL": "2830",
+      "PERCENTAGE": "86.2"
+    },
+    {
+      "line_code": "NJCL",
+      "line": "North Jersey Coast",
+      "version": "all_causes",
+      "YEAR": "2025",
+      "MONTH": "APRIL",
+      "LINE": "North Jersey Coast Line",
+      "COUNT": "2475",
+      "TOTAL": "2874",
+      "PERCENTAGE": "86.1"
+    },
+    {
+      "line_code": "NJCL",
+      "line": "North Jersey Coast",
+      "version": "all_causes",
+      "YEAR": "2025",
+      "MONTH": "AUGUST",
+      "LINE": "North Jersey Coast Line",
+      "COUNT": "2631",
+      "TOTAL": "3047",
+      "PERCENTAGE": "86.3"
+    },
+    {
+      "line_code": "NJCL",
+      "line": "North Jersey Coast",
+      "version": "all_causes",
+      "YEAR": "2025",
+      "MONTH": "DECEMBER",
+      "LINE": "North Jersey Coast Line",
+      "COUNT": "2412",
+      "TOTAL": "2951",
+      "PERCENTAGE": "81.7"
+    },
+    {
+      "line_code": "NJCL",
+      "line": "North Jersey Coast",
+      "version": "all_causes",
+      "YEAR": "2025",
+      "MONTH": "FEBRUARY",
+      "LINE": "North Jersey Coast Line",
+      "COUNT": "2192",
+      "TOTAL": "2589",
+      "PERCENTAGE": "84.7"
+    },
+    {
+      "line_code": "NJCL",
+      "line": "North Jersey Coast",
+      "version": "all_causes",
+      "YEAR": "2025",
+      "MONTH": "JANUARY",
+      "LINE": "North Jersey Coast Line",
+      "COUNT": "2405",
+      "TOTAL": "2869",
+      "PERCENTAGE": "83.8"
+    },
+    {
+      "line_code": "NJCL",
+      "line": "North Jersey Coast",
+      "version": "all_causes",
+      "YEAR": "2025",
+      "MONTH": "JULY",
+      "LINE": "North Jersey Coast Line",
+      "COUNT": "2575",
+      "TOTAL": "3060",
+      "PERCENTAGE": "84.2"
+    },
+    {
+      "line_code": "NJCL",
+      "line": "North Jersey Coast",
+      "version": "all_causes",
+      "YEAR": "2025",
+      "MONTH": "JUNE",
+      "LINE": "North Jersey Coast Line",
+      "COUNT": "2333",
+      "TOTAL": "2912",
+      "PERCENTAGE": "80.1"
+    },
+    {
+      "line_code": "NJCL",
+      "line": "North Jersey Coast",
+      "version": "all_causes",
+      "YEAR": "2025",
+      "MONTH": "MARCH",
+      "LINE": "North Jersey Coast Line",
+      "COUNT": "2509",
+      "TOTAL": "2935",
+      "PERCENTAGE": "85.5"
+    },
+    {
+      "line_code": "NJCL",
+      "line": "North Jersey Coast",
+      "version": "all_causes",
+      "YEAR": "2025",
+      "MONTH": "MAY",
+      "LINE": "North Jersey Coast Line",
+      "COUNT": "2288",
+      "TOTAL": "2607",
+      "PERCENTAGE": "87.8"
+    },
+    {
+      "line_code": "NJCL",
+      "line": "North Jersey Coast",
+      "version": "all_causes",
+      "YEAR": "2025",
+      "MONTH": "NOVEMBER",
+      "LINE": "North Jersey Coast Line",
+      "COUNT": "2434",
+      "TOTAL": "2772",
+      "PERCENTAGE": "87.8"
+    },
+    {
+      "line_code": "NJCL",
+      "line": "North Jersey Coast",
+      "version": "all_causes",
+      "YEAR": "2025",
+      "MONTH": "OCTOBER",
+      "LINE": "North Jersey Coast Line",
+      "COUNT": "2513",
+      "TOTAL": "2977",
+      "PERCENTAGE": "84.4"
+    },
+    {
+      "line_code": "NJCL",
+      "line": "North Jersey Coast",
+      "version": "all_causes",
+      "YEAR": "2025",
+      "MONTH": "SEPTEMBER",
+      "LINE": "North Jersey Coast Line",
+      "COUNT": "2566",
+      "TOTAL": "2923",
+      "PERCENTAGE": "87.8"
+    },
+    {
+      "line_code": "NJCL",
+      "line": "North Jersey Coast",
+      "version": "all_causes",
+      "YEAR": "2026",
+      "MONTH": "APRIL",
+      "LINE": "North Jersey Coast Line",
+      "COUNT": "2333",
+      "TOTAL": "2874",
+      "PERCENTAGE": "81.2"
+    },
+    {
+      "line_code": "NJCL",
+      "line": "North Jersey Coast",
+      "version": "all_causes",
+      "YEAR": "2026",
+      "MONTH": "FEBRUARY",
+      "LINE": "North Jersey Coast Line",
+      "COUNT": "1864",
+      "TOTAL": "2312",
+      "PERCENTAGE": "80.6"
+    },
+    {
+      "line_code": "NJCL",
+      "line": "North Jersey Coast",
+      "version": "all_causes",
+      "YEAR": "2026",
+      "MONTH": "JANUARY",
+      "LINE": "North Jersey Coast Line",
+      "COUNT": "2381",
+      "TOTAL": "2771",
+      "PERCENTAGE": "85.9"
+    },
+    {
+      "line_code": "NJCL",
+      "line": "North Jersey Coast",
+      "version": "all_causes",
+      "YEAR": "2026",
+      "MONTH": "JUNE",
+      "LINE": "North Jersey Coast Line",
+      "COUNT": "2239",
+      "TOTAL": "2801",
+      "PERCENTAGE": "79.9"
+    },
+    {
+      "line_code": "NJCL",
+      "line": "North Jersey Coast",
+      "version": "all_causes",
+      "YEAR": "2026",
+      "MONTH": "MARCH",
+      "LINE": "North Jersey Coast Line",
+      "COUNT": "2103",
+      "TOTAL": "2740",
+      "PERCENTAGE": "76.8"
+    },
+    {
+      "line_code": "NJCL",
+      "line": "North Jersey Coast",
+      "version": "all_causes",
+      "YEAR": "2026",
+      "MONTH": "MAY",
+      "LINE": "North Jersey Coast Line",
+      "COUNT": "2317",
+      "TOTAL": "2933",
+      "PERCENTAGE": "79"
     },
     {
       "line_code": "NJCL",
