@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Summer melt milestone tracker — demo — Kieran Yuen</title>
+<meta name="description" content="A working demo, on synthetic data, of a milestone completion tool built for a college access program.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#F6F7F5; --surface:#FFFFFF; --ink:#16212B; --slate:#5C6B77;
+    --rule:#DCE1DE; --rule-soft:#EBEEEB; --live:#237A52; --build:#B5762A;
+    --flash:rgba(181,118,42,.20);
+  }
+  @media (prefers-color-scheme: dark){
+    :root{
+      --paper:#101619; --surface:#161D21; --ink:#E7EDEA; --slate:#98A5AB;
+      --rule:#283136; --rule-soft:#1D262A; --live:#5FB98C; --build:#D9A65A;
+      --flash:rgba(217,166,90,.22);
+    }
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{margin:0; background:var(--paper); color:var(--ink);
+    font-family:"IBM Plex Sans",system-ui,sans-serif; font-size:16px; line-height:1.6;
+    -webkit-font-smoothing:antialiased}
+  .wrap{max-width:1080px; margin:0 auto; padding:0 24px}
+  a{color:inherit}
+  a:focus-visible, button:focus-visible, select:focus-visible{
+    outline:2px solid var(--live); outline-offset:3px}
+
+  .sitenav{display:flex; flex-wrap:wrap; align-items:baseline; gap:10px 20px;
+    padding:22px 0 0; font-family:"IBM Plex Mono",monospace; font-size:.74rem;
+    letter-spacing:.1em}
+  .sitenav a{text-decoration:none; color:var(--slate)}
+  .sitenav a:hover{color:var(--ink)}
+  .sitenav .brand{color:var(--ink); font-weight:500; text-transform:uppercase;
+    letter-spacing:.14em}
+  .sitenav ul{display:flex; flex-wrap:wrap; gap:18px; list-style:none;
+    margin:0 0 0 auto; padding:0}
+
+  .kicker{font-family:"IBM Plex Mono",monospace; font-size:.72rem; letter-spacing:.16em;
+    text-transform:uppercase; color:var(--slate); margin:52px 0 14px}
+  h1{font-family:"Bricolage Grotesque",system-ui,sans-serif; font-weight:800;
+    font-size:clamp(2rem,5vw,3rem); line-height:1.08; letter-spacing:-.025em;
+    margin:0 0 20px; max-width:20ch}
+  .standfirst{max-width:64ch; color:var(--slate); margin:0 0 26px}
+  .standfirst strong{color:var(--ink); font-weight:500}
+
+  .synthetic{display:flex; gap:12px; align-items:flex-start; max-width:64ch;
+    border:1px solid var(--build); border-radius:3px; padding:14px 16px; margin:0 0 40px;
+    background:var(--flash); font-size:.94rem}
+  .synthetic b{font-family:"IBM Plex Mono",monospace; font-size:.7rem; letter-spacing:.12em;
+    text-transform:uppercase; color:var(--build); display:block; margin:0 0 4px}
+  .synthetic p{margin:0; color:var(--ink)}
+
+  .panel{border:1px solid var(--rule); border-radius:3px; background:var(--surface);
+    padding:22px 22px 8px; margin:0 0 22px}
+  .ctl{margin:0 0 20px}
+  .ctl>label, .grp>label{display:block; font-family:"IBM Plex Mono",monospace;
+    font-size:.68rem; font-weight:500; letter-spacing:.12em; text-transform:uppercase;
+    color:var(--slate); margin:0 0 8px}
+  .chips{display:flex; flex-wrap:wrap; gap:7px}
+  .chip{font:inherit; font-size:.88rem; padding:5px 13px; border-radius:100px; cursor:pointer;
+    background:transparent; color:var(--slate); border:1px solid var(--rule)}
+  .chip:hover{border-color:var(--slate); color:var(--ink)}
+  .chip[aria-pressed="true"]{background:var(--ink); border-color:var(--ink); color:var(--paper)}
+  .grid{display:flex; flex-wrap:wrap; gap:20px 28px; margin:0 0 20px}
+  .grp{flex:0 1 210px}
+  .grp select{width:100%; font:inherit; font-size:.95rem; padding:8px 10px;
+    background:var(--paper); color:var(--ink); border:1px solid var(--rule); border-radius:3px}
+
+  .denom{border-top:1px solid var(--rule-soft); padding:18px 0 20px; margin:0}
+  .switch{display:flex; align-items:flex-start; gap:12px; cursor:pointer}
+  .switch input{margin:3px 0 0; width:17px; height:17px; accent-color:var(--build); flex:none}
+  .switch span{font-size:.94rem}
+  .switch em{display:block; font-style:normal; color:var(--slate); font-size:.88rem; margin-top:3px}
+
+  .readout{font-family:"IBM Plex Mono",monospace; font-size:.8rem; color:var(--slate);
+    border-top:1px solid var(--rule-soft); padding:14px 0; margin:0;
+    display:flex; flex-wrap:wrap; gap:6px 20px}
+  .readout b{color:var(--ink); font-weight:600}
+
+  .scroller{overflow-x:auto; margin:0 0 6px}
+  .hint{display:none; font-family:"IBM Plex Mono",monospace; font-size:.7rem;
+    letter-spacing:.08em; text-transform:uppercase; color:var(--slate); margin:0 0 8px}
+  table{border-collapse:collapse; width:100%; min-width:760px; font-size:.95rem}
+  thead th{font-family:"IBM Plex Mono",monospace; font-size:.68rem; font-weight:500;
+    letter-spacing:.08em; text-transform:uppercase; color:var(--slate);
+    text-align:right; vertical-align:bottom; padding:0 10px 11px; cursor:pointer;
+    border-bottom:1px solid var(--rule); white-space:normal; line-height:1.35}
+  thead th:first-child{text-align:left; padding-left:2px}
+  thead th:hover{color:var(--ink)}
+  thead th .arrow{opacity:0; margin-left:4px}
+  thead th[aria-sort] .arrow{opacity:1; color:var(--ink)}
+  tbody td{padding:11px 10px; text-align:right; border-bottom:1px solid var(--rule-soft);
+    font-variant-numeric:tabular-nums}
+  tbody td:first-child{text-align:left; padding-left:2px; font-weight:500}
+  tbody tr.nested td:first-child{padding-left:22px; font-weight:400; color:var(--slate)}
+  tbody tr.parent td{font-weight:600}
+  .rate{font-family:"IBM Plex Mono",monospace; font-size:1rem; display:block}
+  .sub{font-family:"IBM Plex Mono",monospace; font-size:.72rem; color:var(--slate); display:block}
+  .none{color:var(--slate)}
+  @media (prefers-reduced-motion:no-preference){
+    td.moved .rate{animation:flash 1.1s ease-out}
+  }
+  @keyframes flash{0%{background:var(--flash)}100%{background:transparent}}
+
+  .acts{display:flex; flex-wrap:wrap; gap:10px; padding:16px 0 0;
+    border-top:1px solid var(--rule-soft)}
+  .btn{font:inherit; font-size:.88rem; padding:7px 14px; border-radius:3px; cursor:pointer;
+    background:transparent; color:var(--ink); border:1px solid var(--rule)}
+  .btn:hover{border-color:var(--slate)}
+
+  .notes{max-width:70ch; margin:34px 0 0; padding:0; list-style:none;
+    font-size:.9rem; color:var(--slate)}
+  .notes li{padding:7px 0 7px 18px; position:relative}
+  .notes li::before{content:"\2014"; position:absolute; left:0}
+  .notes b{color:var(--ink); font-weight:500}
+
+  .band{border-top:1px solid var(--rule); margin:52px 0 0; padding:34px 0 0}
+  .band h2{font-family:"Bricolage Grotesque",system-ui,sans-serif; font-weight:600;
+    font-size:1.3rem; letter-spacing:-.015em; margin:0 0 16px}
+  .band p{max-width:66ch; margin:0 0 14px}
+  .band p:last-child{margin-bottom:0}
+  footer{padding:38px 0 64px; font-family:"IBM Plex Mono",monospace; font-size:.72rem;
+    letter-spacing:.06em; color:var(--slate)}
+  footer a{color:var(--slate)}
+
+  @media (max-width:640px){
+    body{font-size:15px}
+    .wrap{padding:0 18px}
+    .hint{display:block}
+    .panel{padding:18px 16px 6px}
+    .grp{flex:1 1 100%}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <nav class="sitenav" aria-label="Site">
+    <a class="brand" href="/">Kieran Yuen</a>
+    <ul>
+      <li><a href="/#work">Work</a></li>
+      <li><a href="/trains/">Trains</a></li>
+      <li><a href="/how-i-build.html">How I work</a></li>
+      <li><a href="/#about">About</a></li>
+    </ul>
+  </nav>
+
+  <p class="kicker">Demo &middot; rebuilt on synthetic data</p>
+  <h1>Who is actually going to show up in the fall?</h1>
+
+  <p class="standfirst">
+    Students who are accepted to college in the spring and never enrol in the fall are said to have
+    &ldquo;melted.&rdquo; Programs track a handful of milestones over the summer to catch it early.
+    This is the tool staff opened to see where a group stood &mdash;
+    <strong>one row per group, one column per milestone</strong>.
+  </p>
+
+  <div class="synthetic">
+    <div>
+      <b>Every number here is invented</b>
+      <p>520 fictional students at eight fictional schools. I rebuilt this from scratch to show
+      how it works; the original runs on real student records and stays where it belongs.</p>
+    </div>
+  </div>
+
+  <div class="panel">
+
+    <div class="grid">
+      <div class="grp">
+        <label for="groupBy">Group by</label>
+        <select id="groupBy">
+          <option value="o">Where they ended up</option>
+          <option value="s">School</option>
+          <option value="r">Region</option>
+          <option value="f">Opt-in form</option>
+        </select>
+      </div>
+      <div class="grp">
+        <label for="thenBy">Then by</label>
+        <select id="thenBy">
+          <option value="">Nothing</option>
+          <option value="o">Where they ended up</option>
+          <option value="s">School</option>
+          <option value="r">Region</option>
+          <option value="f">Opt-in form</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="ctl">
+      <label id="lblOut">Filter: where they ended up</label>
+      <div class="chips" id="fOut" role="group" aria-labelledby="lblOut"></div>
+    </div>
+
+    <div class="ctl">
+      <label id="lblReg">Filter: region</label>
+      <div class="chips" id="fReg" role="group" aria-labelledby="lblReg"></div>
+    </div>
+
+    <div class="denom">
+      <label class="switch">
+        <input type="checkbox" id="incNA">
+        <span>Count &ldquo;not applicable&rdquo; students as incomplete
+          <em>Watch the rates move. Both readings are defensible, which is exactly why this is a
+          control and not a decision I made for you.</em></span>
+      </label>
+    </div>
+
+    <p class="readout" id="readout"></p>
+
+    <p class="hint">Scroll the table sideways for all five milestones</p>
+    <div class="scroller">
+      <table id="tbl">
+        <thead><tr id="head"></tr></thead>
+        <tbody id="body"></tbody>
+      </table>
+    </div>
+
+    <div class="acts">
+      <button class="btn" id="copy">Copy for a spreadsheet</button>
+      <button class="btn" id="dl">Download CSV</button>
+      <button class="btn" id="reset">Reset the view</button>
+    </div>
+  </div>
+
+  <ul class="notes">
+    <li><b>A blank milestone means not started, not missing data.</b> Blank is the resting state in
+      the records system, so treating it as missing would quietly shrink every denominator and
+      inflate every rate.</li>
+    <li><b>&ldquo;Not applicable&rdquo; is excluded by default.</b> Housing carries most of it &mdash;
+      a student living at home does not need it. Including those students changes the pooled rate by
+      several points, so the reading you are looking at is always named above the table.</li>
+    <li><b>The pooled column pools, it does not average.</b> It adds completions across all five
+      milestones rather than averaging five rates, so a group with more eligible milestones carries
+      more weight. That is a real methodological choice with a real consequence, so it is stated
+      rather than left implicit.</li>
+    <li><b>&ldquo;Reached&rdquo; is the share with at least one successful contact logged.</b>
+      Not an average number of contacts. One is the bar.</li>
+    <li><b>A group with nothing eligible sorts to the bottom either way.</b> A group of zero is never
+      the interesting answer, so it does not get the top of the table just because a sort flipped.</li>
+    <li><b>What you copy is what you see.</b> Exports follow the current sort, grouping and filters.</li>
+  </ul>
+
+  <section class="band">
+    <h2>Why it exists</h2>
+    <p>
+      The reporting built into the records system could show these rates, but not honestly. Any
+      milestone can be marked not applicable for an individual student, so each milestone needs its
+      own denominator &mdash; and a report filter applies to the whole report rather than row by row.
+      The only truthful way to do it there was a separate report per milestone, which consumed almost
+      the entire dashboard and left no room for anything else.
+    </p>
+    <p>
+      Worse, none of it could be re-cut. &ldquo;Show me the same rates by where students ended up
+      instead of by school&rdquo; meant building another full set of reports, so in practice people
+      asked me and waited a day. Every control on this page exists to remove one of those waits.
+    </p>
+    <p>
+      Built with Google Apps Script and a single page, reading from a sheet. No student names or
+      record identifiers ever reach the browser &mdash; the server sends counts, so a forwarded link
+      cannot leak anything about a student. This rebuild uses invented data and no server at all.
+    </p>
+  </section>
+
+  <footer>
+    &copy; 2026 Kieran Yuen &middot; <a href="/">back to home</a>
+  </footer>
+</div>
+
+<script>
+const DATA = {"schools":["Alder Park HS","Brightwood HS","Cedar Grove HS","Dunmore HS","Eastgate HS","Fairmount HS","Glenrock HS","Harborview HS"],"regions":["North","Central","South"],"outcomes":["Four-year college","Two-year college","Other pathway","Not recorded"],"milestones":["Financial aid verified","Enrollment deposit paid","Housing secured","Orientation registered","Fall courses registered"],"rows":[{"s":3,"r":1,"o":0,"f":1,"m":["complete","complete","na","complete","complete"],"c":1},{"s":1,"r":0,"o":0,"f":1,"m":["complete","complete","na","complete","incomplete"],"c":1},{"s":0,"r":0,"o":3,"f":1,"m":["complete","incomplete","na","incomplete","incomplete"],"c":1},{"s":4,"r":1,"o":1,"f":1,"m":["complete","complete","na","complete","incomplete"],"c":1},{"s":1,"r":0,"o":3,"f":0,"m":["complete","incomplete","na","incomplete","incomplete"],"c":0},{"s":4,"r":1,"o":0,"f":1,"m":["complete","complete","na","incomplete","complete"],"c":1},{"s":7,"r":2,"o":0,"f":1,"m":["complete","complete","complete","complete","complete"],"c":1},{"s":4,"r":1,"o":1,"f":1,"m":["complete","incomplete","na","complete","complete"],"c":1},{"s":3,"r":1,"o":3,"f":0,"m":["incomplete","complete","incomplete","incomplete","incomplete"],"c":0},{"s":2,"r":0,"o":0,"f":0,"m":["incomplete","complete","incomplete","incomplete","incomplete"],"c":1},{"s":4,"r":1,"o":1,"f":1,"m":["complete","complete","complete","incomplete","complete"],"c":1},{"s":5,"r":1,"o":0,"f":1,"m":["complete","complete","na","complete","incomplete"],"c":1},{"s":4,"r":1,"o":0,"f":1,"m":["complete","incomplete","complete","complete","complete"],"c":0},{"s":4,"r":1,"o":3,"f":0,"m":["incomplete","incomplete","na","incomplete","incomplete"],"c":0},{"s":1,"r":0,"o":0,"f":1,"m":["complete","complete","complete","incomplete","incomplete"],"c":1},{"s":0,"r":0,"o":1,"f":1,"m":["complete","complete","complete","incomplete","incomplete"],"c":1},{"s":6,"r":2,"o":0,"f":1,"m":["complete","complete","na","complete","complete"],"c":1},{"s":3,"r":1,"o":0,"f":1,"m":["complete","complete","na","incomplete","complete"],"c":1},{"s":7,"r":2,"o":1,"f":1,"m":["complete","incomplete","na","complete","complete"],"c":1},{"s":7,"r":2,"o":0,"f":1,"m":["complete","complete","complete","complete","complete"],"c":1},{"s":5,"r":1,"o":0,"f":1,"m":["complete","complete","complete","complete","complete"],"c":1},{"s":4,"r":1,"o":1,"f":1,"m":["complete","complete","complete","complete","incomplete"],"c":1},{"s":0,"r":0,"o":0,"f":1,"m":["complete","complete","complete","complete","complete"],"c":1},{"s":4,"r":1,"o":1,"f":1,"m":["complete","complete","na","incomplete","na"],"c":1},{"s":7,"r":2,"o":3,"f":1,"m":["incomplete","complete","na","complete","incomplete"],"c":1},{"s":2,"r":0,"o":1,"f":1,"m":["complete","complete","complete","complete","incomplete"],"c":1},{"s":5,"r":1,"o":1,"f":1,"m":["incomplete","complete","na","incomplete","incomplete"],"c":0},{"s":1,"r":0,"o":0,"f":1,"m":["complete","complete","incomplete","incomplete","complete"],"c":1},{"s":6,"r":2,"o":0,"f":1,"m":["complete","complete","complete","complete","incomplete"],"c":1},{"s":1,"r":0,"o":1,"f":1,"m":["complete","complete","incomplete","incomplete","complete"],"c":0},{"s":4,"r":1,"o":2,"f":1,"m":["complete","complete","na","complete","incomplete"],"c":1},{"s":4,"r":1,"o":0,"f":1,"m":["na","complete","na","complete","complete"],"c":1},{"s":2,"r":0,"o":1,"f":1,"m":["complete","na","na","complete","incomplete"],"c":1},{"s":1,"r":0,"o":1,"f":1,"m":["na","incomplete","incomplete","incomplete","complete"],"c":0},{"s":6,"r":2,"o":0,"f":1,"m":["complete","complete","complete","complete","complete"],"c":1},{"s":2,"r":0,"o":3,"f":1,"m":["complete","incomplete","na","incomplete","complete"],"c":0},{"s":6,"r":2,"o":0,"f":1,"m":["complete","complete","incomplete","complete","complete"],"c":1},{"s":7,"r":2,"o":0,"f":1,"m":["complete","complete","complete","complete","complete"],"c":1},{"s":6,"r":2,"o":1,"f":1,"m":["complete","complete","na","complete","incomplete"],"c":1},{"s":0,"r":0,"o":0,"f":1,"m":["complete","complete","complete","na","incomplete"],"c":0},{"s":6,"r":2,"o":1,"f":1,"m":["complete","complete","na","complete","complete"],"c":1},{"s":3,"r":1,"o":0,"f":1,"m":["complete","complete","complete","complete","complete"],"c":1},{"s":5,"r":1,"o":3,"f":0,"m":["incomplete","incomplete","na","complete","incomplete"],"c":0},{"s":7,"r":2,"o":0,"f":1,"m":["complete","complete","complete","incomplete","complete"],"c":1},{"s":2,"r":0,"o":2,"f":1,"m":["complete","complete","na","complete","incomplete"],"c":0},{"s":7,"r":2,"o":0,"f":1,"m":["complete","complete","na","complete","complete"],"c":1},{"s":1,"r":0,"o":0,"f":1,"m":["na","complete","na","complete","incomplete"],"c":1},{"s":3,"r":1,"o":3,"f":0,"m":["complete","incomplete","complete","incomplete","complete"],"c":0},{"s":7,"r":2,"o":3,"f":1,"m":["incomplete","complete","na","incomplete","complete"],"c":0},{"s":4,"r":1,"o":2,"f":1,"m":["complete","complete","na","complete","incomplete"],"c":1},{"s":5,"r":1,"o":0,"f":1,"m":["complete","complete","complete","incomplete","complete"],"c":1},{"s":5,"r":1,"o":3,"f":1,"m":["incomplete","incomplete","na","complete","complete"],"c":0},{"s":4,"r":1,"o":1,"f":1,"m":["complete","complete","na","complete","complete"],"c":0},{"s":0,"r":0,"o":0,"f":1,"m":["complete","complete","na","complete","incomplete"],"c":0},{"s":4,"r":1,"o":0,"f":1,"m":["complete","complete","complete","complete","incomplete"],"c":1},{"s":0,"r":0,"o":3,"f":1,"m":["incomplete","incomplete","complete","complete","na"],"c":1},{"s":2,"r":0,"o":0,"f":1,"m":["complete","complete","complete","complete","complete"],"c":1},{"s":2,"r":0,"o":0,"f":1,"m":["complete","complete","na","complete","complete"],"c":1},{"s":2,"r":0,"o":3,"f":0,"m":["incomplete","complete","incomplete","incomplete","incomplete"],"c":1},{"s":1,"r":0,"o":1,"f":1,"m":["complete","incomplete","na","complete","complete"],"c":1},{"s":5,"r":1,"o":3,"f":1,"m":["incomplete","incomplete","na","incomplete","incomplete"],"c":1},{"s":2,"r":0,"o":0,"f":1,"m":["complete","complete","complete","complete","complete"],"c":1},{"s":1,"r":0,"o":0,"f":0,"m":["complete","incomplete","incomplete","complete","complete"],"c":0},{"s":1,"r":0,"o":1,"f":1,"m":["incomplete","complete","na","complete","incomplete"],"c":0},{"s":6,"r":2,"o":1,"f":1,"m":["complete","incomplete","na","complete","complete"],"c":0},{"s":2,"r":0,"o":2,"f":1,"m":["complete","complete","na","complete","incomplete"],"c":1},{"s":4,"r":1,"o":0,"f":1,"m":["complete","complete","incomplete","complete","complete"],"c":1},{"s":6,"r":2,"o":1,"f":1,"m":["complete","complete","complete","incomplete","complete"],"c":0},{"s":7,"r":2,"o":0,"f":0,"m":["complete","incomplete","incomplete","incomplete","complete"],"c":0},{"s":2,"r":0,"o":0,"f":1,"m":["complete","complete","complete","complete","complete"],"c":1},{"s":6,"r":2,"o":0,"f":1,"m":["complete","incomplete","complete","complete","complete"],"c":1},{"s":6,"r":2,"o":3,"f":0,"m":["incomplete","incomplete","incomplete","incomplete","incomplete"],"c":1},{"s":3,"r":1,"o":0,"f":0,"m":["complete","incomplete","complete","incomplete","complete"],"c":1},{"s":2,"r":0,"o":0,"f":1,"m":["complete","complete","na","complete","complete"],"c":1},{"s":3,"r":1,"o":1,"f":1,"m":["complete","complete","na","incomplete","na"],"c":1},{"s":4,"r":1,"o":0,"f":1,"m":["complete","complete","na","complete","incomplete"],"c":1},{"s":1,"r":0,"o":1,"f":1,"m":["complete","complete","na","incomplete","incomplete"],"c":0},{"s":5,"r":1,"o":0,"f":1,"m":["complete","complete","complete","complete","incomplete"],"c":1},{"s":0,"r":0,"o":0,"f":1,"m":["complete","complete","incomplete","complete","incomplete"],"c":1},{"s":0,"r":0,"o":0,"f":0,"m":["incomplete","incomplete","na","na","complete"],"c":0},{"s":0,"r":0,"o":1,"f":1,"m":["complete","complete","na","complete","incomplete"],"c":1},{"s":6,"r":2,"o":1,"f":1,"m":["complete","complete","na","incomplete","complete"],"c":1},{"s":3,"r":1,"o":0,"f":0,"m":["complete","complete","na","incomplete","complete"],"c":1},{"s":5,"r":1,"o":1,"f":1,"m":["complete","complete","incomplete","complete","incomplete"],"c":0},{"s":0,"r":0,"o":0,"f":1,"m":["complete","complete","incomplete","incomplete","complete"],"c":1},{"s":6,"r":2,"o":0,"f":1,"m":["complete","complete","na","complete","complete"],"c":1},{"s":0,"r":0,"o":1,"f":1,"m":["complete","complete","na","complete","complete"],"c":0},{"s":0,"r":0,"o":3,"f":0,"m":["complete","incomplete","incomplete","incomplete","incomplete"],"c":0},{"s":3,"r":1,"o":0,"f":1,"m":["na","complete","complete","complete","incomplete"],"c":1},{"s":3,"r":1,"o":0,"f":1,"m":["complete","incomplete","complete","complete","complete"],"c":1},{"s":3,"r":1,"o":3,"f":0,"m":["complete","incomplete","incomplete","complete","incomplete"],"c":1},{"s":5,"r":1,"o":1,"f":1,"m":["incomplete","complete","complete","na","complete"],"c":0},{"s":4,"r":1,"o":1,"f":0,"m":["incomplete","incomplete","complete","complete","incomplete"],"c":0},{"s":6,"r":2,"o":0,"f":1,"m":["complete","complete","incomplete","complete","complete"],"c":1},{"s":3,"r":1,"o":3,"f":0,"m":["complete","incomplete","incomplete","incomplete","incomplete"],"c":1},{"s":0,"r":0,"o":0,"f":1,"m":["na","complete","na","complete","na"],"c":1},{"s":7,"r":2,"o":0,"f":1,"m":["complete","complete","complete","complete","complete"],"c":1},{"s":5,"r":1,"o":0,"f":1,"m":["complete","complete","complete","complete","complete"],"c":1},{"s":7,"r":2,"o":0,"f":1,"m":["complete","complete","complete","complete","na"],"c":1},{"s":0,"r":0,"o":1,"f":1,"m":["complete","na","na","complete","complete"],"c":0},{"s":3,"r":1,"o":0,"f":1,"m":["incomplete","complete","na","complete","complete"],"c":1},{"s":4,"r":1,"o":1,"f":1,"m":["complete","complete","na","complete","incomplete"],"c":1},{"s":3,"r":1,"o":0,"f":0,"m":["complete","complete","complete","incomplete","incomplete"],"c":0},{"s":7,"r":2,"o":3,"f":0,"m":["incomplete","incomplete","incomplete","incomplete","incomplete"],"c":0},{"s":1,"r":0,"o":3,"f":1,"m":["complete","complete","na","complete","na"],"c":0},{"s":2,"r":0,"o":0,"f":1,"m":["complete","complete","na","complete","complete"],"c":1},{"s":4,"r":1,"o":0,"f":1,"m":["complete","complete","complete","complete","complete"],"c":1},{"s":4,"r":1,"o":0,"f":1,"m":["complete","complete","na","incomplete","complete"],"c":1},{"s":4,"r":1,"o":1,"f":1,"m":["complete","complete","na","complete","complete"],"c":1},{"s":4,"r":1,"o":0,"f":1,"m":["complete","complete","na","na","na"],"c":1},{"s":1,"r":0,"o":1,"f":1,"m":["complete","complete","na","na","incomplete"],"c":1},{"s":1,"r":0,"o":0,"f":0,"m":["complete","incomplete","complete","incomplete","complete"],"c":0},{"s":0,"r":0,"o":3,"f":1,"m":["complete","complete","na","complete","incomplete"],"c":0},{"s":3,"r":1,"o":0,"f":1,"m":["complete","complete","incomplete","complete","complete"],"c":1},{"s":5,"r":1,"o":0,"f":1,"m":["na","complete","na","complete","complete"],"c":1},{"s":0,"r":0,"o":1,"f":1,"m":["complete","complete","complete","complete","complete"],"c":1},{"s":0,"r":0,"o":0,"f":1,"m":["complete","complete","na","complete","incomplete"],"c":1},{"s":4,"r":1,"o":0,"f":1,"m":["complete","complete","incomplete","complete","incomplete"],"c":1},{"s":3,"r":1,"o":2,"f":1,"m":["complete","complete","na","incomplete","complete"],"c":0},{"s":6,"r":2,"o":0,"f":0,"m":["complete","complete","incomplete","complete","complete"],"c":0},{"s":6,"r":2,"o":0,"f":0,"m":["complete","complete","na","complete","incomplete"],"c":0},{"s":0,"r":0,"o":2,"f":1,"m":["complete","complete","na","incomplete","incomplete"],"c":1},{"s":5,"r":1,"o":1,"f":1,"m":["complete","incomplete","complete","complete","complete"],"c":1},{"s":6,"r":2,"o":3,"f":0,"m":["complete","complete","incomplete","complete","incomplete"],"c":0},{"s":4,"r":1,"o":1,"f":1,"m":["incomplete","complete","na","complete","complete"],"c":0},{"s":0,"r":0,"o":0,"f":1,"m":["complete","complete","na","complete","complete"],"c":1},{"s":0,"r":0,"o":2,"f":1,"m":["incomplete","incomplete","complete","complete","incomplete"],"c":1},{"s":6,"r":2,"o":2,"f":1,"m":["complete","incomplete","na","complete","incomplete"],"c":1},{"s":6,"r":2,"o":3,"f":0,"m":["complete","incomplete","incomplete","incomplete","incomplete"],"c":0},{"s":6,"r":2,"o":2,"f":1,"m":["incomplete","complete","na","complete","incomplete"],"c":1},{"s":3,"r":1,"o":1,"f":1,"m":["complete","complete","na","incomplete","incomplete"],"c":1},{"s":5,"r":1,"o":0,"f":1,"m":["complete","complete","na","complete","incomplete"],"c":1},{"s":4,"r":1,"o":0,"f":1,"m":["complete","complete","complete","complete","complete"],"c":1},{"s":3,"r":1,"o":3,"f":0,"m":["incomplete","incomplete","complete","complete","incomplete"],"c":0},{"s":3,"r":1,"o":0,"f":1,"m":["complete","complete","complete","complete","complete"],"c":1},{"s":1,"r":0,"o":0,"f":1,"m":["complete","incomplete","complete","complete","incomplete"],"c":1},{"s":5,"r":1,"o":3,"f":0,"m":["incomplete","incomplete","complete","incomplete","complete"],"c":0},{"s":4,"r":1,"o":1,"f":0,"m":["complete","incomplete","na","incomplete","complete"],"c":1},{"s":7,"r":2,"o":0,"f":1,"m":["complete","complete","na","incomplete","complete"],"c":1},{"s":4,"r":1,"o":0,"f":1,"m":["incomplete","complete","na","complete","complete"],"c":1},{"s":7,"r":2,"o":3,"f":0,"m":["complete","incomplete","incomplete","complete","incomplete"],"c":1},{"s":1,"r":0,"o":3,"f":1,"m":["complete","incomplete","complete","complete","complete"],"c":0},{"s":0,"r":0,"o":0,"f":1,"m":["incomplete","complete","complete","incomplete","complete"],"c":1},{"s":3,"r":1,"o":0,"f":1,"m":["complete","complete","complete","complete","complete"],"c":1},{"s":4,"r":1,"o":1,"f":1,"m":["incomplete","complete","na","incomplete","incomplete"],"c":1},{"s":1,"r":0,"o":0,"f":0,"m":["incomplete","incomplete","na","complete","incomplete"],"c":1},{"s":3,"r":1,"o":3,"f":1,"m":["complete","incomplete","incomplete","incomplete","incomplete"],"c":0},{"s":3,"r":1,"o":0,"f":1,"m":["complete","complete","complete","complete","complete"],"c":1},{"s":3,"r":1,"o":3,"f":1,"m":["complete","complete","na","incomplete","incomplete"],"c":1},{"s":1,"r":0,"o":1,"f":1,"m":["complete","incomplete","na","incomplete","complete"],"c":0},{"s":0,"r":0,"o":3,"f":0,"m":["incomplete","complete","incomplete","complete","incomplete"],"c":0},{"s":3,"r":1,"o":1,"f":1,"m":["incomplete","complete","na","complete","complete"],"c":1},{"s":5,"r":1,"o":1,"f":1,"m":["incomplete","complete","na","complete","incomplete"],"c":0},{"s":5,"r":1,"o":1,"f":1,"m":["na","complete","complete","complete","incomplete"],"c":1},{"s":2,"r":0,"o":1,"f":1,"m":["complete","incomplete","complete","complete","incomplete"],"c":1},{"s":7,"r":2,"o":3,"f":0,"m":["complete","complete","incomplete","incomplete","incomplete"],"c":0},{"s":3,"r":1,"o":0,"f":1,"m":["incomplete","complete","na","complete","incomplete"],"c":1},{"s":6,"r":2,"o":0,"f":1,"m":["complete","complete","incomplete","complete","complete"],"c":1},{"s":0,"r":0,"o":1,"f":1,"m":["complete","complete","complete","complete","complete"],"c":0},{"s":2,"r":0,"o":0,"f":1,"m":["complete","complete","complete","complete","complete"],"c":1},{"s":5,"r":1,"o":3,"f":1,"m":["incomplete","complete","na","complete","complete"],"c":0},{"s":7,"r":2,"o":0,"f":1,"m":["complete","complete","na","complete","complete"],"c":1},{"s":2,"r":0,"o":3,"f":0,"m":["incomplete","complete","na","incomplete","incomplete"],"c":0},{"s":7,"r":2,"o":2,"f":1,"m":["complete","complete","na","complete","incomplete"],"c":1},{"s":1,"r":0,"o":0,"f":1,"m":["complete","complete","na","complete","complete"],"c":1},{"s":3,"r":1,"o":0,"f":1,"m":["incomplete","complete","na","complete","complete"],"c":1},{"s":1,"r":0,"o":0,"f":1,"m":["incomplete","complete","complete","complete","complete"],"c":1},{"s":1,"r":0,"o":1,"f":1,"m":["incomplete","complete","na","incomplete","complete"],"c":1},{"s":4,"r":1,"o":1,"f":1,"m":["complete","complete","na","na","incomplete"],"c":1},{"s":2,"r":0,"o":0,"f":1,"m":["complete","complete","complete","complete","incomplete"],"c":1},{"s":5,"r":1,"o":0,"f":1,"m":["complete","complete","na","na","incomplete"],"c":1},{"s":7,"r":2,"o":0,"f":1,"m":["complete","complete","na","complete","incomplete"],"c":0},{"s":0,"r":0,"o":0,"f":1,"m":["complete","complete","complete","incomplete","complete"],"c":1},{"s":1,"r":0,"o":0,"f":1,"m":["complete","complete","incomplete","complete","incomplete"],"c":1},{"s":5,"r":1,"o":0,"f":1,"m":["incomplete","complete","na","complete","complete"],"c":1},{"s":7,"r":2,"o":0,"f":1,"m":["complete","complete","complete","complete","complete"],"c":1},{"s":2,"r":0,"o":0,"f":1,"m":["complete","complete","complete","complete","complete"],"c":1},{"s":5,"r":1,"o":1,"f":1,"m":["incomplete","complete","na","complete","incomplete"],"c":1},{"s":1,"r":0,"o":1,"f":1,"m":["complete","complete","na","incomplete","complete"],"c":1},{"s":7,"r":2,"o":0,"f":1,"m":["complete","complete","na","complete","complete"],"c":1},{"s":6,"r":2,"o":0,"f":1,"m":["complete","complete","na","complete","complete"],"c":1},{"s":7,"r":2,"o":1,"f":0,"m":["incomplete","complete","incomplete","incomplete","incomplete"],"c":0},{"s":5,"r":1,"o":0,"f":1,"m":["complete","complete","complete","complete","na"],"c":1},{"s":5,"r":1,"o":0,"f":1,"m":["complete","complete","complete","incomplete","complete"],"c":1},{"s":0,"r":0,"o":0,"f":0,"m":["complete","complete","na","complete","incomplete"],"c":0},{"s":6,"r":2,"o":0,"f":1,"m":["complete","complete","complete","complete","complete"],"c":1},{"s":3,"r":1,"o":0,"f":1,"m":["complete","incomplete","na","complete","complete"],"c":1},{"s":1,"r":0,"o":1,"f":1,"m":["complete","complete","incomplete","na","incomplete"],"c":0},{"s":6,"r":2,"o":1,"f":1,"m":["complete","complete","na","complete","incomplete"],"c":1},{"s":1,"r":0,"o":0,"f":1,"m":["complete","complete","na","incomplete","complete"],"c":1},{"s":7,"r":2,"o":1,"f":1,"m":["complete","complete","na","incomplete","complete"],"c":1},{"s":3,"r":1,"o":0,"f":1,"m":["complete","complete","na","complete","complete"],"c":1},{"s":2,"r":0,"o":0,"f":1,"m":["incomplete","complete","na","complete","complete"],"c":1},{"s":0,"r":0,"o":0,"f":1,"m":["complete","complete","complete","complete","incomplete"],"c":1},{"s":1,"r":0,"o":1,"f":1,"m":["complete","complete","na","incomplete","complete"],"c":1},{"s":2,"r":0,"o":0,"f":1,"m":["complete","complete","na","complete","complete"],"c":1},{"s":0,"r":0,"o":0,"f":1,"m":["complete","complete","complete","complete","complete"],"c":1},{"s":6,"r":2,"o":0,"f":1,"m":["complete","complete","na","complete","complete"],"c":1},{"s":2,"r":0,"o":1,"f":0,"m":["incomplete","incomplete","na","complete","incomplete"],"c":0},{"s":3,"r":1,"o":0,"f":1,"m":["complete","complete","na","complete","incomplete"],"c":1},{"s":0,"r":0,"o":3,"f":0,"m":["incomplete","incomplete","incomplete","incomplete","incomplete"],"c":0},{"s":1,"r":0,"o":1,"f":1,"m":["incomplete","na","na","complete","complete"],"c":1},{"s":1,"r":0,"o":1,"f":1,"m":["complete","complete","na","incomplete","incomplete"],"c":1},{"s":6,"r":2,"o":1,"f":1,"m":["complete","complete","na","complete","na"],"c":0},{"s":2,"r":0,"o":0,"f":1,"m":["complete","complete","complete","complete","complete"],"c":1},{"s":4,"r":1,"o":0,"f":1,"m":["complete","complete","complete","complete","incomplete"],"c":1},{"s":4,"r":1,"o":0,"f":1,"m":["complete","na","complete","incomplete","complete"],"c":1},{"s":0,"r":0,"o":0,"f":1,"m":["incomplete","complete","complete","incomplete","complete"],"c":1},{"s":5,"r":1,"o":0,"f":1,"m":["complete","complete","incomplete","complete","complete"],"c":1},{"s":7,"r":2,"o":0,"f":1,"m":["complete","complete","complete","incomplete","incomplete"],"c":1},{"s":6,"r":2,"o":1,"f":1,"m":["complete","complete","na","incomplete","incomplete"],"c":1},{"s":3,"r":1,"o":0,"f":0,"m":["complete","complete","na","complete","incomplete"],"c":1},{"s":7,"r":2,"o":0,"f":1,"m":["complete","complete","complete","complete","incomplete"],"c":1},{"s":5,"r":1,"o":0,"f":1,"m":["complete","complete","na","complete","complete"],"c":1},{"s":6,"r":2,"o":1,"f":1,"m":["complete","complete","na","complete","complete"],"c":1},{"s":4,"r":1,"o":1,"f":1,"m":["complete","incomplete","na","complete","incomplete"],"c":1},{"s":3,"r":1,"o":3,"f":1,"m":["complete","complete","complete","complete","complete"],"c":1},{"s":5,"r":1,"o":0,"f":0,"m":["complete","complete","na","complete","incomplete"],"c":1},{"s":6,"r":2,"o":2,"f":1,"m":["complete","complete","na","complete","incomplete"],"c":1},{"s":7,"r":2,"o":1,"f":1,"m":["complete","complete","na","complete","complete"],"c":1},{"s":5,"r":1,"o":3,"f":1,"m":["incomplete","incomplete","incomplete","incomplete","complete"],"c":1},{"s":2,"r":0,"o":1,"f":1,"m":["complete","complete","na","complete","incomplete"],"c":0},{"s":3,"r":1,"o":2,"f":1,"m":["complete","complete","complete","complete","incomplete"],"c":1},{"s":2,"r":0,"o":1,"f":1,"m":["complete","complete","na","incomplete","incomplete"],"c":1},{"s":6,"r":2,"o":0,"f":1,"m":["complete","complete","complete","complete","incomplete"],"c":1},{"s":2,"r":0,"o":0,"f":1,"m":["complete","complete","complete","complete","complete"],"c":1},{"s":0,"r":0,"o":1,"f":1,"m":["complete","complete","incomplete","incomplete","incomplete"],"c":1},{"s":7,"r":2,"o":2,"f":1,"m":["complete","incomplete","na","incomplete","complete"],"c":0},{"s":6,"r":2,"o":1,"f":1,"m":["complete","complete","na","incomplete","complete"],"c":1},{"s":3,"r":1,"o":1,"f":1,"m":["complete","complete","na","incomplete","incomplete"],"c":1},{"s":5,"r":1,"o":3,"f":1,"m":["incomplete","complete","incomplete","incomplete","incomplete"],"c":1},{"s":3,"r":1,"o":2,"f":1,"m":["complete","incomplete","na","complete","complete"],"c":1},{"s":3,"r":1,"o":1,"f":1,"m":["complete","complete","na","complete","complete"],"c":0},{"s":2,"r":0,"o":0,"f":1,"m":["complete","complete","complete","complete","complete"],"c":1},{"s":5,"r":1,"o":3,"f":0,"m":["complete","incomplete","incomplete","incomplete","complete"],"c":0},{"s":6,"r":2,"o":2,"f":1,"m":["complete","incomplete","na","incomplete","complete"],"c":1},{"s":1,"r":0,"o":2,"f":1,"m":["incomplete","complete","na","incomplete","incomplete"],"c":1},{"s":7,"r":2,"o":0,"f":1,"m":["complete","complete","complete","complete","na"],"c":1},{"s":5,"r":1,"o":1,"f":1,"m":["complete","complete","na","complete","na"],"c":1},{"s":2,"r":0,"o":1,"f":1,"m":["complete","complete","complete","incomplete","incomplete"],"c":1},{"s":1,"r":0,"o":0,"f":1,"m":["complete","complete","na","complete","complete"],"c":1},{"s":6,"r":2,"o":0,"f":1,"m":["complete","incomplete","complete","complete","complete"],"c":1},{"s":7,"r":2,"o":1,"f":1,"m":["incomplete","complete","complete","incomplete","complete"],"c":0},{"s":4,"r":1,"o":0,"f":1,"m":["complete","complete","na","complete","complete"],"c":1},{"s":0,"r":0,"o":0,"f":1,"m":["complete","complete","complete","complete","complete"],"c":0},{"s":1,"r":0,"o":1,"f":1,"m":["complete","incomplete","na","incomplete","complete"],"c":0},{"s":2,"r":0,"o":1,"f":1,"m":["complete","complete","incomplete","incomplete","complete"],"c":1},{"s":5,"r":1,"o":1,"f":1,"m":["complete","complete","na","na","complete"],"c":1},{"s":4,"r":1,"o":0,"f":1,"m":["complete","complete","na","complete","complete"],"c":1},{"s":0,"r":0,"o":3,"f":0,"m":["incomplete","incomplete","incomplete","incomplete","incomplete"],"c":1},{"s":7,"r":2,"o":0,"f":1,"m":["complete","complete","complete","complete","complete"],"c":1},{"s":4,"r":1,"o":1,"f":1,"m":["complete","complete","incomplete","complete","incomplete"],"c":1},{"s":2,"r":0,"o":3,"f":1,"m":["na","incomplete","na","complete","incomplete"],"c":1},{"s":6,"r":2,"o":0,"f":1,"m":["complete","complete","complete","complete","complete"],"c":0},{"s":0,"r":0,"o":0,"f":1,"m":["complete","complete","complete","complete","incomplete"],"c":1},{"s":5,"r":1,"o":0,"f":1,"m":["complete","complete","incomplete","complete","complete"],"c":1},{"s":7,"r":2,"o":3,"f":1,"m":["complete","na","incomplete","incomplete","complete"],"c":0},{"s":7,"r":2,"o":1,"f":1,"m":["complete","incomplete","na","complete","incomplete"],"c":0},{"s":2,"r":0,"o":3,"f":0,"m":["complete","incomplete","incomplete","incomplete","incomplete"],"c":0},{"s":4,"r":1,"o":0,"f":1,"m":["complete","complete","na","complete","incomplete"],"c":1},{"s":2,"r":0,"o":0,"f":1,"m":["complete","complete","complete","complete","incomplete"],"c":1},{"s":3,"r":1,"o":0,"f":1,"m":["complete","complete","complete","complete","complete"],"c":1},{"s":6,"r":2,"o":2,"f":1,"m":["complete","incomplete","na","complete","incomplete"],"c":1},{"s":2,"r":0,"o":1,"f":1,"m":["complete","complete","na","complete","incomplete"],"c":1},{"s":7,"r":2,"o":2,"f":1,"m":["complete","complete","incomplete","complete","incomplete"],"c":1},{"s":7,"r":2,"o":0,"f":1,"m":["complete","complete","na","complete","complete"],"c":1},{"s":2,"r":0,"o":0,"f":1,"m":["complete","complete","complete","incomplete","incomplete"],"c":1},{"s":1,"r":0,"o":1,"f":1,"m":["complete","complete","incomplete","complete","complete"],"c":1},{"s":3,"r":1,"o":1,"f":1,"m":["complete","complete","incomplete","incomplete","incomplete"],"c":1},{"s":2,"r":0,"o":0,"f":1,"m":["complete","complete","complete","complete","complete"],"c":1},{"s":7,"r":2,"o":2,"f":1,"m":["complete","complete","na","incomplete","incomplete"],"c":1},{"s":6,"r":2,"o":1,"f":1,"m":["complete","complete","complete","complete","complete"],"c":0},{"s":4,"r":1,"o":3,"f":0,"m":["incomplete","incomplete","complete","incomplete","complete"],"c":0},{"s":2,"r":0,"o":3,"f":0,"m":["incomplete","complete","na","incomplete","incomplete"],"c":1},{"s":5,"r":1,"o":0,"f":1,"m":["complete","complete","complete","complete","complete"],"c":1},{"s":5,"r":1,"o":0,"f":1,"m":["complete","incomplete","na","complete","complete"],"c":1},{"s":5,"r":1,"o":0,"f":0,"m":["complete","complete","complete","incomplete","complete"],"c":1},{"s":1,"r":0,"o":0,"f":1,"m":["complete","complete","incomplete","complete","complete"],"c":0},{"s":7,"r":2,"o":1,"f":1,"m":["complete","complete","na","na","complete"],"c":1},{"s":7,"r":2,"o":0,"f":1,"m":["complete","complete","complete","incomplete","na"],"c":1},{"s":0,"r":0,"o":1,"f":1,"m":["complete","complete","na","incomplete","incomplete"],"c":1},{"s":5,"r":1,"o":0,"f":1,"m":["complete","complete","na","complete","incomplete"],"c":1},{"s":1,"r":0,"o":0,"f":1,"m":["complete","complete","complete","incomplete","complete"],"c":1},{"s":3,"r":1,"o":0,"f":1,"m":["complete","complete","complete","complete","complete"],"c":1},{"s":2,"r":0,"o":1,"f":1,"m":["complete","complete","na","incomplete","incomplete"],"c":1},{"s":4,"r":1,"o":3,"f":0,"m":["complete","complete","incomplete","na","incomplete"],"c":0},{"s":3,"r":1,"o":3,"f":1,"m":["complete","complete","complete","incomplete","incomplete"],"c":0},{"s":1,"r":0,"o":2,"f":1,"m":["complete","incomplete","complete","incomplete","complete"],"c":1},{"s":5,"r":1,"o":0,"f":1,"m":["complete","complete","na","complete","complete"],"c":1},{"s":6,"r":2,"o":2,"f":1,"m":["complete","complete","complete","complete","complete"],"c":1},{"s":3,"r":1,"o":3,"f":0,"m":["na","complete","complete","complete","incomplete"],"c":0},{"s":7,"r":2,"o":1,"f":1,"m":["complete","incomplete","incomplete","complete","na"],"c":1},{"s":5,"r":1,"o":0,"f":1,"m":["complete","incomplete","incomplete","complete","complete"],"c":0},{"s":1,"r":0,"o":0,"f":1,"m":["complete","incomplete","na","incomplete","complete"],"c":1},{"s":4,"r":1,"o":0,"f":1,"m":["complete","complete","complete","complete","complete"],"c":1},{"s":6,"r":2,"o":1,"f":1,"m":["complete","complete","complete","complete","complete"],"c":1},{"s":7,"r":2,"o":0,"f":1,"m":["complete","complete","na","complete","complete"],"c":0},{"s":2,"r":0,"o":0,"f":1,"m":["complete","complete","na","complete","incomplete"],"c":1},{"s":4,"r":1,"o":3,"f":0,"m":["complete","complete","incomplete","incomplete","incomplete"],"c":1},{"s":2,"r":0,"o":2,"f":1,"m":["complete","incomplete","complete","complete","incomplete"],"c":0},{"s":0,"r":0,"o":3,"f":0,"m":["incomplete","incomplete","na","incomplete","incomplete"],"c":1},{"s":7,"r":2,"o":0,"f":1,"m":["complete","complete","complete","complete","complete"],"c":1},{"s":1,"r":0,"o":0,"f":1,"m":["complete","complete","incomplete","complete","incomplete"],"c":1},{"s":7,"r":2,"o":0,"f":1,"m":["complete","incomplete","na","complete","complete"],"c":1},{"s":3,"r":1,"o":1,"f":1,"m":["complete","complete","complete","complete","complete"],"c":0},{"s":5,"r":1,"o":1,"f":1,"m":["complete","complete","na","incomplete","complete"],"c":1},{"s":3,"r":1,"o":0,"f":1,"m":["complete","complete","incomplete","complete","complete"],"c":1},{"s":7,"r":2,"o":1,"f":1,"m":["complete","complete","na","incomplete","complete"],"c":1},{"s":2,"r":0,"o":0,"f":1,"m":["complete","complete","complete","complete","complete"],"c":1},{"s":0,"r":0,"o":0,"f":1,"m":["complete","complete","na","incomplete","complete"],"c":1},{"s":0,"r":0,"o":2,"f":0,"m":["incomplete","complete","na","complete","incomplete"],"c":0},{"s":5,"r":1,"o":0,"f":1,"m":["complete","complete","incomplete","complete","incomplete"],"c":1},{"s":2,"r":0,"o":0,"f":1,"m":["complete","complete","incomplete","complete","complete"],"c":1},{"s":1,"r":0,"o":1,"f":1,"m":["incomplete","incomplete","na","incomplete","complete"],"c":1},{"s":3,"r":1,"o":1,"f":1,"m":["complete","complete","complete","incomplete","complete"],"c":1},{"s":3,"r":1,"o":3,"f":0,"m":["complete","complete","na","complete","complete"],"c":1},{"s":6,"r":2,"o":0,"f":1,"m":["complete","complete","na","complete","complete"],"c":1},{"s":2,"r":0,"o":2,"f":1,"m":["complete","complete","na","incomplete","complete"],"c":1},{"s":3,"r":1,"o":0,"f":1,"m":["complete","complete","na","complete","incomplete"],"c":1},{"s":5,"r":1,"o":0,"f":1,"m":["complete","complete","na","complete","incomplete"],"c":1},{"s":5,"r":1,"o":0,"f":1,"m":["complete","complete","complete","complete","complete"],"c":0},{"s":3,"r":1,"o":3,"f":0,"m":["incomplete","incomplete","na","complete","incomplete"],"c":0},{"s":1,"r":0,"o":0,"f":1,"m":["complete","complete","na","complete","incomplete"],"c":0},{"s":7,"r":2,"o":1,"f":0,"m":["incomplete","complete","incomplete","incomplete","complete"],"c":0},{"s":7,"r":2,"o":0,"f":1,"m":["complete","complete","complete","complete","incomplete"],"c":1},{"s":5,"r":1,"o":1,"f":1,"m":["complete","complete","na","incomplete","incomplete"],"c":0},{"s":2,"r":0,"o":1,"f":1,"m":["incomplete","complete","na","incomplete","incomplete"],"c":1},{"s":7,"r":2,"o":0,"f":1,"m":["complete","complete","na","complete","complete"],"c":0},{"s":4,"r":1,"o":1,"f":1,"m":["complete","complete","na","complete","complete"],"c":1},{"s":0,"r":0,"o":2,"f":1,"m":["complete","incomplete","na","na","complete"],"c":1},{"s":4,"r":1,"o":2,"f":1,"m":["complete","complete","na","incomplete","complete"],"c":1},{"s":3,"r":1,"o":1,"f":1,"m":["complete","complete","na","complete","complete"],"c":1},{"s":1,"r":0,"o":0,"f":1,"m":["complete","complete","na","complete","complete"],"c":1},{"s":4,"r":1,"o":3,"f":0,"m":["complete","incomplete","incomplete","incomplete","incomplete"],"c":0},{"s":4,"r":1,"o":0,"f":1,"m":["complete","incomplete","na","complete","complete"],"c":1},{"s":3,"r":1,"o":3,"f":0,"m":["incomplete","incomplete","incomplete","incomplete","incomplete"],"c":0},{"s":1,"r":0,"o":0,"f":1,"m":["na","complete","na","complete","complete"],"c":1},{"s":2,"r":0,"o":3,"f":0,"m":["incomplete","incomplete","na","incomplete","complete"],"c":1},{"s":3,"r":1,"o":1,"f":1,"m":["complete","complete","na","complete","complete"],"c":0},{"s":5,"r":1,"o":0,"f":1,"m":["complete","complete","incomplete","complete","na"],"c":1},{"s":3,"r":1,"o":0,"f":1,"m":["complete","complete","complete","complete","complete"],"c":1},{"s":3,"r":1,"o":1,"f":1,"m":["complete","complete","na","complete","complete"],"c":1},{"s":3,"r":1,"o":1,"f":1,"m":["complete","complete","incomplete","complete","complete"],"c":1},{"s":7,"r":2,"o":1,"f":1,"m":["complete","complete","na","complete","complete"],"c":1},{"s":5,"r":1,"o":0,"f":1,"m":["complete","complete","complete","complete","incomplete"],"c":1},{"s":0,"r":0,"o":0,"f":0,"m":["complete","complete","na","complete","complete"],"c":1},{"s":3,"r":1,"o":1,"f":1,"m":["complete","complete","na","complete","complete"],"c":1},{"s":4,"r":1,"o":1,"f":1,"m":["complete","complete","na","incomplete","incomplete"],"c":1},{"s":5,"r":1,"o":3,"f":0,"m":["incomplete","na","na","incomplete","incomplete"],"c":0},{"s":3,"r":1,"o":3,"f":0,"m":["complete","incomplete","incomplete","complete","incomplete"],"c":1},{"s":4,"r":1,"o":3,"f":0,"m":["incomplete","complete","complete","complete","incomplete"],"c":0},{"s":7,"r":2,"o":3,"f":1,"m":["incomplete","incomplete","complete","complete","complete"],"c":1},{"s":0,"r":0,"o":0,"f":1,"m":["complete","incomplete","complete","complete","incomplete"],"c":1},{"s":4,"r":1,"o":0,"f":1,"m":["complete","complete","na","complete","complete"],"c":1},{"s":7,"r":2,"o":2,"f":1,"m":["complete","complete","na","complete","incomplete"],"c":1},{"s":6,"r":2,"o":0,"f":1,"m":["complete","complete","complete","complete","complete"],"c":1},{"s":7,"r":2,"o":1,"f":1,"m":["na","complete","na","complete","complete"],"c":1},{"s":2,"r":0,"o":1,"f":1,"m":["complete","complete","na","complete","complete"],"c":0},{"s":6,"r":2,"o":1,"f":1,"m":["complete","incomplete","na","complete","incomplete"],"c":1},{"s":2,"r":0,"o":0,"f":1,"m":["complete","complete","complete","complete","complete"],"c":1},{"s":1,"r":0,"o":0,"f":1,"m":["complete","complete","complete","complete","complete"],"c":0},{"s":6,"r":2,"o":3,"f":0,"m":["incomplete","incomplete","incomplete","na","complete"],"c":0},{"s":7,"r":2,"o":1,"f":1,"m":["complete","complete","na","incomplete","complete"],"c":1},{"s":0,"r":0,"o":0,"f":1,"m":["complete","complete","na","complete","complete"],"c":1},{"s":7,"r":2,"o":1,"f":1,"m":["incomplete","complete","incomplete","complete","complete"],"c":0},{"s":1,"r":0,"o":0,"f":1,"m":["complete","complete","complete","complete","complete"],"c":1},{"s":0,"r":0,"o":0,"f":1,"m":["na","complete","incomplete","complete","incomplete"],"c":1},{"s":0,"r":0,"o":0,"f":1,"m":["complete","complete","complete","complete","complete"],"c":1},{"s":0,"r":0,"o":0,"f":1,"m":["complete","complete","complete","na","incomplete"],"c":0},{"s":7,"r":2,"o":1,"f":1,"m":["complete","incomplete","na","complete","complete"],"c":1},{"s":3,"r":1,"o":0,"f":1,"m":["complete","complete","complete","complete","complete"],"c":1},{"s":6,"r":2,"o":0,"f":1,"m":["complete","complete","incomplete","complete","complete"],"c":1},{"s":5,"r":1,"o":1,"f":1,"m":["complete","complete","na","complete","incomplete"],"c":0},{"s":4,"r":1,"o":1,"f":1,"m":["complete","complete","complete","incomplete","complete"],"c":1},{"s":2,"r":0,"o":0,"f":1,"m":["complete","complete","complete","complete","incomplete"],"c":1},{"s":5,"r":1,"o":1,"f":1,"m":["complete","complete","na","incomplete","incomplete"],"c":1},{"s":0,"r":0,"o":0,"f":1,"m":["complete","complete","complete","incomplete","complete"],"c":1},{"s":5,"r":1,"o":0,"f":1,"m":["complete","incomplete","incomplete","complete","complete"],"c":1},{"s":6,"r":2,"o":0,"f":1,"m":["complete","complete","complete","complete","complete"],"c":1},{"s":5,"r":1,"o":3,"f":0,"m":["incomplete","incomplete","incomplete","incomplete","incomplete"],"c":0},{"s":6,"r":2,"o":3,"f":1,"m":["incomplete","incomplete","na","complete","incomplete"],"c":1},{"s":7,"r":2,"o":0,"f":0,"m":["complete","incomplete","incomplete","complete","complete"],"c":1},{"s":0,"r":0,"o":0,"f":1,"m":["complete","incomplete","na","complete","incomplete"],"c":1},{"s":5,"r":1,"o":3,"f":1,"m":["complete","incomplete","incomplete","incomplete","na"],"c":1},{"s":1,"r":0,"o":1,"f":1,"m":["incomplete","incomplete","complete","complete","complete"],"c":0},{"s":6,"r":2,"o":1,"f":1,"m":["incomplete","complete","complete","na","complete"],"c":1},{"s":1,"r":0,"o":0,"f":0,"m":["complete","incomplete","na","complete","incomplete"],"c":0},{"s":1,"r":0,"o":2,"f":1,"m":["incomplete","incomplete","na","complete","complete"],"c":1},{"s":7,"r":2,"o":0,"f":1,"m":["complete","complete","complete","complete","complete"],"c":1},{"s":3,"r":1,"o":0,"f":1,"m":["complete","complete","complete","na","complete"],"c":1},{"s":4,"r":1,"o":1,"f":1,"m":["na","complete","na","incomplete","complete"],"c":0},{"s":2,"r":0,"o":0,"f":1,"m":["complete","complete","complete","complete","complete"],"c":1},{"s":4,"r":1,"o":0,"f":1,"m":["complete","complete","complete","na","na"],"c":1},{"s":1,"r":0,"o":3,"f":0,"m":["incomplete","complete","incomplete","incomplete","incomplete"],"c":0},{"s":0,"r":0,"o":0,"f":1,"m":["complete","complete","complete","complete","incomplete"],"c":1},{"s":1,"r":0,"o":1,"f":1,"m":["complete","complete","incomplete","incomplete","incomplete"],"c":1},{"s":0,"r":0,"o":1,"f":1,"m":["complete","complete","na","incomplete","incomplete"],"c":0},{"s":4,"r":1,"o":0,"f":1,"m":["complete","complete","incomplete","complete","incomplete"],"c":1},{"s":6,"r":2,"o":2,"f":1,"m":["incomplete","complete","incomplete","complete","incomplete"],"c":1},{"s":2,"r":0,"o":1,"f":1,"m":["complete","complete","incomplete","complete","complete"],"c":1},{"s":4,"r":1,"o":1,"f":1,"m":["complete","complete","na","complete","complete"],"c":1},{"s":7,"r":2,"o":0,"f":1,"m":["complete","incomplete","na","complete","incomplete"],"c":1},{"s":6,"r":2,"o":2,"f":1,"m":["complete","incomplete","complete","complete","incomplete"],"c":1},{"s":7,"r":2,"o":0,"f":0,"m":["complete","complete","complete","complete","complete"],"c":0},{"s":0,"r":0,"o":2,"f":0,"m":["incomplete","complete","na","incomplete","incomplete"],"c":0},{"s":0,"r":0,"o":0,"f":1,"m":["complete","complete","na","complete","incomplete"],"c":1},{"s":0,"r":0,"o":0,"f":0,"m":["complete","complete","na","complete","complete"],"c":0},{"s":3,"r":1,"o":1,"f":0,"m":["incomplete","complete","complete","incomplete","complete"],"c":0},{"s":5,"r":1,"o":0,"f":1,"m":["complete","complete","complete","complete","incomplete"],"c":0},{"s":3,"r":1,"o":2,"f":1,"m":["complete","complete","complete","complete","incomplete"],"c":0},{"s":6,"r":2,"o":0,"f":1,"m":["complete","complete","complete","complete","complete"],"c":1},{"s":3,"r":1,"o":0,"f":1,"m":["complete","complete","incomplete","complete","complete"],"c":1},{"s":0,"r":0,"o":1,"f":1,"m":["complete","complete","na","complete","complete"],"c":1},{"s":6,"r":2,"o":1,"f":1,"m":["complete","complete","complete","complete","complete"],"c":1},{"s":7,"r":2,"o":0,"f":1,"m":["complete","complete","na","complete","incomplete"],"c":1},{"s":0,"r":0,"o":0,"f":1,"m":["complete","incomplete","complete","complete","complete"],"c":1},{"s":2,"r":0,"o":0,"f":1,"m":["complete","complete","complete","complete","complete"],"c":1},{"s":3,"r":1,"o":3,"f":1,"m":["complete","complete","incomplete","na","na"],"c":0},{"s":3,"r":1,"o":0,"f":0,"m":["complete","complete","incomplete","complete","incomplete"],"c":1},{"s":4,"r":1,"o":0,"f":1,"m":["complete","complete","complete","complete","complete"],"c":1},{"s":3,"r":1,"o":0,"f":1,"m":["complete","complete","na","complete","complete"],"c":1},{"s":6,"r":2,"o":1,"f":1,"m":["complete","complete","incomplete","complete","incomplete"],"c":1},{"s":4,"r":1,"o":0,"f":1,"m":["complete","complete","complete","complete","complete"],"c":1},{"s":2,"r":0,"o":0,"f":1,"m":["complete","complete","complete","complete","na"],"c":1},{"s":4,"r":1,"o":0,"f":1,"m":["complete","complete","incomplete","complete","complete"],"c":1},{"s":2,"r":0,"o":0,"f":1,"m":["complete","complete","complete","complete","complete"],"c":1},{"s":7,"r":2,"o":1,"f":1,"m":["complete","complete","complete","incomplete","complete"],"c":1},{"s":1,"r":0,"o":3,"f":0,"m":["incomplete","incomplete","incomplete","incomplete","incomplete"],"c":1},{"s":3,"r":1,"o":1,"f":0,"m":["incomplete","incomplete","na","complete","incomplete"],"c":1},{"s":3,"r":1,"o":3,"f":0,"m":["complete","complete","incomplete","incomplete","incomplete"],"c":0},{"s":7,"r":2,"o":3,"f":0,"m":["incomplete","incomplete","incomplete","incomplete","na"],"c":0},{"s":6,"r":2,"o":0,"f":0,"m":["complete","complete","complete","complete","incomplete"],"c":1},{"s":7,"r":2,"o":0,"f":1,"m":["complete","complete","na","complete","complete"],"c":0},{"s":0,"r":0,"o":0,"f":1,"m":["complete","complete","na","complete","complete"],"c":1},{"s":4,"r":1,"o":1,"f":0,"m":["complete","complete","na","incomplete","complete"],"c":1},{"s":1,"r":0,"o":0,"f":1,"m":["complete","incomplete","na","complete","complete"],"c":1},{"s":1,"r":0,"o":0,"f":1,"m":["complete","complete","complete","complete","complete"],"c":0},{"s":6,"r":2,"o":0,"f":1,"m":["complete","complete","complete","complete","complete"],"c":1},{"s":7,"r":2,"o":2,"f":1,"m":["complete","complete","na","complete","complete"],"c":0},{"s":7,"r":2,"o":2,"f":1,"m":["incomplete","complete","na","incomplete","incomplete"],"c":1},{"s":6,"r":2,"o":3,"f":0,"m":["incomplete","incomplete","incomplete","incomplete","incomplete"],"c":0},{"s":2,"r":0,"o":0,"f":1,"m":["incomplete","complete","complete","complete","complete"],"c":1},{"s":4,"r":1,"o":1,"f":1,"m":["complete","na","na","complete","complete"],"c":1},{"s":5,"r":1,"o":0,"f":1,"m":["complete","complete","incomplete","complete","incomplete"],"c":1},{"s":6,"r":2,"o":3,"f":0,"m":["complete","incomplete","na","incomplete","incomplete"],"c":0},{"s":4,"r":1,"o":0,"f":1,"m":["complete","complete","na","complete","complete"],"c":1},{"s":7,"r":2,"o":0,"f":0,"m":["complete","complete","na","incomplete","complete"],"c":1},{"s":5,"r":1,"o":0,"f":1,"m":["complete","complete","incomplete","complete","complete"],"c":1},{"s":2,"r":0,"o":0,"f":1,"m":["na","complete","na","complete","complete"],"c":1},{"s":7,"r":2,"o":2,"f":1,"m":["complete","complete","na","complete","incomplete"],"c":1},{"s":5,"r":1,"o":3,"f":1,"m":["incomplete","incomplete","na","incomplete","incomplete"],"c":1},{"s":0,"r":0,"o":0,"f":1,"m":["complete","incomplete","na","complete","complete"],"c":1},{"s":6,"r":2,"o":0,"f":1,"m":["complete","complete","complete","complete","complete"],"c":1},{"s":6,"r":2,"o":0,"f":0,"m":["complete","incomplete","incomplete","complete","na"],"c":0},{"s":4,"r":1,"o":3,"f":0,"m":["incomplete","incomplete","na","incomplete","incomplete"],"c":0},{"s":5,"r":1,"o":3,"f":1,"m":["incomplete","complete","incomplete","complete","incomplete"],"c":1},{"s":1,"r":0,"o":0,"f":1,"m":["complete","complete","na","incomplete","incomplete"],"c":0},{"s":7,"r":2,"o":0,"f":0,"m":["complete","complete","na","na","incomplete"],"c":1},{"s":1,"r":0,"o":0,"f":1,"m":["complete","complete","complete","complete","complete"],"c":1},{"s":0,"r":0,"o":0,"f":1,"m":["complete","complete","complete","incomplete","na"],"c":1},{"s":2,"r":0,"o":3,"f":0,"m":["incomplete","incomplete","incomplete","complete","incomplete"],"c":0},{"s":1,"r":0,"o":0,"f":1,"m":["complete","complete","complete","complete","complete"],"c":1},{"s":4,"r":1,"o":1,"f":1,"m":["complete","complete","na","complete","incomplete"],"c":1},{"s":0,"r":0,"o":0,"f":1,"m":["complete","incomplete","complete","complete","complete"],"c":1},{"s":1,"r":0,"o":0,"f":1,"m":["complete","complete","na","complete","complete"],"c":0},{"s":4,"r":1,"o":0,"f":1,"m":["complete","complete","complete","complete","incomplete"],"c":1},{"s":5,"r":1,"o":1,"f":1,"m":["complete","complete","na","complete","na"],"c":0},{"s":5,"r":1,"o":0,"f":1,"m":["complete","complete","complete","complete","incomplete"],"c":1},{"s":2,"r":0,"o":2,"f":0,"m":["complete","complete","na","incomplete","na"],"c":0},{"s":6,"r":2,"o":0,"f":1,"m":["complete","complete","complete","complete","complete"],"c":1},{"s":7,"r":2,"o":0,"f":1,"m":["complete","complete","na","complete","complete"],"c":1},{"s":5,"r":1,"o":2,"f":1,"m":["incomplete","complete","na","complete","incomplete"],"c":0},{"s":2,"r":0,"o":3,"f":0,"m":["na","incomplete","na","complete","na"],"c":0},{"s":2,"r":0,"o":0,"f":1,"m":["complete","complete","complete","complete","complete"],"c":1},{"s":1,"r":0,"o":0,"f":1,"m":["complete","complete","complete","complete","na"],"c":1},{"s":5,"r":1,"o":1,"f":0,"m":["na","complete","na","incomplete","complete"],"c":1},{"s":6,"r":2,"o":0,"f":1,"m":["complete","complete","complete","complete","complete"],"c":1},{"s":7,"r":2,"o":0,"f":1,"m":["complete","complete","na","complete","na"],"c":1},{"s":7,"r":2,"o":1,"f":1,"m":["complete","complete","complete","complete","incomplete"],"c":0},{"s":7,"r":2,"o":0,"f":1,"m":["complete","complete","na","incomplete","complete"],"c":1},{"s":3,"r":1,"o":0,"f":0,"m":["complete","complete","na","na","incomplete"],"c":1},{"s":1,"r":0,"o":0,"f":1,"m":["complete","complete","na","complete","complete"],"c":1},{"s":7,"r":2,"o":0,"f":1,"m":["complete","complete","complete","na","complete"],"c":1},{"s":5,"r":1,"o":3,"f":0,"m":["complete","incomplete","incomplete","complete","incomplete"],"c":0},{"s":7,"r":2,"o":0,"f":0,"m":["complete","complete","incomplete","complete","complete"],"c":0},{"s":0,"r":0,"o":1,"f":1,"m":["complete","complete","na","complete","complete"],"c":1},{"s":0,"r":0,"o":3,"f":1,"m":["incomplete","incomplete","incomplete","incomplete","incomplete"],"c":0},{"s":2,"r":0,"o":2,"f":1,"m":["incomplete","complete","na","incomplete","incomplete"],"c":1},{"s":7,"r":2,"o":2,"f":1,"m":["complete","incomplete","na","incomplete","complete"],"c":1},{"s":7,"r":2,"o":0,"f":1,"m":["complete","incomplete","incomplete","complete","complete"],"c":1},{"s":3,"r":1,"o":0,"f":1,"m":["complete","complete","complete","complete","complete"],"c":1},{"s":3,"r":1,"o":0,"f":1,"m":["complete","complete","complete","complete","complete"],"c":0},{"s":3,"r":1,"o":0,"f":1,"m":["complete","complete","complete","complete","complete"],"c":1},{"s":4,"r":1,"o":3,"f":1,"m":["complete","complete","na","incomplete","incomplete"],"c":1},{"s":6,"r":2,"o":0,"f":1,"m":["complete","complete","na","complete","complete"],"c":1},{"s":5,"r":1,"o":3,"f":1,"m":["complete","complete","incomplete","complete","incomplete"],"c":0},{"s":3,"r":1,"o":1,"f":1,"m":["complete","complete","na","complete","complete"],"c":1},{"s":4,"r":1,"o":1,"f":1,"m":["complete","complete","complete","complete","incomplete"],"c":1},{"s":5,"r":1,"o":2,"f":1,"m":["incomplete","complete","na","complete","complete"],"c":1},{"s":4,"r":1,"o":0,"f":1,"m":["complete","complete","na","complete","complete"],"c":0},{"s":6,"r":2,"o":2,"f":1,"m":["incomplete","incomplete","na","incomplete","complete"],"c":1},{"s":7,"r":2,"o":1,"f":1,"m":["complete","complete","incomplete","incomplete","incomplete"],"c":1},{"s":3,"r":1,"o":0,"f":0,"m":["complete","complete","complete","complete","incomplete"],"c":1},{"s":3,"r":1,"o":3,"f":0,"m":["incomplete","incomplete","na","complete","incomplete"],"c":0},{"s":5,"r":1,"o":0,"f":1,"m":["complete","complete","na","incomplete","complete"],"c":1},{"s":0,"r":0,"o":0,"f":1,"m":["complete","complete","na","complete","incomplete"],"c":1},{"s":4,"r":1,"o":3,"f":1,"m":["complete","incomplete","na","incomplete","complete"],"c":0},{"s":5,"r":1,"o":3,"f":1,"m":["complete","incomplete","na","incomplete","complete"],"c":0},{"s":2,"r":0,"o":0,"f":1,"m":["complete","complete","na","complete","incomplete"],"c":1},{"s":1,"r":0,"o":0,"f":0,"m":["complete","complete","incomplete","complete","complete"],"c":0},{"s":6,"r":2,"o":1,"f":1,"m":["complete","complete","complete","complete","incomplete"],"c":1},{"s":2,"r":0,"o":0,"f":1,"m":["complete","complete","complete","incomplete","complete"],"c":1},{"s":0,"r":0,"o":2,"f":1,"m":["na","incomplete","complete","complete","incomplete"],"c":1},{"s":1,"r":0,"o":0,"f":1,"m":["complete","complete","complete","incomplete","complete"],"c":1},{"s":6,"r":2,"o":3,"f":1,"m":["incomplete","incomplete","na","incomplete","na"],"c":0},{"s":6,"r":2,"o":3,"f":0,"m":["incomplete","incomplete","incomplete","incomplete","incomplete"],"c":0},{"s":3,"r":1,"o":0,"f":1,"m":["complete","complete","complete","complete","complete"],"c":1},{"s":1,"r":0,"o":0,"f":1,"m":["complete","complete","incomplete","complete","incomplete"],"c":1},{"s":6,"r":2,"o":0,"f":1,"m":["complete","complete","complete","complete","complete"],"c":1},{"s":5,"r":1,"o":1,"f":1,"m":["complete","complete","incomplete","complete","complete"],"c":0}]};
+const M = DATA.milestones, NM = M.length;
+const DIM = {
+  o:{label:"Where they ended up", vals:DATA.outcomes},
+  s:{label:"School",              vals:DATA.schools},
+  r:{label:"Region",              vals:DATA.regions},
+  f:{label:"Opt-in form",         vals:["Not submitted","Submitted"]}
+};
+const state = {group:"o", then:"", out:new Set(), reg:new Set(), incNA:false,
+               sort:{col:NM, dir:-1}};
+let previous = {};
+
+const $ = id => document.getElementById(id);
+const pct = (c,e) => e ? 100*c/e : null;
+const fmt = v => v==null ? "\u2014" : v.toFixed(1)+"%";
+
+function chips(host, dim, set){
+  host.innerHTML = DIM[dim].vals.map((v,i)=>
+    `<button class="chip" data-i="${i}" aria-pressed="false">${v}</button>`).join("");
+  host.querySelectorAll(".chip").forEach(b=>b.addEventListener("click", ()=>{
+    const i = +b.dataset.i;
+    set.has(i) ? set.delete(i) : set.add(i);
+    b.setAttribute("aria-pressed", set.has(i));
+    render();
+  }));
+}
+
+function visible(){
+  return DATA.rows.filter(r =>
+    (!state.out.size || state.out.has(r.o)) &&
+    (!state.reg.size || state.reg.has(r.r)));
+}
+
+// One bucket per group. Each milestone gets its own complete/eligible pair,
+// because eligibility differs milestone by milestone -- that is the whole point.
+function tally(rows){
+  const b = {done:Array(NM).fill(0), elig:Array(NM).fill(0),
+             pDone:0, pElig:0, reached:0, n:0};
+  for(const r of rows){
+    b.n++; if(r.c) b.reached++;
+    r.m.forEach((v,j)=>{
+      if(v==="na" && !state.incNA) return;
+      b.elig[j]++; b.pElig++;
+      if(v==="complete"){ b.done[j]++; b.pDone++; }
+    });
+  }
+  return b;
+}
+
+function build(){
+  const rows = visible(), g = state.group, t = state.then;
+  const top = new Map();
+  for(const r of rows){
+    if(!top.has(r[g])) top.set(r[g], []);
+    top.get(r[g]).push(r);
+  }
+  let out = [...top.entries()].map(([k,rs])=>{
+    const node = {label:DIM[g].vals[k], b:tally(rs), kids:[]};
+    if(t){
+      const sub = new Map();
+      for(const r of rs){ if(!sub.has(r[t])) sub.set(r[t],[]); sub.get(r[t]).push(r); }
+      node.kids = [...sub.entries()]
+        .map(([k2,rs2])=>({label:DIM[t].vals[k2], b:tally(rs2)}));
+    }
+    return node;
+  });
+  const key = n => {
+    const c = state.sort.col;
+    if(c === NM)   return pct(n.b.pDone, n.b.pElig);
+    if(c === NM+1) return n.b.n ? 100*n.b.reached/n.b.n : null;
+    return pct(n.b.done[c], n.b.elig[c]);
+  };
+  // empty groups always sink, whichever way the sort points
+  const cmp = (a,b)=>{
+    const x = key(a), y = key(b);
+    if(x==null && y==null) return 0;
+    if(x==null) return 1;
+    if(y==null) return -1;
+    return (x-y)*state.sort.dir;
+  };
+  out.sort(cmp);
+  out.forEach(n => n.kids.sort(cmp));   // nested rows sort inside their parent
+  return out;
+}
+
+function head(){
+  const cols = [DIM[state.group].label, ...M, "All five pooled", "Reached this month"];
+  $("head").innerHTML = cols.map((c,i)=>{
+    if(i===0) return `<th scope="col">${c}</th>`;
+    const ci = i-1, on = state.sort.col===ci;
+    return `<th scope="col" data-c="${ci}"${on?` aria-sort="${state.sort.dir<0?"descending":"ascending"}"`:""}>`
+      + `${c}<span class="arrow">${on && state.sort.dir>0 ? "\u2191" : "\u2193"}</span></th>`;
+  }).join("");
+  $("head").querySelectorAll("th[data-c]").forEach(th=>th.addEventListener("click", ()=>{
+    const c = +th.dataset.c;
+    state.sort = (state.sort.col===c) ? {col:c, dir:-state.sort.dir} : {col:c, dir:-1};
+    render();
+  }));
+}
+
+function cells(b, id){
+  let h = "";
+  for(let j=0;j<NM;j++) h += cell(pct(b.done[j],b.elig[j]), b.done[j], b.elig[j], id+":"+j);
+  h += cell(pct(b.pDone,b.pElig), b.pDone, b.pElig, id+":p");
+  const rr = b.n ? 100*b.reached/b.n : null;
+  h += cell(rr, b.reached, b.n, id+":c");
+  return h;
+}
+function cell(v, c, e, id){
+  if(v==null) return `<td><span class="rate none">\u2014</span><span class="sub">no one eligible</span></td>`;
+  const before = previous[id];
+  const moved = before!=null && Math.abs(before-v) > 0.05 ? " class=\"moved\"" : "";
+  previous[id] = v;
+  return `<td${moved}><span class="rate">${fmt(v)}</span><span class="sub">${c}/${e}</span></td>`;
+}
+
+function render(){
+  head();
+  const tree = build();
+  let h = "";
+  for(const n of tree){
+    h += `<tr${n.kids.length?' class="parent"':''}><td>${n.label}</td>${cells(n.b, n.label)}</tr>`;
+    for(const k of n.kids)
+      h += `<tr class="nested"><td>${k.label}</td>${cells(k.b, n.label+">"+k.label)}</tr>`;
+  }
+  $("body").innerHTML = h;
+
+  const rows = visible(), all = tally(rows);
+  $("readout").innerHTML =
+     `<span><b>${rows.length}</b> students shown of ${DATA.rows.length}</span>`
+    +`<span>pooled completion <b>${fmt(pct(all.pDone, all.pElig))}</b></span>`
+    +`<span>reading: <b>${state.incNA ? "not applicable counted as incomplete"
+                                      : "not applicable excluded"}</b></span>`;
+}
+
+function table(){
+  const tree = build();
+  const cols = [DIM[state.group].label, ...M, "All five pooled", "Reached this month"];
+  const line = n => [n.label, ...n.b.done.map((d,j)=>fmt(pct(d,n.b.elig[j]))),
+                     fmt(pct(n.b.pDone,n.b.pElig)),
+                     fmt(n.b.n ? 100*n.b.reached/n.b.n : null)];
+  const out = [cols];
+  for(const n of tree){ out.push(line(n)); for(const k of n.kids) out.push(line(k)); }
+  return out;
+}
+
+$("groupBy").addEventListener("change", e => { state.group = e.target.value; previous={}; render(); });
+$("thenBy").addEventListener("change",  e => { state.then  = e.target.value; previous={}; render(); });
+$("incNA").addEventListener("change",   e => { state.incNA = e.target.checked; render(); });
+
+$("copy").addEventListener("click", async e => {
+  const txt = table().map(r=>r.join("\t")).join("\n");
+  try { await navigator.clipboard.writeText(txt); e.target.textContent = "Copied"; }
+  catch { e.target.textContent = "Copy blocked by the browser"; }
+  setTimeout(()=>e.target.textContent = "Copy for a spreadsheet", 1800);
+});
+$("dl").addEventListener("click", ()=>{
+  const csv = table().map(r=>r.map(c=>`"${c}"`).join(",")).join("\n");
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(new Blob([csv], {type:"text/csv"}));
+  a.download = "milestone-completion-demo.csv"; a.click();
+  URL.revokeObjectURL(a.href);
+});
+$("reset").addEventListener("click", ()=>{
+  state.group="o"; state.then=""; state.incNA=false;
+  state.out.clear(); state.reg.clear(); state.sort={col:NM, dir:-1};
+  $("groupBy").value="o"; $("thenBy").value=""; $("incNA").checked=false;
+  document.querySelectorAll(".chip").forEach(b=>b.setAttribute("aria-pressed","false"));
+  previous={}; render();
+});
+
+chips($("fOut"), "o", state.out);
+chips($("fReg"), "r", state.reg);
+render();
+</script>
+</body>
+</html>
