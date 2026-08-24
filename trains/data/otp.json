@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-08-17T11:21:21+00:00",
+  "generated_at": "2026-08-24T11:23:58+00:00",
   "source": "https://www.njtransit.com/performance-data-download",
   "note": "NJ TRANSIT counts a train as on time if it operates within 6 minutes of its published schedule. Published monthly under NJ Executive Order 80.",
   "lines": {
@@ -21,126 +21,126 @@
       "all_causes": {
         "status": "fresh",
         "rows": 115,
-        "last_success": "2026-08-17T11:21:21+00:00",
-        "checked_at": "2026-08-17T11:21:21+00:00"
+        "last_success": "2026-08-24T11:23:58+00:00",
+        "checked_at": "2026-08-24T11:23:58+00:00"
       },
       "amtrak_adjusted": {
         "status": "fresh",
         "rows": 115,
-        "last_success": "2026-08-17T11:21:21+00:00",
-        "checked_at": "2026-08-17T11:21:21+00:00"
+        "last_success": "2026-08-24T11:23:58+00:00",
+        "checked_at": "2026-08-24T11:23:58+00:00"
       }
     },
     "ACRL": {
       "all_causes": {
         "status": "fresh",
         "rows": 108,
-        "last_success": "2026-08-17T11:21:21+00:00",
-        "checked_at": "2026-08-17T11:21:21+00:00"
+        "last_success": "2026-08-24T11:23:58+00:00",
+        "checked_at": "2026-08-24T11:23:58+00:00"
       },
       "amtrak_adjusted": {
         "status": "fresh",
         "rows": 108,
-        "last_success": "2026-08-17T11:21:21+00:00",
-        "checked_at": "2026-08-17T11:21:21+00:00"
+        "last_success": "2026-08-24T11:23:58+00:00",
+        "checked_at": "2026-08-24T11:23:58+00:00"
       }
     },
     "MNBN": {
       "all_causes": {
         "status": "fresh",
         "rows": 115,
-        "last_success": "2026-08-17T11:21:21+00:00",
-        "checked_at": "2026-08-17T11:21:21+00:00"
+        "last_success": "2026-08-24T11:23:58+00:00",
+        "checked_at": "2026-08-24T11:23:58+00:00"
       },
       "amtrak_adjusted": {
         "status": "fresh",
         "rows": 115,
-        "last_success": "2026-08-17T11:21:21+00:00",
-        "checked_at": "2026-08-17T11:21:21+00:00"
+        "last_success": "2026-08-24T11:23:58+00:00",
+        "checked_at": "2026-08-24T11:23:58+00:00"
       }
     },
     "BNTN": {
       "all_causes": {
         "status": "fresh",
         "rows": 115,
-        "last_success": "2026-08-17T11:21:21+00:00",
-        "checked_at": "2026-08-17T11:21:21+00:00"
+        "last_success": "2026-08-24T11:23:58+00:00",
+        "checked_at": "2026-08-24T11:23:58+00:00"
       },
       "amtrak_adjusted": {
         "status": "fresh",
         "rows": 115,
-        "last_success": "2026-08-17T11:21:21+00:00",
-        "checked_at": "2026-08-17T11:21:21+00:00"
+        "last_success": "2026-08-24T11:23:58+00:00",
+        "checked_at": "2026-08-24T11:23:58+00:00"
       }
     },
     "MNE": {
       "all_causes": {
         "status": "fresh",
         "rows": 115,
-        "last_success": "2026-08-17T11:21:21+00:00",
-        "checked_at": "2026-08-17T11:21:21+00:00"
+        "last_success": "2026-08-24T11:23:58+00:00",
+        "checked_at": "2026-08-24T11:23:58+00:00"
       },
       "amtrak_adjusted": {
         "status": "fresh",
         "rows": 115,
-        "last_success": "2026-08-17T11:21:21+00:00",
-        "checked_at": "2026-08-17T11:21:21+00:00"
+        "last_success": "2026-08-24T11:23:58+00:00",
+        "checked_at": "2026-08-24T11:23:58+00:00"
       }
     },
     "NEC": {
       "all_causes": {
         "status": "fresh",
         "rows": 115,
-        "last_success": "2026-08-17T11:21:21+00:00",
-        "checked_at": "2026-08-17T11:21:21+00:00"
+        "last_success": "2026-08-24T11:23:58+00:00",
+        "checked_at": "2026-08-24T11:23:58+00:00"
       },
       "amtrak_adjusted": {
         "status": "fresh",
         "rows": 115,
-        "last_success": "2026-08-17T11:21:21+00:00",
-        "checked_at": "2026-08-17T11:21:21+00:00"
+        "last_success": "2026-08-24T11:23:58+00:00",
+        "checked_at": "2026-08-24T11:23:58+00:00"
       }
     },
     "NJCL": {
       "all_causes": {
         "status": "fresh",
         "rows": 115,
-        "last_success": "2026-08-17T11:21:21+00:00",
-        "checked_at": "2026-08-17T11:21:21+00:00"
+        "last_success": "2026-08-24T11:23:58+00:00",
+        "checked_at": "2026-08-24T11:23:58+00:00"
       },
       "amtrak_adjusted": {
         "status": "fresh",
         "rows": 115,
-        "last_success": "2026-08-17T11:21:21+00:00",
-        "checked_at": "2026-08-17T11:21:21+00:00"
+        "last_success": "2026-08-24T11:23:58+00:00",
+        "checked_at": "2026-08-24T11:23:58+00:00"
       }
     },
     "PASC": {
       "all_causes": {
         "status": "fresh",
         "rows": 115,
-        "last_success": "2026-08-17T11:21:21+00:00",
-        "checked_at": "2026-08-17T11:21:21+00:00"
+        "last_success": "2026-08-24T11:23:58+00:00",
+        "checked_at": "2026-08-24T11:23:58+00:00"
       },
       "amtrak_adjusted": {
         "status": "fresh",
         "rows": 115,
-        "last_success": "2026-08-17T11:21:21+00:00",
-        "checked_at": "2026-08-17T11:21:21+00:00"
+        "last_success": "2026-08-24T11:23:58+00:00",
+        "checked_at": "2026-08-24T11:23:58+00:00"
       }
     },
     "RARV": {
       "all_causes": {
         "status": "fresh",
         "rows": 115,
-        "last_success": "2026-08-17T11:21:21+00:00",
-        "checked_at": "2026-08-17T11:21:21+00:00"
+        "last_success": "2026-08-24T11:23:58+00:00",
+        "checked_at": "2026-08-24T11:23:58+00:00"
       },
       "amtrak_adjusted": {
         "status": "fresh",
         "rows": 115,
-        "last_success": "2026-08-17T11:21:21+00:00",
-        "checked_at": "2026-08-17T11:21:21+00:00"
+        "last_success": "2026-08-24T11:23:58+00:00",
+        "checked_at": "2026-08-24T11:23:58+00:00"
       }
     }
   },
