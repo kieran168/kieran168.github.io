@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-09-07T16:15:53+00:00",
+  "generated_at": "2026-09-14T16:45:21+00:00",
   "source": "https://www.njtransit.com/performance-data-download",
   "note": "NJ TRANSIT counts a train as on time if it operates within 6 minutes of its published schedule. Published monthly under NJ Executive Order 80.",
   "lines": {
@@ -20,131 +20,131 @@
     "SYSTEM": {
       "all_causes": {
         "status": "fresh",
-        "rows": 115,
-        "last_success": "2026-09-07T16:15:53+00:00",
-        "checked_at": "2026-09-07T16:15:53+00:00"
+        "rows": 116,
+        "last_success": "2026-09-14T16:45:21+00:00",
+        "checked_at": "2026-09-14T16:45:21+00:00"
       },
       "amtrak_adjusted": {
         "status": "fresh",
-        "rows": 115,
-        "last_success": "2026-09-07T16:15:53+00:00",
-        "checked_at": "2026-09-07T16:15:53+00:00"
+        "rows": 116,
+        "last_success": "2026-09-14T16:45:21+00:00",
+        "checked_at": "2026-09-14T16:45:21+00:00"
       }
     },
     "ACRL": {
       "all_causes": {
         "status": "fresh",
-        "rows": 108,
-        "last_success": "2026-09-07T16:15:53+00:00",
-        "checked_at": "2026-09-07T16:15:53+00:00"
+        "rows": 109,
+        "last_success": "2026-09-14T16:45:21+00:00",
+        "checked_at": "2026-09-14T16:45:21+00:00"
       },
       "amtrak_adjusted": {
         "status": "fresh",
-        "rows": 108,
-        "last_success": "2026-09-07T16:15:53+00:00",
-        "checked_at": "2026-09-07T16:15:53+00:00"
+        "rows": 109,
+        "last_success": "2026-09-14T16:45:21+00:00",
+        "checked_at": "2026-09-14T16:45:21+00:00"
       }
     },
     "MNBN": {
       "all_causes": {
         "status": "fresh",
-        "rows": 115,
-        "last_success": "2026-09-07T16:15:53+00:00",
-        "checked_at": "2026-09-07T16:15:53+00:00"
+        "rows": 116,
+        "last_success": "2026-09-14T16:45:21+00:00",
+        "checked_at": "2026-09-14T16:45:21+00:00"
       },
       "amtrak_adjusted": {
         "status": "fresh",
-        "rows": 115,
-        "last_success": "2026-09-07T16:15:53+00:00",
-        "checked_at": "2026-09-07T16:15:53+00:00"
+        "rows": 116,
+        "last_success": "2026-09-14T16:45:21+00:00",
+        "checked_at": "2026-09-14T16:45:21+00:00"
       }
     },
     "BNTN": {
       "all_causes": {
         "status": "fresh",
-        "rows": 115,
-        "last_success": "2026-09-07T16:15:53+00:00",
-        "checked_at": "2026-09-07T16:15:53+00:00"
+        "rows": 116,
+        "last_success": "2026-09-14T16:45:21+00:00",
+        "checked_at": "2026-09-14T16:45:21+00:00"
       },
       "amtrak_adjusted": {
         "status": "fresh",
-        "rows": 115,
-        "last_success": "2026-09-07T16:15:53+00:00",
-        "checked_at": "2026-09-07T16:15:53+00:00"
+        "rows": 116,
+        "last_success": "2026-09-14T16:45:21+00:00",
+        "checked_at": "2026-09-14T16:45:21+00:00"
       }
     },
     "MNE": {
       "all_causes": {
         "status": "fresh",
-        "rows": 115,
-        "last_success": "2026-09-07T16:15:53+00:00",
-        "checked_at": "2026-09-07T16:15:53+00:00"
+        "rows": 116,
+        "last_success": "2026-09-14T16:45:21+00:00",
+        "checked_at": "2026-09-14T16:45:21+00:00"
       },
       "amtrak_adjusted": {
         "status": "fresh",
-        "rows": 115,
-        "last_success": "2026-09-07T16:15:53+00:00",
-        "checked_at": "2026-09-07T16:15:53+00:00"
+        "rows": 116,
+        "last_success": "2026-09-14T16:45:21+00:00",
+        "checked_at": "2026-09-14T16:45:21+00:00"
       }
     },
     "NEC": {
       "all_causes": {
         "status": "fresh",
-        "rows": 115,
-        "last_success": "2026-09-07T16:15:53+00:00",
-        "checked_at": "2026-09-07T16:15:53+00:00"
+        "rows": 116,
+        "last_success": "2026-09-14T16:45:21+00:00",
+        "checked_at": "2026-09-14T16:45:21+00:00"
       },
       "amtrak_adjusted": {
         "status": "fresh",
-        "rows": 115,
-        "last_success": "2026-09-07T16:15:53+00:00",
-        "checked_at": "2026-09-07T16:15:53+00:00"
+        "rows": 116,
+        "last_success": "2026-09-14T16:45:21+00:00",
+        "checked_at": "2026-09-14T16:45:21+00:00"
       }
     },
     "NJCL": {
       "all_causes": {
         "status": "fresh",
-        "rows": 115,
-        "last_success": "2026-09-07T16:15:53+00:00",
-        "checked_at": "2026-09-07T16:15:53+00:00"
+        "rows": 116,
+        "last_success": "2026-09-14T16:45:21+00:00",
+        "checked_at": "2026-09-14T16:45:21+00:00"
       },
       "amtrak_adjusted": {
         "status": "fresh",
-        "rows": 115,
-        "last_success": "2026-09-07T16:15:53+00:00",
-        "checked_at": "2026-09-07T16:15:53+00:00"
+        "rows": 116,
+        "last_success": "2026-09-14T16:45:21+00:00",
+        "checked_at": "2026-09-14T16:45:21+00:00"
       }
     },
     "PASC": {
       "all_causes": {
         "status": "fresh",
-        "rows": 115,
-        "last_success": "2026-09-07T16:15:53+00:00",
-        "checked_at": "2026-09-07T16:15:53+00:00"
+        "rows": 116,
+        "last_success": "2026-09-14T16:45:21+00:00",
+        "checked_at": "2026-09-14T16:45:21+00:00"
       },
       "amtrak_adjusted": {
         "status": "fresh",
-        "rows": 115,
-        "last_success": "2026-09-07T16:15:53+00:00",
-        "checked_at": "2026-09-07T16:15:53+00:00"
+        "rows": 116,
+        "last_success": "2026-09-14T16:45:21+00:00",
+        "checked_at": "2026-09-14T16:45:21+00:00"
       }
     },
     "RARV": {
       "all_causes": {
         "status": "fresh",
-        "rows": 115,
-        "last_success": "2026-09-07T16:15:53+00:00",
-        "checked_at": "2026-09-07T16:15:53+00:00"
+        "rows": 116,
+        "last_success": "2026-09-14T16:45:21+00:00",
+        "checked_at": "2026-09-14T16:45:21+00:00"
       },
       "amtrak_adjusted": {
         "status": "fresh",
-        "rows": 115,
-        "last_success": "2026-09-07T16:15:53+00:00",
-        "checked_at": "2026-09-07T16:15:53+00:00"
+        "rows": 116,
+        "last_success": "2026-09-14T16:45:21+00:00",
+        "checked_at": "2026-09-14T16:45:21+00:00"
       }
     }
   },
-  "record_count": 2056,
+  "record_count": 2074,
   "records": [
     {
       "line_code": "SYSTEM",
@@ -662,6 +662,17 @@
       "COUNT": "16387",
       "TOTAL": "18130",
       "PERCENTAGE": "90.4"
+    },
+    {
+      "line_code": "SYSTEM",
+      "line": "System-wide",
+      "version": "all_causes",
+      "YEAR": "2026",
+      "MONTH": "AUGUST",
+      "STATUS": "On Time",
+      "COUNT": "16537",
+      "TOTAL": "18273",
+      "PERCENTAGE": "90.5"
     },
     {
       "line_code": "SYSTEM",
@@ -1695,6 +1706,17 @@
       "STATUS": "On Time",
       "COUNT": "16266",
       "TOTAL": "17626",
+      "PERCENTAGE": "92.3"
+    },
+    {
+      "line_code": "SYSTEM",
+      "line": "System-wide",
+      "version": "amtrak_adjusted",
+      "YEAR": "2026",
+      "MONTH": "AUGUST",
+      "STATUS": "On Time",
+      "COUNT": "16871",
+      "TOTAL": "18273",
       "PERCENTAGE": "92.3"
     },
     {
@@ -3803,6 +3825,17 @@
       "line": "Atlantic City",
       "version": "all_causes",
       "YEAR": "2026",
+      "MONTH": "AUGUST",
+      "LINE": "Atlantic City Rail Line",
+      "COUNT": "675",
+      "TOTAL": "744",
+      "PERCENTAGE": "90.7"
+    },
+    {
+      "line_code": "ACRL",
+      "line": "Atlantic City",
+      "version": "all_causes",
+      "YEAR": "2026",
       "MONTH": "FEBRUARY",
       "LINE": "Atlantic City Rail Line",
       "COUNT": "545",
@@ -4985,6 +5018,17 @@
       "COUNT": "673",
       "TOTAL": "721",
       "PERCENTAGE": "93.3"
+    },
+    {
+      "line_code": "ACRL",
+      "line": "Atlantic City",
+      "version": "amtrak_adjusted",
+      "YEAR": "2026",
+      "MONTH": "AUGUST",
+      "LINE": "Atlantic City Rail Line",
+      "COUNT": "675",
+      "TOTAL": "744",
+      "PERCENTAGE": "90.7"
     },
     {
       "line_code": "ACRL",
@@ -6256,6 +6300,17 @@
       "line": "Main-Bergen County",
       "version": "all_causes",
       "YEAR": "2026",
+      "MONTH": "AUGUST",
+      "LINE": "Main-Bergen Line",
+      "COUNT": "3194",
+      "TOTAL": "3328",
+      "PERCENTAGE": "96"
+    },
+    {
+      "line_code": "MNBN",
+      "line": "Main-Bergen County",
+      "version": "all_causes",
+      "YEAR": "2026",
       "MONTH": "FEBRUARY",
       "LINE": "Main-Bergen Line",
       "COUNT": "2736",
@@ -7515,6 +7570,17 @@
       "COUNT": "3218",
       "TOTAL": "3280",
       "PERCENTAGE": "98.1"
+    },
+    {
+      "line_code": "MNBN",
+      "line": "Main-Bergen County",
+      "version": "amtrak_adjusted",
+      "YEAR": "2026",
+      "MONTH": "AUGUST",
+      "LINE": "Main-Bergen Line",
+      "COUNT": "3198",
+      "TOTAL": "3328",
+      "PERCENTAGE": "96.1"
     },
     {
       "line_code": "MNBN",
@@ -8786,6 +8852,17 @@
       "line": "Montclair-Boonton",
       "version": "all_causes",
       "YEAR": "2026",
+      "MONTH": "AUGUST",
+      "LINE": "Montclair Boonton Line",
+      "COUNT": "1414",
+      "TOTAL": "1534",
+      "PERCENTAGE": "92.2"
+    },
+    {
+      "line_code": "BNTN",
+      "line": "Montclair-Boonton",
+      "version": "all_causes",
+      "YEAR": "2026",
       "MONTH": "FEBRUARY",
       "LINE": "Montclair Boonton Line",
       "COUNT": "1170",
@@ -10045,6 +10122,17 @@
       "COUNT": "1484",
       "TOTAL": "1560",
       "PERCENTAGE": "95.1"
+    },
+    {
+      "line_code": "BNTN",
+      "line": "Montclair-Boonton",
+      "version": "amtrak_adjusted",
+      "YEAR": "2026",
+      "MONTH": "AUGUST",
+      "LINE": "Montclair Boonton Line",
+      "COUNT": "1429",
+      "TOTAL": "1534",
+      "PERCENTAGE": "93.2"
     },
     {
       "line_code": "BNTN",
@@ -11316,6 +11404,17 @@
       "line": "Morris & Essex",
       "version": "all_causes",
       "YEAR": "2026",
+      "MONTH": "AUGUST",
+      "LINE": "Morris & Essex Line",
+      "COUNT": "3388",
+      "TOTAL": "3855",
+      "PERCENTAGE": "87.9"
+    },
+    {
+      "line_code": "MNE",
+      "line": "Morris & Essex",
+      "version": "all_causes",
+      "YEAR": "2026",
       "MONTH": "FEBRUARY",
       "LINE": "Morris & Essex Line",
       "COUNT": "2956",
@@ -12575,6 +12674,17 @@
       "COUNT": "3623",
       "TOTAL": "3894",
       "PERCENTAGE": "93"
+    },
+    {
+      "line_code": "MNE",
+      "line": "Morris & Essex",
+      "version": "amtrak_adjusted",
+      "YEAR": "2026",
+      "MONTH": "AUGUST",
+      "LINE": "Morris & Essex Line",
+      "COUNT": "3439",
+      "TOTAL": "3855",
+      "PERCENTAGE": "89.2"
     },
     {
       "line_code": "MNE",
@@ -13846,6 +13956,17 @@
       "line": "Northeast Corridor",
       "version": "all_causes",
       "YEAR": "2026",
+      "MONTH": "AUGUST",
+      "LINE": "Northeast Corridor",
+      "COUNT": "2982",
+      "TOTAL": "3373",
+      "PERCENTAGE": "88.4"
+    },
+    {
+      "line_code": "NEC",
+      "line": "Northeast Corridor",
+      "version": "all_causes",
+      "YEAR": "2026",
       "MONTH": "FEBRUARY",
       "LINE": "Northeast Corridor",
       "COUNT": "2684",
@@ -15105,6 +15226,17 @@
       "COUNT": "3202",
       "TOTAL": "3454",
       "PERCENTAGE": "92.7"
+    },
+    {
+      "line_code": "NEC",
+      "line": "Northeast Corridor",
+      "version": "amtrak_adjusted",
+      "YEAR": "2026",
+      "MONTH": "AUGUST",
+      "LINE": "Northeast Corridor",
+      "COUNT": "3153",
+      "TOTAL": "3373",
+      "PERCENTAGE": "93.5"
     },
     {
       "line_code": "NEC",
@@ -16376,6 +16508,17 @@
       "line": "North Jersey Coast",
       "version": "all_causes",
       "YEAR": "2026",
+      "MONTH": "AUGUST",
+      "LINE": "North Jersey Coast Line",
+      "COUNT": "2546",
+      "TOTAL": "2923",
+      "PERCENTAGE": "87.1"
+    },
+    {
+      "line_code": "NJCL",
+      "line": "North Jersey Coast",
+      "version": "all_causes",
+      "YEAR": "2026",
       "MONTH": "FEBRUARY",
       "LINE": "North Jersey Coast Line",
       "COUNT": "1864",
@@ -17635,6 +17778,17 @@
       "COUNT": "2522",
       "TOTAL": "2874",
       "PERCENTAGE": "87.8"
+    },
+    {
+      "line_code": "NJCL",
+      "line": "North Jersey Coast",
+      "version": "amtrak_adjusted",
+      "YEAR": "2026",
+      "MONTH": "AUGUST",
+      "LINE": "North Jersey Coast Line",
+      "COUNT": "2631",
+      "TOTAL": "2923",
+      "PERCENTAGE": "90"
     },
     {
       "line_code": "NJCL",
@@ -18906,6 +19060,17 @@
       "line": "Pascack Valley",
       "version": "all_causes",
       "YEAR": "2026",
+      "MONTH": "AUGUST",
+      "LINE": "Pascack Valley Line",
+      "COUNT": "1020",
+      "TOTAL": "1085",
+      "PERCENTAGE": "94"
+    },
+    {
+      "line_code": "PASC",
+      "line": "Pascack Valley",
+      "version": "all_causes",
+      "YEAR": "2026",
       "MONTH": "FEBRUARY",
       "LINE": "Pascack Valley Line",
       "COUNT": "873",
@@ -20165,6 +20330,17 @@
       "COUNT": "1031",
       "TOTAL": "1076",
       "PERCENTAGE": "95.8"
+    },
+    {
+      "line_code": "PASC",
+      "line": "Pascack Valley",
+      "version": "amtrak_adjusted",
+      "YEAR": "2026",
+      "MONTH": "AUGUST",
+      "LINE": "Pascack Valley Line",
+      "COUNT": "1020",
+      "TOTAL": "1085",
+      "PERCENTAGE": "94"
     },
     {
       "line_code": "PASC",
@@ -21436,6 +21612,17 @@
       "line": "Raritan Valley",
       "version": "all_causes",
       "YEAR": "2026",
+      "MONTH": "AUGUST",
+      "LINE": "Raritan Valley Line",
+      "COUNT": "1318",
+      "TOTAL": "1431",
+      "PERCENTAGE": "92.1"
+    },
+    {
+      "line_code": "RARV",
+      "line": "Raritan Valley",
+      "version": "all_causes",
+      "YEAR": "2026",
       "MONTH": "FEBRUARY",
       "LINE": "Raritan Valley Line",
       "COUNT": "1100",
@@ -22694,6 +22881,17 @@
       "LINE": "Raritan Valley Line",
       "COUNT": "1327",
       "TOTAL": "1432",
+      "PERCENTAGE": "92.7"
+    },
+    {
+      "line_code": "RARV",
+      "line": "Raritan Valley",
+      "version": "amtrak_adjusted",
+      "YEAR": "2026",
+      "MONTH": "AUGUST",
+      "LINE": "Raritan Valley Line",
+      "COUNT": "1326",
+      "TOTAL": "1431",
       "PERCENTAGE": "92.7"
     },
     {
