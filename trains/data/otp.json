@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-09-28T18:23:45+00:00",
+  "generated_at": "2026-10-12T20:05:40+00:00",
   "source": "https://www.njtransit.com/performance-data-download",
   "note": "NJ TRANSIT counts a train as on time if it operates within 6 minutes of its published schedule. Published monthly under NJ Executive Order 80.",
   "lines": {
@@ -13,138 +13,146 @@
     "PASC": "Pascack Valley",
     "RARV": "Raritan Valley"
   },
-  "unavailable": [],
-  "stale": [],
+  "unavailable": [
+    "North Jersey Coast/all_causes: HTTP Error 404: Not Found",
+    "Raritan Valley/amtrak_adjusted: HTTP Error 404: Not Found"
+  ],
+  "stale": [
+    "North Jersey Coast/all_causes: kept the copy from 2026-09-28",
+    "Raritan Valley/amtrak_adjusted: kept the copy from 2026-09-28"
+  ],
   "missing": [],
   "sources": {
     "SYSTEM": {
       "all_causes": {
         "status": "fresh",
-        "rows": 116,
-        "last_success": "2026-09-28T18:23:45+00:00",
-        "checked_at": "2026-09-28T18:23:45+00:00"
+        "rows": 117,
+        "last_success": "2026-10-12T20:05:40+00:00",
+        "checked_at": "2026-10-12T20:05:40+00:00"
       },
       "amtrak_adjusted": {
         "status": "fresh",
-        "rows": 116,
-        "last_success": "2026-09-28T18:23:45+00:00",
-        "checked_at": "2026-09-28T18:23:45+00:00"
+        "rows": 117,
+        "last_success": "2026-10-12T20:05:40+00:00",
+        "checked_at": "2026-10-12T20:05:40+00:00"
       }
     },
     "ACRL": {
       "all_causes": {
         "status": "fresh",
-        "rows": 109,
-        "last_success": "2026-09-28T18:23:45+00:00",
-        "checked_at": "2026-09-28T18:23:45+00:00"
+        "rows": 110,
+        "last_success": "2026-10-12T20:05:40+00:00",
+        "checked_at": "2026-10-12T20:05:40+00:00"
       },
       "amtrak_adjusted": {
         "status": "fresh",
-        "rows": 109,
-        "last_success": "2026-09-28T18:23:45+00:00",
-        "checked_at": "2026-09-28T18:23:45+00:00"
+        "rows": 110,
+        "last_success": "2026-10-12T20:05:40+00:00",
+        "checked_at": "2026-10-12T20:05:40+00:00"
       }
     },
     "MNBN": {
       "all_causes": {
         "status": "fresh",
-        "rows": 116,
-        "last_success": "2026-09-28T18:23:45+00:00",
-        "checked_at": "2026-09-28T18:23:45+00:00"
+        "rows": 117,
+        "last_success": "2026-10-12T20:05:40+00:00",
+        "checked_at": "2026-10-12T20:05:40+00:00"
       },
       "amtrak_adjusted": {
         "status": "fresh",
-        "rows": 116,
-        "last_success": "2026-09-28T18:23:45+00:00",
-        "checked_at": "2026-09-28T18:23:45+00:00"
+        "rows": 117,
+        "last_success": "2026-10-12T20:05:40+00:00",
+        "checked_at": "2026-10-12T20:05:40+00:00"
       }
     },
     "BNTN": {
       "all_causes": {
         "status": "fresh",
-        "rows": 116,
-        "last_success": "2026-09-28T18:23:45+00:00",
-        "checked_at": "2026-09-28T18:23:45+00:00"
+        "rows": 117,
+        "last_success": "2026-10-12T20:05:40+00:00",
+        "checked_at": "2026-10-12T20:05:40+00:00"
       },
       "amtrak_adjusted": {
         "status": "fresh",
-        "rows": 116,
-        "last_success": "2026-09-28T18:23:45+00:00",
-        "checked_at": "2026-09-28T18:23:45+00:00"
+        "rows": 117,
+        "last_success": "2026-10-12T20:05:40+00:00",
+        "checked_at": "2026-10-12T20:05:40+00:00"
       }
     },
     "MNE": {
       "all_causes": {
         "status": "fresh",
-        "rows": 116,
-        "last_success": "2026-09-28T18:23:45+00:00",
-        "checked_at": "2026-09-28T18:23:45+00:00"
+        "rows": 117,
+        "last_success": "2026-10-12T20:05:40+00:00",
+        "checked_at": "2026-10-12T20:05:40+00:00"
       },
       "amtrak_adjusted": {
         "status": "fresh",
-        "rows": 116,
-        "last_success": "2026-09-28T18:23:45+00:00",
-        "checked_at": "2026-09-28T18:23:45+00:00"
+        "rows": 117,
+        "last_success": "2026-10-12T20:05:40+00:00",
+        "checked_at": "2026-10-12T20:05:40+00:00"
       }
     },
     "NEC": {
       "all_causes": {
         "status": "fresh",
-        "rows": 116,
-        "last_success": "2026-09-28T18:23:45+00:00",
-        "checked_at": "2026-09-28T18:23:45+00:00"
+        "rows": 117,
+        "last_success": "2026-10-12T20:05:40+00:00",
+        "checked_at": "2026-10-12T20:05:40+00:00"
       },
       "amtrak_adjusted": {
         "status": "fresh",
-        "rows": 116,
-        "last_success": "2026-09-28T18:23:45+00:00",
-        "checked_at": "2026-09-28T18:23:45+00:00"
+        "rows": 117,
+        "last_success": "2026-10-12T20:05:40+00:00",
+        "checked_at": "2026-10-12T20:05:40+00:00"
       }
     },
     "NJCL": {
       "all_causes": {
-        "status": "fresh",
+        "status": "carried",
         "rows": 116,
         "last_success": "2026-09-28T18:23:45+00:00",
-        "checked_at": "2026-09-28T18:23:45+00:00"
+        "checked_at": "2026-10-12T20:05:40+00:00",
+        "last_error": "HTTP Error 404: Not Found"
       },
       "amtrak_adjusted": {
         "status": "fresh",
-        "rows": 116,
-        "last_success": "2026-09-28T18:23:45+00:00",
-        "checked_at": "2026-09-28T18:23:45+00:00"
+        "rows": 117,
+        "last_success": "2026-10-12T20:05:40+00:00",
+        "checked_at": "2026-10-12T20:05:40+00:00"
       }
     },
     "PASC": {
       "all_causes": {
         "status": "fresh",
-        "rows": 116,
-        "last_success": "2026-09-28T18:23:45+00:00",
-        "checked_at": "2026-09-28T18:23:45+00:00"
+        "rows": 117,
+        "last_success": "2026-10-12T20:05:40+00:00",
+        "checked_at": "2026-10-12T20:05:40+00:00"
       },
       "amtrak_adjusted": {
         "status": "fresh",
-        "rows": 116,
-        "last_success": "2026-09-28T18:23:45+00:00",
-        "checked_at": "2026-09-28T18:23:45+00:00"
+        "rows": 117,
+        "last_success": "2026-10-12T20:05:40+00:00",
+        "checked_at": "2026-10-12T20:05:40+00:00"
       }
     },
     "RARV": {
       "all_causes": {
         "status": "fresh",
-        "rows": 116,
-        "last_success": "2026-09-28T18:23:45+00:00",
-        "checked_at": "2026-09-28T18:23:45+00:00"
+        "rows": 117,
+        "last_success": "2026-10-12T20:05:40+00:00",
+        "checked_at": "2026-10-12T20:05:40+00:00"
       },
       "amtrak_adjusted": {
-        "status": "fresh",
+        "status": "carried",
         "rows": 116,
         "last_success": "2026-09-28T18:23:45+00:00",
-        "checked_at": "2026-09-28T18:23:45+00:00"
+        "checked_at": "2026-10-12T20:05:40+00:00",
+        "last_error": "HTTP Error 404: Not Found"
       }
     }
   },
-  "record_count": 2074,
+  "record_count": 2090,
   "records": [
     {
       "line_code": "SYSTEM",
@@ -804,6 +812,17 @@
       "STATUS": "On Time",
       "COUNT": "16040",
       "TOTAL": "17568",
+      "PERCENTAGE": "91.3"
+    },
+    {
+      "line_code": "SYSTEM",
+      "line": "System-wide",
+      "version": "all_causes",
+      "YEAR": "2026",
+      "MONTH": "SEPTEMBER",
+      "STATUS": "On Time",
+      "COUNT": "16214",
+      "TOTAL": "17755",
       "PERCENTAGE": "91.3"
     },
     {
@@ -1992,6 +2011,17 @@
       "STATUS": "On Time",
       "COUNT": "17632",
       "TOTAL": "18859",
+      "PERCENTAGE": "93.5"
+    },
+    {
+      "line_code": "SYSTEM",
+      "line": "System-wide",
+      "version": "amtrak_adjusted",
+      "YEAR": "2026",
+      "MONTH": "SEPTEMBER",
+      "STATUS": "On Time",
+      "COUNT": "16602",
+      "TOTAL": "17755",
       "PERCENTAGE": "93.5"
     },
     {
@@ -3900,6 +3930,17 @@
     {
       "line_code": "ACRL",
       "line": "Atlantic City",
+      "version": "all_causes",
+      "YEAR": "2026",
+      "MONTH": "SEPTEMBER",
+      "LINE": "Atlantic City Rail Line",
+      "COUNT": "686",
+      "TOTAL": "720",
+      "PERCENTAGE": "95.3"
+    },
+    {
+      "line_code": "ACRL",
+      "line": "Atlantic City",
       "version": "amtrak_adjusted",
       "YEAR": "2017",
       "MONTH": "APRIL",
@@ -5095,6 +5136,17 @@
       "COUNT": "644",
       "TOTAL": "744",
       "PERCENTAGE": "86.6"
+    },
+    {
+      "line_code": "ACRL",
+      "line": "Atlantic City",
+      "version": "amtrak_adjusted",
+      "YEAR": "2026",
+      "MONTH": "SEPTEMBER",
+      "LINE": "Atlantic City Rail Line",
+      "COUNT": "689",
+      "TOTAL": "720",
+      "PERCENTAGE": "95.7"
     },
     {
       "line_code": "MNBN",
@@ -6375,6 +6427,17 @@
     {
       "line_code": "MNBN",
       "line": "Main-Bergen County",
+      "version": "all_causes",
+      "YEAR": "2026",
+      "MONTH": "SEPTEMBER",
+      "LINE": "Main-Bergen Line",
+      "COUNT": "3112",
+      "TOTAL": "3211",
+      "PERCENTAGE": "96.9"
+    },
+    {
+      "line_code": "MNBN",
+      "line": "Main-Bergen County",
       "version": "amtrak_adjusted",
       "YEAR": "2017",
       "MONTH": "APRIL",
@@ -7647,6 +7710,17 @@
       "COUNT": "3162",
       "TOTAL": "3251",
       "PERCENTAGE": "97.3"
+    },
+    {
+      "line_code": "MNBN",
+      "line": "Main-Bergen County",
+      "version": "amtrak_adjusted",
+      "YEAR": "2026",
+      "MONTH": "SEPTEMBER",
+      "LINE": "Main-Bergen Line",
+      "COUNT": "3119",
+      "TOTAL": "3211",
+      "PERCENTAGE": "97.1"
     },
     {
       "line_code": "BNTN",
@@ -8927,6 +9001,17 @@
     {
       "line_code": "BNTN",
       "line": "Montclair-Boonton",
+      "version": "all_causes",
+      "YEAR": "2026",
+      "MONTH": "SEPTEMBER",
+      "LINE": "Montclair Boonton Line",
+      "COUNT": "1401",
+      "TOTAL": "1515",
+      "PERCENTAGE": "92.5"
+    },
+    {
+      "line_code": "BNTN",
+      "line": "Montclair-Boonton",
       "version": "amtrak_adjusted",
       "YEAR": "2017",
       "MONTH": "APRIL",
@@ -10199,6 +10284,17 @@
       "COUNT": "1407",
       "TOTAL": "1488",
       "PERCENTAGE": "94.6"
+    },
+    {
+      "line_code": "BNTN",
+      "line": "Montclair-Boonton",
+      "version": "amtrak_adjusted",
+      "YEAR": "2026",
+      "MONTH": "SEPTEMBER",
+      "LINE": "Montclair Boonton Line",
+      "COUNT": "1422",
+      "TOTAL": "1515",
+      "PERCENTAGE": "93.9"
     },
     {
       "line_code": "MNE",
@@ -11479,6 +11575,17 @@
     {
       "line_code": "MNE",
       "line": "Morris & Essex",
+      "version": "all_causes",
+      "YEAR": "2026",
+      "MONTH": "SEPTEMBER",
+      "LINE": "Morris & Essex Line",
+      "COUNT": "3254",
+      "TOTAL": "3608",
+      "PERCENTAGE": "90.2"
+    },
+    {
+      "line_code": "MNE",
+      "line": "Morris & Essex",
       "version": "amtrak_adjusted",
       "YEAR": "2017",
       "MONTH": "APRIL",
@@ -12751,6 +12858,17 @@
       "COUNT": "3603",
       "TOTAL": "3825",
       "PERCENTAGE": "94.2"
+    },
+    {
+      "line_code": "MNE",
+      "line": "Morris & Essex",
+      "version": "amtrak_adjusted",
+      "YEAR": "2026",
+      "MONTH": "SEPTEMBER",
+      "LINE": "Morris & Essex Line",
+      "COUNT": "3315",
+      "TOTAL": "3608",
+      "PERCENTAGE": "91.9"
     },
     {
       "line_code": "NEC",
@@ -14031,6 +14149,17 @@
     {
       "line_code": "NEC",
       "line": "Northeast Corridor",
+      "version": "all_causes",
+      "YEAR": "2026",
+      "MONTH": "SEPTEMBER",
+      "LINE": "Northeast Corridor",
+      "COUNT": "2936",
+      "TOTAL": "3366",
+      "PERCENTAGE": "87.2"
+    },
+    {
+      "line_code": "NEC",
+      "line": "Northeast Corridor",
       "version": "amtrak_adjusted",
       "YEAR": "2017",
       "MONTH": "APRIL",
@@ -15303,6 +15432,17 @@
       "COUNT": "3174",
       "TOTAL": "3385",
       "PERCENTAGE": "93.8"
+    },
+    {
+      "line_code": "NEC",
+      "line": "Northeast Corridor",
+      "version": "amtrak_adjusted",
+      "YEAR": "2026",
+      "MONTH": "SEPTEMBER",
+      "LINE": "Northeast Corridor",
+      "COUNT": "3129",
+      "TOTAL": "3366",
+      "PERCENTAGE": "93"
     },
     {
       "line_code": "NJCL",
@@ -17857,6 +17997,17 @@
       "PERCENTAGE": "87.5"
     },
     {
+      "line_code": "NJCL",
+      "line": "North Jersey Coast",
+      "version": "amtrak_adjusted",
+      "YEAR": "2026",
+      "MONTH": "SEPTEMBER",
+      "LINE": "North Jersey Coast Line",
+      "COUNT": "2634",
+      "TOTAL": "2880",
+      "PERCENTAGE": "91.5"
+    },
+    {
       "line_code": "PASC",
       "line": "Pascack Valley",
       "version": "all_causes",
@@ -19135,6 +19286,17 @@
     {
       "line_code": "PASC",
       "line": "Pascack Valley",
+      "version": "all_causes",
+      "YEAR": "2026",
+      "MONTH": "SEPTEMBER",
+      "LINE": "Pascack Valley Line",
+      "COUNT": "999",
+      "TOTAL": "1060",
+      "PERCENTAGE": "94.2"
+    },
+    {
+      "line_code": "PASC",
+      "line": "Pascack Valley",
       "version": "amtrak_adjusted",
       "YEAR": "2017",
       "MONTH": "APRIL",
@@ -20407,6 +20569,17 @@
       "COUNT": "1036",
       "TOTAL": "1072",
       "PERCENTAGE": "96.6"
+    },
+    {
+      "line_code": "PASC",
+      "line": "Pascack Valley",
+      "version": "amtrak_adjusted",
+      "YEAR": "2026",
+      "MONTH": "SEPTEMBER",
+      "LINE": "Pascack Valley Line",
+      "COUNT": "1001",
+      "TOTAL": "1060",
+      "PERCENTAGE": "94.4"
     },
     {
       "line_code": "RARV",
@@ -21683,6 +21856,17 @@
       "COUNT": "1353",
       "TOTAL": "1437",
       "PERCENTAGE": "94.2"
+    },
+    {
+      "line_code": "RARV",
+      "line": "Raritan Valley",
+      "version": "all_causes",
+      "YEAR": "2026",
+      "MONTH": "SEPTEMBER",
+      "LINE": "Raritan Valley Line",
+      "COUNT": "1281",
+      "TOTAL": "1395",
+      "PERCENTAGE": "91.8"
     },
     {
       "line_code": "RARV",
